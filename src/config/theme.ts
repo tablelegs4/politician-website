@@ -17,6 +17,7 @@ export type ThemeType = typeof THEMES[keyof typeof THEMES];
  * ここを変更するだけでサイト全体のテーマが切り替わります
  */
 export const CURRENT_THEME: ThemeType = 'default';
+// export const CURRENT_THEME: ThemeType = 'modern';
 
 /**
  * サイト共通のテーマカラー

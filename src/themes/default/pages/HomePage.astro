@@ -20,15 +20,25 @@ const formatDate = (date: Date) => {
 ---
 
 <main>
+  <!-- ヒーローセクション -->
+  <section class="hero-section">
+    <div class="hero-image-wrapper">
+      <img src={THEME_IMAGES.default.hero} alt="あたらしい答え" class="hero-image" />
+      <div class="hero-overlay">
+        <div class="hero-content">
+          <h1 class="hero-title">地域とともに、未来をつくる</h1>
+          <p class="hero-subtitle">すべての住民が安心して暮らせる社会の実現を目指して</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <div class="container">
     <div class="two-column-layout">
       <!-- メインコンテンツ -->
       <div class="main-content">
         <section>
-          <div class="logo-container">
-            <img src={THEME_IMAGES.default.logo} alt="山田太郎ロゴ" class="site-logo" />
-          </div>
-          <h1>地域とともに、未来をつくる</h1>
+          <h2>ごあいさつ</h2>
           <p>
             この度は、山田太郎の公式ウェブサイトをご覧いただき、誠にありがとうございます。
           </p>

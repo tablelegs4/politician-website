@@ -92,6 +92,19 @@ img {
 .site-title a {
   color: inherit;
   text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.header-logo {
+  height: 40px;
+  width: auto;
+}
+
+@media (max-width: 767px) {
+  .header-logo {
+    height: 32px;
+  }
 }
 
 /* SP: ハンバーガーメニュー（details/summary使用、JSなし） */

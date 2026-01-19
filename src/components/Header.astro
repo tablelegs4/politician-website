@@ -1,12 +1,15 @@
 ---
 // ヘッダーコンポーネント（JSなし、details/summaryでSPメニュー実装）
+import { THEME_IMAGES, CURRENT_THEME } from '../config/theme';
 ---
 
 <header class="site-header">
   <div class="container">
     <div class="header-inner">
       <div class="site-title">
-        <a href="/">山田太郎</a>
+        <a href="/">
+          <img src={THEME_IMAGES[CURRENT_THEME].logo} alt="山田太郎" class="header-logo" />
+        </a>
       </div>
 
       <details class="nav-toggle">

@@ -3,7 +3,8 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://example.com', // 実際のURLに変更すること
+  site: 'https://tablelegs4.github.io',
+  base: '/politician-website',
   output: 'static',
   compressHTML: true,
   integrations: [sitemap()],
