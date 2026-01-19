@@ -1,0 +1,16 @@
+/* ===========================
+   デフォルトテーマ専用スタイル
+   =========================== */
+
+/* テーマカラー */
+:root {
+  --theme-primary: #043e80;
+  --theme-secondary: #f5b500;
+  --theme-primary-dark: #032f5e;
+  --theme-accent: #043e80;
+  --theme-bg: #fff;
+  --theme-text: #333;
+  --theme-border: #e0e0e0;
+}
+
+/* このテーマではglobal.cssを使用するため、追加スタイルは最小限 */

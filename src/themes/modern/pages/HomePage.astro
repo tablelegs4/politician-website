@@ -1,0 +1,99 @@
+---
+import { getCollection } from 'astro:content';
+
+// 最新ニュース4件を取得
+const allNews = await getCollection('news');
+const latestNews = allNews
+  .filter(entry => !entry.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 4);
+
+// 日付フォーマット関数
+const formatDate = (date: Date) => {
+  return date.toLocaleDateString('ja-JP', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+};
+---
+
+<main class="modern-home">
+  <!-- ヒーローセクション -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">地域とともに、<br>未来をつくる</h1>
+        <p class="hero-subtitle">
+          すべての住民が安心して暮らせる社会の実現を目指して
+        </p>
+        <div class="hero-actions">
+          <a href="/policy/" class="btn-hero btn-primary">政策を見る</a>
+          <a href="/contact/" class="btn-hero btn-outline">お問い合わせ</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- メッセージセクション -->
+  <section class="message-section">
+    <div class="container">
+      <div class="message-box">
+        <p class="message-text">
+          私は、地域に根ざした政治活動を通じて、皆様の声に真摯に耳を傾け、
+          一つひとつの課題に全力で取り組んでまいります。
+        </p>
+        <p class="message-signature">山田太郎</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ニュースセクション -->
+  <section class="news-section">
+    <div class="container">
+      <h2 class="section-title">最新のお知らせ</h2>
+      {latestNews.length > 0 ? (
+        <div class="news-grid">
+          {latestNews.map((entry) => (
+            <article class="news-card">
+              <a href={`/news/${entry.id.replace('.md', '')}/`} class="news-card-link">
+                <div class="news-card-date">{formatDate(entry.data.date)}</div>
+                <h3 class="news-card-title">{entry.data.title}</h3>
+                <p class="news-card-description">{entry.data.description}</p>
+                <span class="news-card-arrow">→</span>
+              </a>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <p class="no-news">現在、お知らせはありません。</p>
+      )}
+      <div class="text-center mt-4">
+        <a href="/news/" class="btn-more">すべてのお知らせを見る</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTAセクション -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-grid">
+        <div class="cta-card">
+          <h3 class="cta-title">プロフィール</h3>
+          <p class="cta-description">経歴や活動内容をご覧いただけます</p>
+          <a href="/profile/" class="cta-link">詳しく見る</a>
+        </div>
+        <div class="cta-card">
+          <h3 class="cta-title">政策</h3>
+          <p class="cta-description">私が取り組む主要政策をご紹介します</p>
+          <a href="/policy/" class="cta-link">詳しく見る</a>
+        </div>
+        <div class="cta-card">
+          <h3 class="cta-title">お問い合わせ</h3>
+          <p class="cta-description">ご意見・ご要望をお聞かせください</p>
+          <a href="/contact/" class="cta-link">お問い合わせする</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

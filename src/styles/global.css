@@ -21,7 +21,7 @@ body {
 }
 
 a {
-  color: #0056b3;
+  color: #043e80;
   text-decoration: none;
 }
 
@@ -30,7 +30,7 @@ a:hover {
 }
 
 a:focus-visible {
-  outline: 2px solid #0056b3;
+  outline: 2px solid #043e80;
   outline-offset: 2px;
 }
 
@@ -68,7 +68,7 @@ img {
    ヘッダー（SP/PC差別化）
    =========================== */
 .site-header {
-  background: #003d7a;
+  background: #043e80;
   color: #fff;
   padding: 1rem 0;
   position: sticky;
@@ -117,7 +117,7 @@ img {
   }
 
   .main-nav {
-    background: #002a55;
+    background: #032f5e;
     padding: 1rem;
     border-radius: 4px;
   }
@@ -246,14 +246,14 @@ h1 {
   font-size: 2rem;
   margin-bottom: 1.5rem;
   padding-bottom: 0.5rem;
-  border-bottom: 3px solid #003d7a;
-  color: #003d7a;
+  border-bottom: 3px solid #043e80;
+  color: #043e80;
 }
 
 h2 {
   font-size: 1.5rem;
   margin: 2rem 0 1rem;
-  color: #003d7a;
+  color: #043e80;
 }
 
 h3 {
@@ -282,7 +282,7 @@ h3 {
 .card-title {
   font-size: 1.25rem;
   margin-bottom: 0.5rem;
-  color: #003d7a;
+  color: #043e80;
 }
 
 .card-meta {
@@ -302,7 +302,7 @@ h3 {
 .btn {
   display: inline-block;
   padding: 0.75rem 1.5rem;
-  background: #003d7a;
+  background: #043e80;
   color: #fff;
   border-radius: 4px;
   font-weight: bold;
@@ -313,12 +313,12 @@ h3 {
 }
 
 .btn:hover {
-  background: #002a55;
+  background: #032f5e;
   text-decoration: none;
 }
 
 .btn:focus-visible {
-  outline: 2px solid #003d7a;
+  outline: 2px solid #043e80;
   outline-offset: 2px;
 }
 
@@ -344,8 +344,8 @@ h3 {
 .sidebar-widget h3 {
   margin-top: 0;
   font-size: 1.125rem;
-  color: #003d7a;
-  border-bottom: 2px solid #003d7a;
+  color: #043e80;
+  border-bottom: 2px solid #043e80;
   padding-bottom: 0.5rem;
   margin-bottom: 1rem;
 }
@@ -383,7 +383,7 @@ h3 {
 .news-title {
   font-size: 1.125rem;
   font-weight: bold;
-  color: #003d7a;
+  color: #043e80;
   margin-bottom: 0.5rem;
 }
 
@@ -430,7 +430,7 @@ h3 {
 }
 
 .article-content blockquote {
-  border-left: 4px solid #003d7a;
+  border-left: 4px solid #043e80;
   padding-left: 1rem;
   margin: 1rem 0;
   color: #555;
@@ -446,7 +446,7 @@ h3 {
 
 .policy-item {
   background: #fff;
-  border-left: 4px solid #003d7a;
+  border-left: 4px solid #043e80;
   padding: 1.5rem;
   margin-bottom: 1.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -454,7 +454,7 @@ h3 {
 
 .policy-item h3 {
   margin-top: 0;
-  color: #003d7a;
+  color: #043e80;
 }
 
 /* ===========================

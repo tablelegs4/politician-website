@@ -1,0 +1,370 @@
+/* ===========================
+   モダンテーマ専用スタイル
+   =========================== */
+
+/* テーマカラー */
+:root {
+  --modern-primary: #043e80;
+  --modern-secondary: #f5b500;
+  --modern-primary-dark: #032f5e;
+  --modern-accent: #f5b500;
+  --modern-bg: #ffffff;
+  --modern-bg-light: #f8f9fa;
+  --modern-text: #2c3e50;
+  --modern-text-light: #7f8c8d;
+  --modern-border: #ecf0f1;
+  --modern-shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* ===========================
+   ヒーローセクション
+   =========================== */
+.hero-section {
+  background: linear-gradient(135deg, var(--modern-primary) 0%, var(--modern-accent) 100%);
+  color: #fff;
+  padding: 4rem 0;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .hero-section {
+    padding: 6rem 0;
+  }
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero-title {
+  font-size: 2rem;
+  line-height: 1.3;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  border: none;
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  .hero-title {
+    font-size: 3rem;
+  }
+}
+
+.hero-subtitle {
+  font-size: 1.125rem;
+  margin-bottom: 2rem;
+  opacity: 0.95;
+  line-height: 1.6;
+}
+
+@media (min-width: 768px) {
+  .hero-subtitle {
+    font-size: 1.25rem;
+  }
+}
+
+.hero-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .hero-actions {
+    flex-direction: row;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+}
+
+.btn-hero {
+  display: inline-block;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  min-width: 200px;
+  text-align: center;
+}
+
+.btn-primary {
+  background: #fff;
+  color: var(--modern-primary);
+}
+
+.btn-primary:hover {
+  background: #f8f9fa;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--modern-shadow);
+  text-decoration: none;
+}
+
+.btn-outline {
+  background: transparent;
+  color: #fff;
+  border: 2px solid #fff;
+}
+
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+/* ===========================
+   メッセージセクション
+   =========================== */
+.message-section {
+  padding: 3rem 0;
+  background: var(--modern-bg-light);
+}
+
+@media (min-width: 768px) {
+  .message-section {
+    padding: 4rem 0;
+  }
+}
+
+.message-box {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: #fff;
+  border-left: 4px solid var(--modern-primary);
+  box-shadow: 0 2px 8px var(--modern-shadow);
+}
+
+@media (min-width: 768px) {
+  .message-box {
+    padding: 3rem;
+  }
+}
+
+.message-text {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: var(--modern-text);
+  margin-bottom: 1.5rem;
+}
+
+.message-signature {
+  text-align: right;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--modern-primary);
+}
+
+/* ===========================
+   セクション共通
+   =========================== */
+.news-section,
+.cta-section {
+  padding: 3rem 0;
+}
+
+@media (min-width: 768px) {
+  .news-section,
+  .cta-section {
+    padding: 5rem 0;
+  }
+}
+
+.section-title {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: var(--modern-primary);
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: var(--modern-accent);
+  border-radius: 2px;
+}
+
+/* ===========================
+   ニュースグリッド
+   =========================== */
+.news-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .news-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.news-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px var(--modern-shadow);
+  transition: all 0.3s ease;
+}
+
+.news-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px var(--modern-shadow);
+}
+
+.news-card-link {
+  display: block;
+  padding: 1.5rem;
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+}
+
+.news-card-date {
+  font-size: 0.875rem;
+  color: var(--modern-text-light);
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+
+.news-card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--modern-primary);
+  margin-bottom: 0.75rem;
+  margin-top: 0;
+  line-height: 1.4;
+}
+
+.news-card-description {
+  font-size: 0.9375rem;
+  color: var(--modern-text);
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+.news-card-arrow {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  color: var(--modern-accent);
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.news-card:hover .news-card-arrow {
+  transform: translateX(4px);
+}
+
+.no-news {
+  text-align: center;
+  color: var(--modern-text-light);
+  font-size: 1.125rem;
+  padding: 2rem;
+}
+
+.btn-more {
+  display: inline-block;
+  padding: 0.875rem 2rem;
+  background: transparent;
+  color: var(--modern-primary);
+  border: 2px solid var(--modern-primary);
+  border-radius: 50px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-more:hover {
+  background: var(--modern-primary);
+  color: #fff;
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+/* ===========================
+   CTAグリッド
+   =========================== */
+.cta-section {
+  background: var(--modern-bg-light);
+}
+
+.cta-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .cta-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.cta-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 2px 8px var(--modern-shadow);
+  transition: all 0.3s ease;
+}
+
+.cta-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px var(--modern-shadow);
+}
+
+.cta-title {
+  font-size: 1.5rem;
+  color: var(--modern-primary);
+  margin-bottom: 1rem;
+  margin-top: 0;
+}
+
+.cta-description {
+  color: var(--modern-text-light);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.cta-link {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: var(--modern-primary);
+  color: #fff;
+  border-radius: 50px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.cta-link:hover {
+  background: var(--modern-primary-dark);
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+/* ===========================
+   ユーティリティ（モダン用）
+   =========================== */
+.modern-home .text-center {
+  text-align: center;
+}
+
+.modern-home .mt-4 {
+  margin-top: 2rem;
+}

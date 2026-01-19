@@ -1,0 +1,77 @@
+---
+import { getCollection } from 'astro:content';
+
+// 最新ニュース3件を取得
+const allNews = await getCollection('news');
+const latestNews = allNews
+  .filter(entry => !entry.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+
+// 日付フォーマット関数
+const formatDate = (date: Date) => {
+  return date.toLocaleDateString('ja-JP', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).replace(/\//g, '-');
+};
+---
+
+<main>
+  <div class="container">
+    <div class="two-column-layout">
+      <!-- メインコンテンツ -->
+      <div class="main-content">
+        <section>
+          <h1>地域とともに、未来をつくる</h1>
+          <p>
+            この度は、山田太郎の公式ウェブサイトをご覧いただき、誠にありがとうございます。
+          </p>
+          <p>
+            私は、地域に根ざした政治活動を通じて、すべての住民が安心して暮らせる社会の実現を目指しています。
+            皆様の声に真摯に耳を傾け、一つひとつの課題に全力で取り組んでまいります。
+          </p>
+        </section>
+
+        <section class="mt-4">
+          <h2>最新のお知らせ</h2>
+          {latestNews.length > 0 ? (
+            <ul class="news-list">
+              {latestNews.map((entry) => (
+                <li class="news-item">
+                  <a href={`/news/${entry.id.replace('.md', '')}/`} class="news-link">
+                    <div class="news-date">{formatDate(entry.data.date)}</div>
+                    <div class="news-title">{entry.data.title}</div>
+                    <div class="news-description">{entry.data.description}</div>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>現在、お知らせはありません。</p>
+          )}
+          <div class="mt-2">
+            <a href="/news/" class="btn">お知らせ一覧を見る</a>
+          </div>
+        </section>
+      </div>
+
+      <!-- サイドバー（PCのみ表示） -->
+      <aside class="sidebar">
+        <div class="sidebar-widget">
+          <h3>プロフィール</h3>
+          <p><strong>山田太郎</strong></p>
+          <p>地域のために全力で働きます。</p>
+          <a href="/profile/" class="btn mt-2" style="width: 100%;">詳しく見る</a>
+        </div>
+
+        <div class="sidebar-widget">
+          <h3>お問い合わせ</h3>
+          <p>ご意見・ご要望をお聞かせください。</p>
+          <a href="/contact/" class="btn btn-secondary mt-2" style="width: 100%;">お問い合わせ</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</main>
