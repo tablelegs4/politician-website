@@ -1,0 +1,52 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+// 全ニュースを取得（下書き除外、日付降順）
+const allNews = await getCollection('news');
+const publishedNews = allNews
+  .filter(entry => !entry.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+// 日付フォーマット関数
+const formatDate = (date: Date) => {
+  return date.toLocaleDateString('ja-JP', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).replace(/\//g, '-');
+};
+---
+
+<Layout
+  title="お知らせ"
+  description="山田太郎の最新活動報告・お知らせ一覧ページです。"
+>
+  <main>
+    <div class="container">
+      <h1>お知らせ</h1>
+      <p>最新の活動報告やお知らせをご覧いただけます。</p>
+
+      {publishedNews.length > 0 ? (
+        <ul class="news-list mt-4">
+          {publishedNews.map((entry) => (
+            <li class="news-item">
+              <a href={`/news/${entry.id.replace('.md', '')}/`} class="news-link">
+                <div class="news-date">{formatDate(entry.data.date)}</div>
+                <div class="news-title">{entry.data.title}</div>
+                <div class="news-description">{entry.data.description}</div>
+                {entry.data.tags && entry.data.tags.length > 0 && (
+                  <div class="mt-1" style="font-size: 0.875rem; color: #0056b3;">
+                    {entry.data.tags.map(tag => `#${tag}`).join(' ')}
+                  </div>
+                )}
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="mt-4">現在、お知らせはありません。</p>
+      )}
+    </div>
+  </main>
+</Layout>

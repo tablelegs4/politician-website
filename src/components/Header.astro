@@ -1,0 +1,37 @@
+---
+// ヘッダーコンポーネント（JSなし、details/summaryでSPメニュー実装）
+---
+
+<header class="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <div class="site-title">
+        <a href="/">山田太郎</a>
+      </div>
+
+      <details class="nav-toggle">
+        <summary aria-label="メニューを開く">☰</summary>
+        <nav class="main-nav" aria-label="メインナビゲーション">
+          <ul>
+            <li><a href="/">トップ</a></li>
+            <li><a href="/profile/">プロフィール</a></li>
+            <li><a href="/policy/">政策</a></li>
+            <li><a href="/news/">お知らせ</a></li>
+            <li><a href="/contact/">お問い合わせ</a></li>
+          </ul>
+        </nav>
+      </details>
+
+      <!-- PC用ナビはCSSで常時表示 -->
+      <nav class="main-nav" aria-label="メインナビゲーション">
+        <ul>
+          <li><a href="/">トップ</a></li>
+          <li><a href="/profile/">プロフィール</a></li>
+          <li><a href="/policy/">政策</a></li>
+          <li><a href="/news/">お知らせ</a></li>
+          <li><a href="/contact/">お問い合わせ</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>

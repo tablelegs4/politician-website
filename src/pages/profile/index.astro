@@ -1,0 +1,72 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  title="プロフィール"
+  description="山田太郎のプロフィール・経歴・略歴をご紹介します。"
+>
+  <main>
+    <div class="container">
+      <h1>プロフィール</h1>
+
+      <section class="card">
+        <h2>基本情報</h2>
+        <table style="width: 100%; border-collapse: collapse;">
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <th style="padding: 0.75rem; text-align: left; width: 30%; background: #f9f9f9;">氏名</th>
+            <td style="padding: 0.75rem;">山田 太郎（やまだ たろう）</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <th style="padding: 0.75rem; text-align: left; background: #f9f9f9;">生年月日</th>
+            <td style="padding: 0.75rem;">1975年4月15日</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <th style="padding: 0.75rem; text-align: left; background: #f9f9f9;">出身地</th>
+            <td style="padding: 0.75rem;">東京都</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <th style="padding: 0.75rem; text-align: left; background: #f9f9f9;">学歴</th>
+            <td style="padding: 0.75rem;">○○大学法学部卒業</td>
+          </tr>
+          <tr>
+            <th style="padding: 0.75rem; text-align: left; background: #f9f9f9;">趣味</th>
+            <td style="padding: 0.75rem;">読書、ジョギング</td>
+          </tr>
+        </table>
+      </section>
+
+      <section class="mt-4">
+        <h2>経歴</h2>
+        <ul style="line-height: 2;">
+          <li>1998年 - ○○大学法学部卒業</li>
+          <li>1998年 - 民間企業入社</li>
+          <li>2005年 - 地域NPO法人設立に参画</li>
+          <li>2010年 - 市議会議員初当選</li>
+          <li>2014年 - 市議会議員再選（2期目）</li>
+          <li>2018年 - 市議会議員再選（3期目）</li>
+          <li>2022年 - 市議会議員再選（4期目、現在に至る）</li>
+        </ul>
+      </section>
+
+      <section class="mt-4">
+        <h2>政治信条</h2>
+        <p>
+          「すべての住民が安心して暮らせる社会」を実現するため、以下の信条のもと活動しています。
+        </p>
+        <ul style="line-height: 2; margin-top: 1rem;">
+          <li>住民の声を第一に、現場主義を徹底します</li>
+          <li>透明性の高い政治を実現します</li>
+          <li>次世代に誇れる地域づくりを推進します</li>
+        </ul>
+      </section>
+
+      <section class="mt-4">
+        <div class="text-center">
+          <a href="/policy/" class="btn">政策を見る</a>
+          <a href="/contact/" class="btn btn-secondary" style="margin-left: 1rem;">お問い合わせ</a>
+        </div>
+      </section>
+    </div>
+  </main>
+</Layout>

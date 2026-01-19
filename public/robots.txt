@@ -1,0 +1,7 @@
+# robots.txt for politician website
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://example.com/sitemap-index.xml
