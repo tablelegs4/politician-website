@@ -27,6 +27,31 @@ export const THEME_COLORS = {
 } as const;
 
 /**
+ * テーマごとの画像設定
+ */
+export const THEME_IMAGES = {
+  default: {
+    hero: '/images/hero-default.jpg',
+    logo: '/images/logo.png',
+  },
+  modern: {
+    hero: '/images/hero-modern.jpg',
+    logo: '/images/logo.png',
+  },
+} as const;
+
+/**
+ * サイト共通の画像（活動写真など）
+ */
+export const SITE_IMAGES = {
+  activities: [
+    { src: '/images/activities/activity-01.jpg', alt: '地域活動の様子' },
+    { src: '/images/activities/activity-02.jpg', alt: '街頭演説の様子' },
+    { src: '/images/activities/activity-03.jpg', alt: '住民との対話' },
+  ],
+} as const;
+
+/**
  * テーマごとの設定
  */
 export const THEME_CONFIG = {

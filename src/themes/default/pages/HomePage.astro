@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { THEME_IMAGES } from '../../../config/theme';
 
 // 最新ニュース3件を取得
 const allNews = await getCollection('news');
@@ -24,6 +25,9 @@ const formatDate = (date: Date) => {
       <!-- メインコンテンツ -->
       <div class="main-content">
         <section>
+          <div class="logo-container">
+            <img src={THEME_IMAGES.default.logo} alt="山田太郎ロゴ" class="site-logo" />
+          </div>
           <h1>地域とともに、未来をつくる</h1>
           <p>
             この度は、山田太郎の公式ウェブサイトをご覧いただき、誠にありがとうございます。

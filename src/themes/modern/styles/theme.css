@@ -21,9 +21,13 @@
    =========================== */
 .hero-section {
   background: linear-gradient(135deg, var(--modern-primary) 0%, var(--modern-accent) 100%);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: #fff;
   padding: 4rem 0;
   text-align: center;
+  position: relative;
 }
 
 @media (min-width: 768px) {
@@ -356,6 +360,75 @@
   background: var(--modern-primary-dark);
   transform: translateY(-2px);
   text-decoration: none;
+}
+
+/* ===========================
+   活動写真ギャラリー
+   =========================== */
+.gallery-section {
+  padding: 3rem 0;
+  background: #fff;
+}
+
+@media (min-width: 768px) {
+  .gallery-section {
+    padding: 5rem 0;
+  }
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px var(--modern-shadow);
+  transition: all 0.3s ease;
+  aspect-ratio: 4/3;
+}
+
+.gallery-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px var(--modern-shadow);
+}
+
+.gallery-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(4, 62, 128, 0.9) 0%, transparent 100%);
+  padding: 1.5rem 1rem 1rem;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.gallery-item:hover .gallery-overlay {
+  transform: translateY(0);
+}
+
+.gallery-caption {
+  color: #fff;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  margin: 0;
 }
 
 /* ===========================

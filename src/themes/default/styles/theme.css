@@ -14,3 +14,21 @@
 }
 
 /* このテーマではglobal.cssを使用するため、追加スタイルは最小限 */
+
+/* ロゴ表示 */
+.logo-container {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.site-logo {
+  max-width: 150px;
+  height: auto;
+  margin: 0 auto;
+}
+
+@media (max-width: 767px) {
+  .site-logo {
+    max-width: 100px;
+  }
+}
