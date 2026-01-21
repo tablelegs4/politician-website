@@ -81,7 +81,7 @@ const formatSummary = (summary: string) => {
 
 // 信頼要素の表示判定
 const isIncumbent = siteConfig.trustElements.mode === 'incumbent';
-const trustData = isIncumbent ? siteConfig.trustElements.incumbent : siteConfig.trustElements.newcomer;
+const incumbentData = siteConfig.trustElements.incumbent;
 
 ---
 
@@ -100,18 +100,18 @@ const trustData = isIncumbent ? siteConfig.trustElements.incumbent : siteConfig.
       <div class="container">
         <h1 class="hero-title">{siteConfig.hero.title}</h1>
         <p class="hero-subtitle">{siteConfig.hero.subtitle}</p>
-        {isIncumbent && trustData.proposals > 0 && (
+        {isIncumbent && incumbentData.proposals > 0 && (
           <div class="trust-elements">
             <div class="trust-item">
-              <span class="trust-number">{trustData.proposals}</span>
+              <span class="trust-number">{incumbentData.proposals}</span>
               <span class="trust-label">件の提案</span>
             </div>
             <div class="trust-item">
-              <span class="trust-number">{trustData.questions}</span>
+              <span class="trust-number">{incumbentData.questions}</span>
               <span class="trust-label">回の質問</span>
             </div>
             <div class="trust-item">
-              <span class="trust-number">{trustData.cases}</span>
+              <span class="trust-number">{incumbentData.cases}</span>
               <span class="trust-label">件の対応</span>
             </div>
           </div>
@@ -126,18 +126,18 @@ const trustData = isIncumbent ? siteConfig.trustElements.incumbent : siteConfig.
       <div class="hero-content">
         <h1 class="hero-title">{siteConfig.hero.title}</h1>
         <p class="hero-subtitle">{siteConfig.hero.subtitle}</p>
-        {isIncumbent && trustData.proposals > 0 && (
+        {isIncumbent && incumbentData.proposals > 0 && (
           <div class="trust-elements">
             <div class="trust-item">
-              <span class="trust-number">{trustData.proposals}</span>
+              <span class="trust-number">{incumbentData.proposals}</span>
               <span class="trust-label">件の提案</span>
             </div>
             <div class="trust-item">
-              <span class="trust-number">{trustData.questions}</span>
+              <span class="trust-number">{incumbentData.questions}</span>
               <span class="trust-label">回の質問</span>
             </div>
             <div class="trust-item">
-              <span class="trust-number">{trustData.cases}</span>
+              <span class="trust-number">{incumbentData.cases}</span>
               <span class="trust-label">件の対応</span>
             </div>
           </div>
@@ -156,18 +156,18 @@ const trustData = isIncumbent ? siteConfig.trustElements.incumbent : siteConfig.
       <div class="hero-diagonal-content">
         <h1 class="hero-title">{siteConfig.hero.title}</h1>
         <p class="hero-subtitle">{siteConfig.hero.subtitle}</p>
-        {isIncumbent && trustData.proposals > 0 && (
+        {isIncumbent && incumbentData.proposals > 0 && (
           <div class="trust-elements">
             <div class="trust-item">
-              <span class="trust-number">{trustData.proposals}</span>
+              <span class="trust-number">{incumbentData.proposals}</span>
               <span class="trust-label">件の提案</span>
             </div>
             <div class="trust-item">
-              <span class="trust-number">{trustData.questions}</span>
+              <span class="trust-number">{incumbentData.questions}</span>
               <span class="trust-label">回の質問</span>
             </div>
             <div class="trust-item">
-              <span class="trust-number">{trustData.cases}</span>
+              <span class="trust-number">{incumbentData.cases}</span>
               <span class="trust-label">件の対応</span>
             </div>
           </div>
