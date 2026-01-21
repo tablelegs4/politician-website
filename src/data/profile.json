@@ -1,0 +1,21 @@
+{
+  "name": "山田太郎",
+  "nameReading": "やまだ たろう",
+  "photo": "/images/profile.jpg",
+  "position": "",
+  "affiliation": "",
+  "shortBio": "地域のために全力で働きます。",
+  "fullBio": "この度は、私のウェブサイトをご覧いただき、誠にありがとうございます。\n\n私は地域に根ざした活動を通じて、すべての住民が安心して暮らせる社会の実現を目指しています。",
+  "expertise": [],
+  "history": [
+    {
+      "year": "",
+      "event": ""
+    }
+  ],
+  "contact": {
+    "office": "",
+    "email": "",
+    "phone": ""
+  }
+}

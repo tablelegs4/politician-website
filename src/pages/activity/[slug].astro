@@ -1,0 +1,79 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const activityEntries = await getCollection('activity');
+  return activityEntries
+    .filter(entry => !entry.data.draft)
+    .map(entry => ({
+      params: { slug: entry.id.replace('.md', '') },
+      props: { entry },
+    }));
+}
+
+interface Props {
+  entry: CollectionEntry<'activity'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+// 日付フォーマット関数
+const formatDate = (date: Date) => {
+  return date.toLocaleDateString('ja-JP', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).replace(/\//g, '-');
+};
+
+const formattedDate = formatDate(entry.data.date);
+const isoDate = entry.data.date.toISOString().split('T')[0];
+const updatedDate = entry.data.updatedDate ? formatDate(entry.data.updatedDate) : null;
+---
+
+<Layout
+  title={entry.data.title}
+  description={entry.data.description}
+  ogType="article"
+>
+  <main>
+    <div class="container">
+      <article>
+        <header class="mb-3">
+          <div class="news-category" style="display: inline-block; background: #e8f0fe; color: #1a73e8; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.875rem; margin-bottom: 0.5rem;">
+            {entry.data.category}
+          </div>
+          <h1>{entry.data.title}</h1>
+          <div class="card-meta">
+            <time datetime={isoDate}>{formattedDate}</time>
+            {updatedDate && (
+              <span style="margin-left: 1rem; color: #666;">
+                (更新: {updatedDate})
+              </span>
+            )}
+            {entry.data.tags && entry.data.tags.length > 0 && (
+              <span style="margin-left: 1rem;">
+                {entry.data.tags.map(tag => `#${tag}`).join(' ')}
+              </span>
+            )}
+          </div>
+        </header>
+
+        <div class="article-content">
+          <Content />
+        </div>
+
+        <footer class="mt-4" style="padding-top: 2rem; border-top: 1px solid #e0e0e0;">
+          <a href="/activity/" class="btn">活動報告一覧に戻る</a>
+          {entry.data.relatedPolicy && (
+            <a href={`/policy/${entry.data.relatedPolicy}/`} class="btn btn-secondary" style="margin-left: 1rem;">
+              関連政策を見る
+            </a>
+          )}
+        </footer>
+      </article>
+    </div>
+  </main>
+</Layout>

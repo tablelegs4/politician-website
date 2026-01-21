@@ -1,0 +1,58 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { getSiteConfig } from '../../utils/content';
+
+const siteConfig = getSiteConfig();
+
+// 全活動報告を取得（下書き除外、日付降順）
+const allActivities = await getCollection('activity');
+const publishedActivities = allActivities
+  .filter(entry => !entry.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+// 日付フォーマット関数
+const formatDate = (date: Date) => {
+  return date.toLocaleDateString('ja-JP', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).replace(/\//g, '-');
+};
+---
+
+<Layout
+  title="活動報告"
+  description={`${siteConfig.politician.name}の最新活動報告一覧ページです。`}
+>
+  <main>
+    <div class="container">
+      <h1>活動報告</h1>
+      <p>最新の活動報告をご覧いただけます。</p>
+
+      {publishedActivities.length > 0 ? (
+        <ul class="news-list mt-4">
+          {publishedActivities.map((entry) => (
+            <li class="news-item">
+              <a href={`/activity/${entry.id.replace('.md', '')}/`} class="news-link">
+                <div class="news-date">{formatDate(entry.data.date)}</div>
+                <div class="news-category" style="display: inline-block; background: #e8f0fe; color: #1a73e8; padding: 0.125rem 0.5rem; border-radius: 4px; font-size: 0.75rem; margin-bottom: 0.25rem;">
+                  {entry.data.category}
+                </div>
+                <div class="news-title">{entry.data.title}</div>
+                <div class="news-description">{entry.data.description}</div>
+                {entry.data.tags && entry.data.tags.length > 0 && (
+                  <div class="mt-1" style="font-size: 0.875rem; color: #0056b3;">
+                    {entry.data.tags.map(tag => `#${tag}`).join(' ')}
+                  </div>
+                )}
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="mt-4">現在、活動報告はありません。</p>
+      )}
+    </div>
+  </main>
+</Layout>

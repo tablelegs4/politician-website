@@ -1,6 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
 import { THEME_IMAGES } from '../../../config/theme';
+import { getSiteConfig, getProfile } from '../../../utils/content';
+
+// コンテンツ読み込み
+const siteConfig = getSiteConfig();
+const profile = getProfile();
 
 // URLパラメータを保持する関数
 const themeParam = Astro.url.searchParams.get('theme');
@@ -17,12 +22,22 @@ const withBase = (path: string) => {
   return `${base}${cleanPath}${themeQuery}`;
 };
 
-// 最新ニュース3件を取得
-const allNews = await getCollection('news');
-const latestNews = allNews
-  .filter(entry => !entry.data.draft)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0, 3);
+// 最新活動報告3件を取得（activityがあればactivity、なければnewsを使用）
+let latestActivities: any[] = [];
+try {
+  const allActivities = await getCollection('activity');
+  latestActivities = allActivities
+    .filter(entry => !entry.data.draft)
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+    .slice(0, 3);
+} catch {
+  // activityがない場合はnewsを使用
+  const allNews = await getCollection('news');
+  latestActivities = allNews
+    .filter(entry => !entry.data.draft)
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+    .slice(0, 3);
+}
 
 // 日付フォーマット関数
 const formatDate = (date: Date) => {
@@ -38,11 +53,11 @@ const formatDate = (date: Date) => {
   <!-- ヒーローセクション -->
   <section class="hero-section">
     <div class="hero-image-wrapper">
-      <img src={THEME_IMAGES.default.hero} alt="あたらしい答え" class="hero-image" />
+      <img src={THEME_IMAGES.default.hero} alt={siteConfig.hero.title} class="hero-image" />
       <div class="hero-overlay">
         <div class="hero-content">
-          <h1 class="hero-title">地域とともに、未来をつくる</h1>
-          <p class="hero-subtitle">すべての住民が安心して暮らせる社会の実現を目指して</p>
+          <h1 class="hero-title">{siteConfig.hero.title}</h1>
+          <p class="hero-subtitle">{siteConfig.hero.subtitle}</p>
         </div>
       </div>
     </div>
@@ -53,23 +68,19 @@ const formatDate = (date: Date) => {
       <!-- メインコンテンツ -->
       <div class="main-content">
         <section>
-          <h2>ごあいさつ</h2>
-          <p>
-            この度は、山田太郎の公式ウェブサイトをご覧いただき、誠にありがとうございます。
-          </p>
-          <p>
-            私は、地域に根ざした政治活動を通じて、すべての住民が安心して暮らせる社会の実現を目指しています。
-            皆様の声に真摯に耳を傾け、一つひとつの課題に全力で取り組んでまいります。
-          </p>
+          <h2>{siteConfig.greeting.title}</h2>
+          {siteConfig.greeting.message.split('\n\n').map((paragraph) => (
+            <p>{paragraph}</p>
+          ))}
         </section>
 
         <section class="mt-4">
-          <h2>最新のお知らせ</h2>
-          {latestNews.length > 0 ? (
+          <h2>最新の活動報告</h2>
+          {latestActivities.length > 0 ? (
             <ul class="news-list">
-              {latestNews.map((entry) => (
+              {latestActivities.map((entry) => (
                 <li class="news-item">
-                  <a href={withBase(`/news/${entry.id.replace('.md', '')}/`)} class="news-link">
+                  <a href={withBase(`/activity/${entry.id.replace('.md', '')}/`)} class="news-link">
                     <div class="news-date">{formatDate(entry.data.date)}</div>
                     <div class="news-title">{entry.data.title}</div>
                     <div class="news-description">{entry.data.description}</div>
@@ -78,10 +89,10 @@ const formatDate = (date: Date) => {
               ))}
             </ul>
           ) : (
-            <p>現在、お知らせはありません。</p>
+            <p>現在、活動報告はありません。</p>
           )}
           <div class="mt-2">
-            <a href={withBase('/news/')} class="btn">お知らせ一覧を見る</a>
+            <a href={withBase('/activity/')} class="btn">活動報告一覧を見る</a>
           </div>
         </section>
       </div>
@@ -90,15 +101,15 @@ const formatDate = (date: Date) => {
       <aside class="sidebar">
         <div class="sidebar-widget">
           <h3>プロフィール</h3>
-          <p><strong>山田太郎</strong></p>
-          <p>地域のために全力で働きます。</p>
+          <p><strong>{profile.name}</strong></p>
+          <p>{profile.shortBio}</p>
           <a href={withBase('/profile/')} class="btn mt-2" style="width: 100%;">詳しく見る</a>
         </div>
 
         <div class="sidebar-widget">
-          <h3>お問い合わせ</h3>
+          <h3>{siteConfig.cta.primary.label}</h3>
           <p>ご意見・ご要望をお聞かせください。</p>
-          <a href={withBase('/contact/')} class="btn btn-secondary mt-2" style="width: 100%;">お問い合わせ</a>
+          <a href={withBase(siteConfig.cta.primary.url)} class="btn btn-secondary mt-2" style="width: 100%;">{siteConfig.cta.primary.label}</a>
         </div>
       </aside>
     </div>

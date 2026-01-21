@@ -1,0 +1,61 @@
+{
+  "siteName": "山田太郎 公式サイト",
+  "siteDescription": "すべての住民が安心して暮らせる社会の実現を目指して",
+  "politician": {
+    "name": "山田太郎",
+    "nameReading": "やまだ たろう",
+    "title": "",
+    "position": "",
+    "office": ""
+  },
+  "hero": {
+    "title": "地域とともに、未来をつくる",
+    "subtitle": "すべての住民が安心して暮らせる社会の実現を目指して"
+  },
+  "greeting": {
+    "title": "ごあいさつ",
+    "message": "この度は、山田太郎の公式ウェブサイトをご覧いただき、誠にありがとうございます。\n\n私は、地域に根ざした政治活動を通じて、すべての住民が安心して暮らせる社会の実現を目指しています。皆様の声に真摯に耳を傾け、一つひとつの課題に全力で取り組んでまいります。"
+  },
+  "cta": {
+    "primary": {
+      "label": "相談・要望を送る",
+      "url": "/contact/"
+    },
+    "secondary": {
+      "label": "活動レポートを受け取る",
+      "url": "/contact/"
+    }
+  },
+  "trustElements": {
+    "mode": "newcomer",
+    "incumbent": {
+      "proposals": 0,
+      "questions": 0,
+      "cases": 0,
+      "lastUpdated": ""
+    },
+    "newcomer": {
+      "expertise": [],
+      "experience": [],
+      "communityWork": []
+    }
+  },
+  "contact": {
+    "email": "",
+    "phone": "",
+    "address": "",
+    "formUrl": ""
+  },
+  "social": {
+    "twitter": "",
+    "facebook": "",
+    "instagram": "",
+    "youtube": "",
+    "line": ""
+  },
+  "ogp": {
+    "title": "山田太郎 公式サイト",
+    "description": "すべての住民が安心して暮らせる社会の実現を目指して",
+    "image": "/images/ogp.jpg"
+  }
+}

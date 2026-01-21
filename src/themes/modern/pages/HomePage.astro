@@ -1,13 +1,27 @@
 ---
 import { getCollection } from 'astro:content';
 import { THEME_IMAGES, SITE_IMAGES } from '../../../config/theme';
+import { getSiteConfig, getProfile } from '../../../utils/content';
 
-// 最新ニュース4件を取得
-const allNews = await getCollection('news');
-const latestNews = allNews
-  .filter(entry => !entry.data.draft)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0, 4);
+// コンテンツ読み込み
+const siteConfig = getSiteConfig();
+const profile = getProfile();
+
+// 最新活動報告4件を取得（activityがあればactivity、なければnewsを使用）
+let latestActivities: any[] = [];
+try {
+  const allActivities = await getCollection('activity');
+  latestActivities = allActivities
+    .filter(entry => !entry.data.draft)
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+    .slice(0, 4);
+} catch {
+  const allNews = await getCollection('news');
+  latestActivities = allNews
+    .filter(entry => !entry.data.draft)
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+    .slice(0, 4);
+}
 
 // 日付フォーマット関数
 const formatDate = (date: Date) => {
@@ -24,13 +38,13 @@ const formatDate = (date: Date) => {
   <section class="hero-section" style={`background-image: linear-gradient(135deg, rgba(4, 62, 128, 0.85) 0%, rgba(4, 62, 128, 0.7) 100%), url(${THEME_IMAGES.modern.hero})`}>
     <div class="container">
       <div class="hero-content">
-        <h1 class="hero-title">地域とともに、<br>未来をつくる</h1>
+        <h1 class="hero-title" set:html={siteConfig.hero.title.replace('、', '、<br>')}></h1>
         <p class="hero-subtitle">
-          すべての住民が安心して暮らせる社会の実現を目指して
+          {siteConfig.hero.subtitle}
         </p>
         <div class="hero-actions">
           <a href="/policy/" class="btn-hero btn-primary">政策を見る</a>
-          <a href="/contact/" class="btn-hero btn-outline">お問い合わせ</a>
+          <a href={siteConfig.cta.primary.url} class="btn-hero btn-outline">{siteConfig.cta.primary.label}</a>
         </div>
       </div>
     </div>
@@ -41,23 +55,22 @@ const formatDate = (date: Date) => {
     <div class="container">
       <div class="message-box">
         <p class="message-text">
-          私は、地域に根ざした政治活動を通じて、皆様の声に真摯に耳を傾け、
-          一つひとつの課題に全力で取り組んでまいります。
+          {siteConfig.greeting.message.split('\n\n')[0]}
         </p>
-        <p class="message-signature">山田太郎</p>
+        <p class="message-signature">{profile.name}</p>
       </div>
     </div>
   </section>
 
-  <!-- ニュースセクション -->
+  <!-- 活動報告セクション -->
   <section class="news-section">
     <div class="container">
-      <h2 class="section-title">最新のお知らせ</h2>
-      {latestNews.length > 0 ? (
+      <h2 class="section-title">最新の活動報告</h2>
+      {latestActivities.length > 0 ? (
         <div class="news-grid">
-          {latestNews.map((entry) => (
+          {latestActivities.map((entry) => (
             <article class="news-card">
-              <a href={`/news/${entry.id.replace('.md', '')}/`} class="news-card-link">
+              <a href={`/activity/${entry.id.replace('.md', '')}/`} class="news-card-link">
                 <div class="news-card-date">{formatDate(entry.data.date)}</div>
                 <h3 class="news-card-title">{entry.data.title}</h3>
                 <p class="news-card-description">{entry.data.description}</p>
@@ -67,10 +80,10 @@ const formatDate = (date: Date) => {
           ))}
         </div>
       ) : (
-        <p class="no-news">現在、お知らせはありません。</p>
+        <p class="no-news">現在、活動報告はありません。</p>
       )}
       <div class="text-center mt-4">
-        <a href="/news/" class="btn-more">すべてのお知らせを見る</a>
+        <a href="/activity/" class="btn-more">すべての活動報告を見る</a>
       </div>
     </div>
   </section>
