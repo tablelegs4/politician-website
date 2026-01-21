@@ -102,8 +102,18 @@ img {
 }
 
 @media (max-width: 767px) {
+  .site-header {
+    padding: 0.25rem 0;
+  }
   .header-logo {
-    height: 32px;
+    height: 24px;
+  }
+  .header-inner {
+    position: relative;
+  }
+  .nav-toggle {
+    order: 10;
+    margin-left: auto;
   }
 }
 
@@ -122,9 +132,9 @@ img {
 
   .nav-toggle summary {
     list-style: none;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     color: #fff;
-    padding: 0.5rem;
+    padding: 0.25rem;
   }
 
   .nav-toggle summary::-webkit-details-marker {

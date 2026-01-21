@@ -35,7 +35,7 @@ export function getThemeFromUrl(url: URL): ThemeType {
  */
 export const THEME_COLORS = {
   primary: '#043e80',    // ブルー
-  secondary: '#f5b500',  // ゴールド
+  secondary: '#f5b500',  // イエロー
 } as const;
 
 /**

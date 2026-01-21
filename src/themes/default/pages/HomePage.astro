@@ -79,6 +79,11 @@ const formatSummary = (summary: string) => {
   return emphasized.split('。').filter(s => s.trim()).map(s => s + '。').join('<br>');
 };
 
+// ヒーロータイトル用：*で囲んだ部分を強調（大きく力強く、赤文字・黄色背景）
+const formatHeroTitle = (title: string) => {
+  return title.replace(/\*([^*]+)\*/g, '<span class="hero-emphasis">$1</span>');
+};
+
 // 信頼要素の表示判定
 const isIncumbent = siteConfig.trustElements.mode === 'incumbent';
 const incumbentData = siteConfig.trustElements.incumbent;
@@ -98,7 +103,7 @@ const incumbentData = siteConfig.trustElements.incumbent;
     </div>
     <div class="hero-content-below">
       <div class="container">
-        <h1 class="hero-title">{siteConfig.hero.title}</h1>
+        <h1 class="hero-title" set:html={formatHeroTitle(siteConfig.hero.title)}></h1>
         <p class="hero-subtitle">{siteConfig.hero.subtitle}</p>
         {isIncumbent && incumbentData.proposals > 0 && (
           <div class="trust-elements">
@@ -124,7 +129,7 @@ const incumbentData = siteConfig.trustElements.incumbent;
   <section class="hero-section hero-layout-2" data-hero-layout="2">
     <div class="hero-image-wrapper">
       <div class="hero-content">
-        <h1 class="hero-title">{siteConfig.hero.title}</h1>
+        <h1 class="hero-title" set:html={formatHeroTitle(siteConfig.hero.title)}></h1>
         <p class="hero-subtitle">{siteConfig.hero.subtitle}</p>
         {isIncumbent && incumbentData.proposals > 0 && (
           <div class="trust-elements">
@@ -154,7 +159,7 @@ const incumbentData = siteConfig.trustElements.incumbent;
         <img src={THEME_IMAGES.default.hero} alt={`${siteConfig.politician.name}の写真`} loading="eager" />
       </div>
       <div class="hero-diagonal-content">
-        <h1 class="hero-title">{siteConfig.hero.title}</h1>
+        <h1 class="hero-title" set:html={formatHeroTitle(siteConfig.hero.title)}></h1>
         <p class="hero-subtitle">{siteConfig.hero.subtitle}</p>
         {isIncumbent && incumbentData.proposals > 0 && (
           <div class="trust-elements">
@@ -186,32 +191,8 @@ const incumbentData = siteConfig.trustElements.incumbent;
 
         <!-- 重点政策：レイアウト切り替え対応 -->
 
-        {/* ========== 政策レイアウト1: カード全体リンク ========== */}
+        {/* ========== 政策レイアウト1: アコーディオン（プルダウン） ========== */}
         <section class="section-block policy-section policy-layout-1" data-policy-layout="1">
-          <h2 class="section-title">重点政策</h2>
-          {featuredPolicies.length > 0 ? (
-            <div class="policy-cards policy-cards-linked">
-              {featuredPolicies.map((policy) => (
-                <a href={withBase(`/policy/${policy.data.slug}/`)} class="policy-card-link-wrapper">
-                  <article class="policy-card">
-                    <span class="policy-category">{policy.data.category}</span>
-                    <h3 class="policy-card-title">{policy.data.title}</h3>
-                    <p class="policy-card-summary" set:html={formatSummary(policy.data.summary)}></p>
-                    <span class="policy-card-arrow">→</span>
-                  </article>
-                </a>
-              ))}
-            </div>
-          ) : (
-            <p class="no-content">政策を準備中です。</p>
-          )}
-          <div class="section-more">
-            <a href={withBase('/policy/')} class="btn btn-outline">政策一覧を見る</a>
-          </div>
-        </section>
-
-        {/* ========== 政策レイアウト2: アコーディオン（プルダウン） ========== */}
-        <section class="section-block policy-section policy-layout-2" data-policy-layout="2">
           <h2 class="section-title">重点政策</h2>
           {featuredPolicies.length > 0 ? (
             <div class="policy-accordion">
@@ -228,6 +209,30 @@ const incumbentData = siteConfig.trustElements.incumbent;
                     </a>
                   </div>
                 </details>
+              ))}
+            </div>
+          ) : (
+            <p class="no-content">政策を準備中です。</p>
+          )}
+          <div class="section-more">
+            <a href={withBase('/policy/')} class="btn btn-outline">政策一覧を見る</a>
+          </div>
+        </section>
+
+        {/* ========== 政策レイアウト2: カード全体リンク ========== */}
+        <section class="section-block policy-section policy-layout-2" data-policy-layout="2">
+          <h2 class="section-title">重点政策</h2>
+          {featuredPolicies.length > 0 ? (
+            <div class="policy-cards policy-cards-linked">
+              {featuredPolicies.map((policy) => (
+                <a href={withBase(`/policy/${policy.data.slug}/`)} class="policy-card-link-wrapper">
+                  <article class="policy-card">
+                    <span class="policy-category">{policy.data.category}</span>
+                    <h3 class="policy-card-title">{policy.data.title}</h3>
+                    <p class="policy-card-summary" set:html={formatSummary(policy.data.summary)}></p>
+                    <span class="policy-card-arrow">→</span>
+                  </article>
+                </a>
               ))}
             </div>
           ) : (
@@ -436,6 +441,82 @@ const incumbentData = siteConfig.trustElements.incumbent;
     text-decoration: none;
   }
 
+  /* ヒーロータイトル強調（*囲み文字） */
+  .hero-title {
+    white-space: nowrap;
+  }
+
+  .hero-subtitle {
+    white-space: nowrap;
+    text-align: center;
+    width: 100%;
+  }
+
+  :global(.hero-emphasis) {
+    color: #c41e3a;
+    background: #fff;
+    font-size: 1.4em;
+    font-weight: 900;
+    padding: 0.1em 0.4em;
+    border-radius: 2px;
+    text-decoration: underline;
+    text-decoration-color: #c41e3a;
+    text-decoration-thickness: 4px;
+    text-underline-offset: 4px;
+    white-space: nowrap;
+  }
+
+  /* レスポンシブ：タブレット */
+  @media (max-width: 1024px) {
+    :global(.hero-emphasis) {
+      font-size: 1.3em;
+      text-decoration-thickness: 3px;
+      text-underline-offset: 3px;
+    }
+  }
+
+  /* レスポンシブ：スマートフォン */
+  @media (max-width: 767px) {
+    .hero-title {
+      font-size: clamp(1rem, 4.5vw, 1.5rem);
+      text-align: center;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    :global(.hero-emphasis) {
+      font-size: 1.2em;
+      padding: 0.05em 0.2em;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 2px;
+    }
+
+    .hero-content-below .container,
+    .hero-content,
+    .hero-diagonal-content {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
+
+  /* レスポンシブ：小さいスマートフォン */
+  @media (max-width: 480px) {
+    .hero-title {
+      font-size: clamp(0.9rem, 4vw, 1.2rem);
+    }
+
+    :global(.hero-emphasis) {
+      font-size: 1.15em;
+      padding: 0.05em 0.15em;
+    }
+  }
+
   /* 信頼要素 */
   .trust-elements {
     display: flex;
@@ -565,8 +646,12 @@ const incumbentData = siteConfig.trustElements.incumbent;
     background: #e8f0f8;
     color: #043e80;
     font-size: 0.75rem;
-    padding: 0.25rem 0.5rem;
+    padding: 0.25rem 0.75rem;
     border-radius: 3px;
+    min-width: 6em;
+    text-align: center;
+    box-sizing: border-box;
+    white-space: nowrap;
   }
 
   /* =====================================
@@ -614,10 +699,11 @@ const incumbentData = siteConfig.trustElements.incumbent;
   }
 
   .policy-card-title {
-    font-size: 1.125rem;
+    font-size: clamp(0.9rem, 2.5vw, 1.125rem);
     color: #043e80;
     margin: 0 0 0.75rem;
     line-height: 1.4;
+    white-space: nowrap;
   }
 
   .policy-card-summary {
@@ -700,7 +786,8 @@ const incumbentData = siteConfig.trustElements.incumbent;
     font-weight: bold;
     color: #333;
     flex: 1;
-    font-size: 1.25rem;
+    font-size: clamp(1rem, 3vw, 1.25rem);
+    white-space: nowrap;
   }
 
   .policy-accordion-content {
@@ -775,10 +862,11 @@ const incumbentData = siteConfig.trustElements.incumbent;
   }
 
   .policy-timeline-title {
-    font-size: 1.125rem;
+    font-size: clamp(0.9rem, 2.5vw, 1.125rem);
     color: #043e80;
     margin: 0 0 0.5rem;
     line-height: 1.4;
+    white-space: nowrap;
   }
 
   .policy-timeline-summary {
