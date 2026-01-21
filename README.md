@@ -29,6 +29,48 @@ Astroで構築された静的サイト。高速・安全・SEO最適化。
 本テンプレートの利用により生じたいかなる損害についても、開発者は責任を負いません。
 また、本リポジトリは特定の政治家・政党・団体を支持・推薦するものではありません。
 
+## 初期設定
+
+### 1. カスタムドメインの設定
+
+`.env.example` をコピーして `.env` ファイルを作成し、自分のドメインを設定してください。
+
+```bash
+cp .env.example .env
+```
+
+`.env` ファイルの内容を編集：
+
+```env
+# 自分のドメインを設定
+PUBLIC_SITE_URL=https://your-domain.com
+PUBLIC_BASE_PATH=/
+```
+
+### 2. GitHub Pagesの設定
+
+#### カスタムドメインを使用する場合
+
+1. GitHubリポジトリの **Settings** > **Pages** を開く
+2. **Source** を **GitHub Actions** に設定
+3. **Custom domain** に自分のドメイン（例: `your-domain.com`）を入力
+4. DNSレコードを設定:
+   - **Aレコード**: GitHubのIPアドレスを設定
+   - **CNAMEレコード**: `username.github.io` を設定
+5. `.github/workflows/deploy.yml` のドメインを変更
+
+#### GitHub Actionsでのビルド設定
+
+`.github/workflows/deploy.yml` を編集して、自分のドメインを設定：
+
+```yaml
+- name: Build
+  run: npm run build
+  env:
+    PUBLIC_SITE_URL: https://your-domain.com
+    PUBLIC_BASE_PATH: /
+```
+
 ## 開発
 
 ```bash
@@ -48,27 +90,32 @@ npm run preview
 ## 特徴
 
 ### 超軽量・高速
+
 - **JavaScriptゼロ** - クライアントサイドJSは一切使用せず、純粋なHTML/CSSのみで構築
 - 静的サイト生成（SSG）により、サーバーレスポンスが不要
 - 最小限の依存パッケージ
 
 ### レスポンシブデザイン
+
 - SP/PCで明確に異なるレイアウト（CSSメディアクエリで完全制御）
 - SPはハンバーガーメニュー（`<details>/<summary>`でJSなし実装）
 - PCは常時表示ナビゲーション + 2カラムレイアウト
 
 ### SEO最適化
+
 - OGP / Twitter Card 完全対応
 - sitemap.xml 自動生成
 - robots.txt 設定済み
 - セマンティックHTML / 見出し階層管理
 
 ### 簡単な更新
+
 - ニュース記事はMarkdownで管理（Content Collections）
 - `src/content/news/` にファイルを追加するだけで自動反映
 - 画像は `public/` に配置
 
 ### アクセシビリティ
+
 - 適切な見出し階層
 - alt属性、aria-label対応
 - フォーカス可視化
@@ -99,18 +146,18 @@ npm run preview
 
 1. `src/content/news/` に新しいMarkdownファイルを作成
 
-```md
----
-title: お知らせのタイトル
-date: 2026-01-20
-description: 説明文
-tags: ["お知らせ"]
----
+   ```md
+   ---
+   title: お知らせのタイトル
+   date: 2026-01-20
+   description: 説明文
+   tags: ["お知らせ"]
+   ---
 
-本文をここに記述します。
-```
+   本文をここに記述します。
+   ```
 
-2. ビルドすると自動的にページが生成されます
+1. ビルドすると自動的にページが生成されます
 
 ### 画像を差し替える
 
@@ -120,6 +167,7 @@ tags: ["お知らせ"]
 ### サイト名を変更する
 
 以下のファイルで「山田太郎」を検索して置換：
+
 - `src/components/Header.astro`
 - `src/components/Footer.astro`
 - `src/layouts/Layout.astro`
@@ -140,7 +188,7 @@ tags: ["お知らせ"]
 
 ## プロジェクト構成
 
-```
+```text
 politician-website/
 ├── src/
 │   ├── pages/          # ページ（ルーティング）
@@ -156,11 +204,13 @@ politician-website/
 ## 開発方針
 
 ### 禁止事項
+
 - クライアントサイドJavaScript（アニメーション、SPA化など）
 - 不要なnpm依存の追加
 - 過度な装飾・複雑化
 
 ### 推奨事項
+
 - 最小限の実装
 - 読みやすさ優先
 - アクセシビリティ重視

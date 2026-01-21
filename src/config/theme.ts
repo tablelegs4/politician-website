@@ -28,16 +28,35 @@ export const THEME_COLORS = {
 } as const;
 
 /**
+ * ベースパスを取得する関数
+ */
+const getBaseUrl = () => {
+  if (typeof import.meta.env !== 'undefined' && import.meta.env.BASE_URL) {
+    return import.meta.env.BASE_URL;
+  }
+  return '/';
+};
+
+/**
+ * 画像パスを生成する関数
+ */
+const getImagePath = (path: string) => {
+  const base = getBaseUrl();
+  // baseが'/'で終わっている場合は重複を避ける
+  return base.endsWith('/') ? `${base}${path.replace(/^\//, '')}` : `${base}${path}`;
+};
+
+/**
  * テーマごとの画像設定
  */
 export const THEME_IMAGES = {
   default: {
-    hero: '/images/hero-default.jpg',
-    logo: '/images/logo.png',
+    hero: getImagePath('/images/hero-default.jpg'),
+    logo: getImagePath('/images/logo.png'),
   },
   modern: {
-    hero: '/images/hero-modern.jpg',
-    logo: '/images/logo.png',
+    hero: getImagePath('/images/hero-modern.jpg'),
+    logo: getImagePath('/images/logo.png'),
   },
 } as const;
 
@@ -46,9 +65,9 @@ export const THEME_IMAGES = {
  */
 export const SITE_IMAGES = {
   activities: [
-    { src: '/images/activities/activity-01.jpg', alt: '地域活動の様子' },
-    { src: '/images/activities/activity-02.jpg', alt: '街頭演説の様子' },
-    { src: '/images/activities/activity-03.jpg', alt: '住民との対話' },
+    { src: getImagePath('/images/activities/activity-01.jpg'), alt: '地域活動の様子' },
+    { src: getImagePath('/images/activities/activity-02.jpg'), alt: '街頭演説の様子' },
+    { src: getImagePath('/images/activities/activity-03.jpg'), alt: '住民との対話' },
   ],
 } as const;
 
