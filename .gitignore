@@ -51,3 +51,4 @@ coverage/
 # Documentation (sensitive)
 # =========================
 # doc/spec.md
+.claude/settings.local.json
