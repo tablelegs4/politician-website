@@ -1,14 +1,17 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { CURRENT_THEME } from '../../config/theme';
+import { getThemeFromUrl } from '../../config/theme';
+
+// URLパラメータからテーマを取得
+const currentTheme = getThemeFromUrl(Astro.url);
 
 // テーマに応じた政策ページコンポーネントを動的にインポート
-const PolicyPage = CURRENT_THEME === 'modern'
+const PolicyPage = currentTheme === 'modern'
   ? (await import('../../themes/modern/pages/PolicyPage.astro')).default
   : (await import('../../themes/default/pages/PolicyPage.astro')).default;
 
 // テーマに応じたCSSをインポート
-const themeStyles = CURRENT_THEME === 'modern'
+const themeStyles = currentTheme === 'modern'
   ? (await import('../../themes/modern/styles/theme.css?raw')).default
   : (await import('../../themes/default/styles/theme.css?raw')).default;
 ---

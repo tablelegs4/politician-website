@@ -1,22 +1,22 @@
-import { CURRENT_THEME, type ThemeType } from '../config/theme';
+import { getThemeFromUrl, type ThemeType } from '../config/theme';
 
 /**
- * 現在のテーマを取得
+ * 現在のテーマを取得（URLから）
  */
-export const getCurrentTheme = (): ThemeType => {
-  return CURRENT_THEME;
+export const getCurrentTheme = (url: URL): ThemeType => {
+  return getThemeFromUrl(url);
 };
 
 /**
  * テーマに応じたコンポーネントパスを取得
  */
-export const getThemedComponentPath = (componentName: string): string => {
-  return `../themes/${CURRENT_THEME}/${componentName}`;
+export const getThemedComponentPath = (theme: ThemeType, componentName: string): string => {
+  return `../themes/${theme}/${componentName}`;
 };
 
 /**
  * テーマに応じたレイアウトパスを取得
  */
-export const getThemedLayoutPath = (layoutName: string): string => {
-  return `../themes/${CURRENT_THEME}/layouts/${layoutName}`;
+export const getThemedLayoutPath = (theme: ThemeType, layoutName: string): string => {
+  return `../themes/${theme}/layouts/${layoutName}`;
 };

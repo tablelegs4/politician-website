@@ -1,6 +1,13 @@
 ---
 // ヘッダーコンポーネント（JSなし、details/summaryでSPメニュー実装）
-import { THEME_IMAGES, CURRENT_THEME } from '../config/theme';
+import { THEME_IMAGES, getThemeFromUrl } from '../config/theme';
+
+// URLパラメータからテーマを取得
+const currentTheme = getThemeFromUrl(Astro.url);
+
+// URLパラメータを保持する関数
+const themeParam = Astro.url.searchParams.get('theme');
+const themeQuery = themeParam ? `?theme=${themeParam}` : '';
 
 // ベースパスを適用したパスを生成する関数
 const baseUrl = import.meta.env.BASE_URL || '/';
@@ -10,7 +17,7 @@ const withBase = (path: string) => {
   }
   const base = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
-  return `${base}${cleanPath}`;
+  return `${base}${cleanPath}${themeQuery}`;
 };
 ---
 
@@ -19,7 +26,7 @@ const withBase = (path: string) => {
     <div class="header-inner">
       <div class="site-title">
         <a href={withBase('/')}>
-          <img src={THEME_IMAGES[CURRENT_THEME].logo} alt="山田太郎" class="header-logo" />
+          <img src={THEME_IMAGES[currentTheme].logo} alt="山田太郎" class="header-logo" />
         </a>
       </div>
 

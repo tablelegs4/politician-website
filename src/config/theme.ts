@@ -1,8 +1,8 @@
 /**
  * テーマ設定
  *
- * 使用するテーマを変更する場合は、CURRENT_THEME の値を変更してください。
- * 利用可能なテーマ: 'default', 'modern'
+ * URLパラメータ ?theme=modern または ?theme=default でテーマを切り替え可能
+ * パラメータがない場合は DEFAULT_THEME が使用されます
  */
 
 export const THEMES = {
@@ -13,11 +13,22 @@ export const THEMES = {
 export type ThemeType = typeof THEMES[keyof typeof THEMES];
 
 /**
- * 現在使用中のテーマ
- * ここを変更するだけでサイト全体のテーマが切り替わります
+ * デフォルトテーマ
  */
-export const CURRENT_THEME: ThemeType = 'default';
-// export const CURRENT_THEME: ThemeType = 'modern';
+export const DEFAULT_THEME: ThemeType = 'default';
+
+/**
+ * URLパラメータからテーマを取得する関数
+ * @param url - 現在のURL
+ * @returns テーマ名（default または modern）
+ */
+export function getThemeFromUrl(url: URL): ThemeType {
+  const themeParam = url.searchParams.get('theme');
+  if (themeParam === 'modern' || themeParam === 'default') {
+    return themeParam;
+  }
+  return DEFAULT_THEME;
+}
 
 /**
  * サイト共通のテーマカラー
