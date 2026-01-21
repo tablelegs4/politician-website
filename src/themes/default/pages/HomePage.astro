@@ -96,8 +96,8 @@ const incumbentData = siteConfig.trustElements.incumbent;
        レイアウトパターン: ?top=1〜5 で切り替え（クライアントサイドJS）
        ===================================== -->
 
-  {/* ========== TOP1: TOP画像を大きく表示、要素は画像の下 ========== */}
-  <section class="hero-section hero-layout-1" data-hero-layout="1">
+  {/* ========== TOP画像を大きく表示、要素は画像の下 ========== */}
+  <section class="hero-section hero-layout-1">
     <div class="hero-full-image">
       <img src={THEME_IMAGES.default.hero} alt={`${siteConfig.politician.name}の写真`} class="hero-image-large" loading="eager" />
     </div>
@@ -125,61 +125,6 @@ const incumbentData = siteConfig.trustElements.incumbent;
     </div>
   </section>
 
-  {/* ========== TOP2: 要素とTOP画像を左右に配置（デフォルト） ========== */}
-  <section class="hero-section hero-layout-2" data-hero-layout="2">
-    <div class="hero-image-wrapper">
-      <div class="hero-content">
-        <h1 class="hero-title" set:html={formatHeroTitle(siteConfig.hero.title)}></h1>
-        <p class="hero-subtitle">{siteConfig.hero.subtitle}</p>
-        {isIncumbent && incumbentData.proposals > 0 && (
-          <div class="trust-elements">
-            <div class="trust-item">
-              <span class="trust-number">{incumbentData.proposals}</span>
-              <span class="trust-label">件の提案</span>
-            </div>
-            <div class="trust-item">
-              <span class="trust-number">{incumbentData.questions}</span>
-              <span class="trust-label">回の質問</span>
-            </div>
-            <div class="trust-item">
-              <span class="trust-number">{incumbentData.cases}</span>
-              <span class="trust-label">件の対応</span>
-            </div>
-          </div>
-        )}
-      </div>
-      <img src={THEME_IMAGES.default.hero} alt={`${siteConfig.politician.name}の写真`} class="hero-image" loading="eager" />
-    </div>
-  </section>
-
-  {/* ========== TOP3: 斜め分割（画像を斜めにクリップ） ========== */}
-  <section class="hero-section hero-layout-3" data-hero-layout="3">
-    <div class="hero-diagonal">
-      <div class="hero-diagonal-image">
-        <img src={THEME_IMAGES.default.hero} alt={`${siteConfig.politician.name}の写真`} loading="eager" />
-      </div>
-      <div class="hero-diagonal-content">
-        <h1 class="hero-title" set:html={formatHeroTitle(siteConfig.hero.title)}></h1>
-        <p class="hero-subtitle">{siteConfig.hero.subtitle}</p>
-        {isIncumbent && incumbentData.proposals > 0 && (
-          <div class="trust-elements">
-            <div class="trust-item">
-              <span class="trust-number">{incumbentData.proposals}</span>
-              <span class="trust-label">件の提案</span>
-            </div>
-            <div class="trust-item">
-              <span class="trust-number">{incumbentData.questions}</span>
-              <span class="trust-label">回の質問</span>
-            </div>
-            <div class="trust-item">
-              <span class="trust-number">{incumbentData.cases}</span>
-              <span class="trust-label">件の対応</span>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  </section>
 
   <div class="container">
     <div class="two-column-layout">
@@ -189,38 +134,8 @@ const incumbentData = siteConfig.trustElements.incumbent;
              3-2. 重点ブロック（TOP中段）
              ===================================== -->
 
-        <!-- 重点政策：レイアウト切り替え対応 -->
-
-        {/* ========== 政策レイアウト1: アコーディオン（プルダウン） ========== */}
-        <section class="section-block policy-section policy-layout-1" data-policy-layout="1">
-          <h2 class="section-title">重点政策</h2>
-          {featuredPolicies.length > 0 ? (
-            <div class="policy-accordion">
-              {featuredPolicies.map((policy) => (
-                <details class="policy-accordion-item">
-                  <summary class="policy-accordion-header">
-                    <span class="policy-category">{policy.data.category}</span>
-                    <span class="policy-accordion-title">{policy.data.title}</span>
-                  </summary>
-                  <div class="policy-accordion-content">
-                    <p set:html={formatSummary(policy.data.summary)}></p>
-                    <a href={withBase(`/policy/${policy.data.slug}/`)} class="policy-detail-link">
-                      詳しく見る →
-                    </a>
-                  </div>
-                </details>
-              ))}
-            </div>
-          ) : (
-            <p class="no-content">政策を準備中です。</p>
-          )}
-          <div class="section-more">
-            <a href={withBase('/policy/')} class="btn btn-outline">政策一覧を見る</a>
-          </div>
-        </section>
-
-        {/* ========== 政策レイアウト2: カード全体リンク ========== */}
-        <section class="section-block policy-section policy-layout-2" data-policy-layout="2">
+        <!-- 重点政策 -->
+        <section class="section-block policy-section">
           <h2 class="section-title">重点政策</h2>
           {featuredPolicies.length > 0 ? (
             <div class="policy-cards policy-cards-linked">
@@ -232,30 +147,6 @@ const incumbentData = siteConfig.trustElements.incumbent;
                     <p class="policy-card-summary" set:html={formatSummary(policy.data.summary)}></p>
                     <span class="policy-card-arrow">→</span>
                   </article>
-                </a>
-              ))}
-            </div>
-          ) : (
-            <p class="no-content">政策を準備中です。</p>
-          )}
-          <div class="section-more">
-            <a href={withBase('/policy/')} class="btn btn-outline">政策一覧を見る</a>
-          </div>
-        </section>
-
-        {/* ========== 政策レイアウト3: タイムライン風（縦並びリスト） ========== */}
-        <section class="section-block policy-section policy-layout-3" data-policy-layout="3">
-          <h2 class="section-title">重点政策</h2>
-          {featuredPolicies.length > 0 ? (
-            <div class="policy-timeline">
-              {featuredPolicies.map((policy, index) => (
-                <a href={withBase(`/policy/${policy.data.slug}/`)} class="policy-timeline-item">
-                  <div class="policy-timeline-number">{index + 1}</div>
-                  <div class="policy-timeline-content">
-                    <span class="policy-category">{policy.data.category}</span>
-                    <h3 class="policy-timeline-title">{policy.data.title}</h3>
-                    <p class="policy-timeline-summary" set:html={formatSummary(policy.data.summary)}></p>
-                  </div>
                 </a>
               ))}
             </div>
@@ -630,16 +521,6 @@ const incumbentData = siteConfig.trustElements.incumbent;
     border-radius: 8px;
   }
 
-  /* =====================================
-     重点政策セクション切り替え
-     ===================================== */
-  .policy-section[data-policy-layout] {
-    display: none;
-  }
-  .policy-section[data-policy-layout].active {
-    display: block;
-  }
-
   /* 共通スタイル */
   .policy-category {
     display: inline-block;
@@ -735,145 +616,6 @@ const incumbentData = siteConfig.trustElements.incumbent;
   .policy-card-link-wrapper:hover .policy-card-arrow {
     opacity: 1;
     transform: translateX(4px);
-  }
-
-  /* =====================================
-     政策レイアウト2: アコーディオン
-     ===================================== */
-  .policy-accordion {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .policy-accordion-item {
-    background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .policy-accordion-header {
-    padding: 1rem 1.25rem;
-    cursor: pointer;
-    list-style: none;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    position: relative;
-    padding-right: 2.5rem;
-  }
-
-  .policy-accordion-header::-webkit-details-marker {
-    display: none;
-  }
-
-  .policy-accordion-header::after {
-    content: '+';
-    position: absolute;
-    right: 1.25rem;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.25rem;
-    color: #043e80;
-  }
-
-  .policy-accordion-item[open] .policy-accordion-header::after {
-    content: '−';
-  }
-
-  .policy-accordion-title {
-    font-weight: bold;
-    color: #333;
-    flex: 1;
-    font-size: clamp(1rem, 3vw, 1.25rem);
-    white-space: nowrap;
-  }
-
-  .policy-accordion-content {
-    padding: 0 1.25rem 1.25rem;
-    border-top: 1px solid #e0e0e0;
-  }
-
-  .policy-accordion-content p {
-    color: #555;
-    line-height: 1.6;
-    margin: 1rem 0;
-  }
-
-  .policy-detail-link {
-    display: inline-block;
-    font-size: 0.875rem;
-    color: #043e80;
-    font-weight: bold;
-  }
-
-  /* =====================================
-     政策レイアウト3: タイムライン風
-     ===================================== */
-  .policy-timeline {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .policy-timeline-item {
-    display: flex;
-    gap: 1rem;
-    padding: 1.25rem;
-    background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: all 0.2s;
-  }
-
-  .policy-timeline-item:hover {
-    text-decoration: none;
-    border-color: #043e80;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  }
-
-  .policy-timeline-number {
-    flex-shrink: 0;
-    width: 48px;
-    height: 48px;
-    background: #043e80;
-    color: #fff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.25rem;
-    font-weight: bold;
-  }
-
-  .policy-timeline-item:hover .policy-timeline-number {
-    background: #f5b500;
-    color: #333;
-  }
-
-  .policy-timeline-content {
-    flex: 1;
-  }
-
-  .policy-timeline-content .policy-category {
-    margin-bottom: 0.5rem;
-  }
-
-  .policy-timeline-title {
-    font-size: clamp(0.9rem, 2.5vw, 1.125rem);
-    color: #043e80;
-    margin: 0 0 0.5rem;
-    line-height: 1.4;
-    white-space: nowrap;
-  }
-
-  .policy-timeline-summary {
-    font-size: 0.9375rem;
-    color: #555;
-    line-height: 1.6;
-    margin: 0;
   }
 
   /* =====================================
@@ -1148,64 +890,4 @@ const incumbentData = siteConfig.trustElements.incumbent;
     }
   }
 
-  /* =====================================
-     ヒーローレイアウト切り替え（デフォルトは非表示、JSで制御）
-     ===================================== */
-  .hero-section[data-hero-layout] {
-    display: none;
-  }
-  .hero-section[data-hero-layout].active {
-    display: block;
-  }
-  /* TOP1はflexなので上書き */
-  .hero-layout-1.active {
-    display: block;
-  }
 </style>
-
-<script>
-  // レイアウト切り替え用スクリプト
-  (function() {
-    const params = new URLSearchParams(window.location.search);
-    const topLayout = params.get('top') || '1'; // デフォルトはTOP1
-
-    // すべてのヒーローセクションを非表示
-    document.querySelectorAll('[data-hero-layout]').forEach(section => {
-      section.classList.remove('active');
-    });
-
-    // 指定されたレイアウトを表示
-    const activeSection = document.querySelector(`[data-hero-layout="${topLayout}"]`);
-    if (activeSection) {
-      activeSection.classList.add('active');
-    } else {
-      // 無効な値の場合はデフォルト（TOP1）を表示
-      const defaultSection = document.querySelector('[data-hero-layout="1"]');
-      if (defaultSection) defaultSection.classList.add('active');
-    }
-
-    // 政策セクションもTOPレイアウトに連動して切り替え
-    document.querySelectorAll('[data-policy-layout]').forEach(section => {
-      section.classList.remove('active');
-    });
-
-    const activePolicySection = document.querySelector(`[data-policy-layout="${topLayout}"]`);
-    if (activePolicySection) {
-      activePolicySection.classList.add('active');
-    } else {
-      // 無効な値の場合はデフォルト（レイアウト1）を表示
-      const defaultPolicySection = document.querySelector('[data-policy-layout="1"]');
-      if (defaultPolicySection) defaultPolicySection.classList.add('active');
-    }
-
-    // ヘッダーのスイッチャーリンクにactiveクラスを設定
-    document.querySelectorAll('.switcher-link[data-top-layout]').forEach(link => {
-      const linkTop = link.getAttribute('data-top-layout');
-      if (linkTop === topLayout) {
-        link.classList.add('active');
-      } else {
-        link.classList.remove('active');
-      }
-    });
-  })();
-</script>
