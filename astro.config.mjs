@@ -1,5 +1,9 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import dotenv from 'dotenv';
+
+// .envファイルを読み込む
+dotenv.config();
 
 // 環境変数から設定を取得（デフォルト値: カスタムドメイン前提）
 const siteUrl = process.env.PUBLIC_SITE_URL || 'https://example.com';

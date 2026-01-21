@@ -37,9 +37,9 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          # カスタムドメインを設定してください
-          PUBLIC_SITE_URL: https://example.com
-          PUBLIC_BASE_PATH: /
+          # デバッグ用: GitHub Pages設定
+          PUBLIC_SITE_URL: https://tablelegs4.github.io
+          PUBLIC_BASE_PATH: /politician-website
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
