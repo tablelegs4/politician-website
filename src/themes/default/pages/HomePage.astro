@@ -1,11 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
 import { THEME_IMAGES } from '../../../config/theme';
-import { getSiteConfig, getProfile } from '../../../utils/content';
+import { getSiteConfig, getProfile, getFeaturedFaq } from '../../../utils/content';
 
 // コンテンツ読み込み
 const siteConfig = getSiteConfig();
 const profile = getProfile();
+const featuredFaq = getFeaturedFaq(3);
 
 // URLパラメータを保持する関数
 const themeParam = Astro.url.searchParams.get('theme');
@@ -20,6 +21,16 @@ const withBase = (path: string) => {
   const base = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
   return `${base}${cleanPath}${themeQuery}`;
+};
+
+// 画像パスにベースを適用
+const withImageBase = (path: string) => {
+  if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('//')) {
+    return path;
+  }
+  const base = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  return `${base}${cleanPath}`;
 };
 
 // 最新活動報告3件を取得（activityがあればactivity、なければnewsを使用）
@@ -39,6 +50,18 @@ try {
     .slice(0, 3);
 }
 
+// 重点政策3件を取得
+let featuredPolicies: any[] = [];
+try {
+  const allPolicies = await getCollection('policy');
+  featuredPolicies = allPolicies
+    .filter(entry => entry.data.featured)
+    .sort((a, b) => (a.data.order || 0) - (b.data.order || 0))
+    .slice(0, 3);
+} catch {
+  // 政策がない場合は空配列
+}
+
 // 日付フォーマット関数
 const formatDate = (date: Date) => {
   return date.toLocaleDateString('ja-JP', {
@@ -47,18 +70,108 @@ const formatDate = (date: Date) => {
     day: '2-digit',
   }).replace(/\//g, '-');
 };
+
+// summaryを「。」で改行し、*で囲んだ部分を強調するフォーマット関数
+const formatSummary = (summary: string) => {
+  // *で囲んだ部分を赤太字に変換
+  const emphasized = summary.replace(/\*([^*]+)\*/g, '<strong class="emphasis">$1</strong>');
+  // 。で改行
+  return emphasized.split('。').filter(s => s.trim()).map(s => s + '。').join('<br>');
+};
+
+// 信頼要素の表示判定
+const isIncumbent = siteConfig.trustElements.mode === 'incumbent';
+const trustData = isIncumbent ? siteConfig.trustElements.incumbent : siteConfig.trustElements.newcomer;
+
 ---
 
 <main>
-  <!-- ヒーローセクション -->
-  <section class="hero-section">
+  <!-- =====================================
+       3-1. ファーストビュー（1スクロール以内）
+       レイアウトパターン: ?top=1〜5 で切り替え（クライアントサイドJS）
+       ===================================== -->
+
+  {/* ========== TOP1: TOP画像を大きく表示、要素は画像の下 ========== */}
+  <section class="hero-section hero-layout-1" data-hero-layout="1">
+    <div class="hero-full-image">
+      <img src={THEME_IMAGES.default.hero} alt={`${siteConfig.politician.name}の写真`} class="hero-image-large" loading="eager" />
+    </div>
+    <div class="hero-content-below">
+      <div class="container">
+        <h1 class="hero-title">{siteConfig.hero.title}</h1>
+        <p class="hero-subtitle">{siteConfig.hero.subtitle}</p>
+        {isIncumbent && trustData.proposals > 0 && (
+          <div class="trust-elements">
+            <div class="trust-item">
+              <span class="trust-number">{trustData.proposals}</span>
+              <span class="trust-label">件の提案</span>
+            </div>
+            <div class="trust-item">
+              <span class="trust-number">{trustData.questions}</span>
+              <span class="trust-label">回の質問</span>
+            </div>
+            <div class="trust-item">
+              <span class="trust-number">{trustData.cases}</span>
+              <span class="trust-label">件の対応</span>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  {/* ========== TOP2: 要素とTOP画像を左右に配置（デフォルト） ========== */}
+  <section class="hero-section hero-layout-2" data-hero-layout="2">
     <div class="hero-image-wrapper">
-      <img src={THEME_IMAGES.default.hero} alt={siteConfig.hero.title} class="hero-image" />
-      <div class="hero-overlay">
-        <div class="hero-content">
-          <h1 class="hero-title">{siteConfig.hero.title}</h1>
-          <p class="hero-subtitle">{siteConfig.hero.subtitle}</p>
-        </div>
+      <div class="hero-content">
+        <h1 class="hero-title">{siteConfig.hero.title}</h1>
+        <p class="hero-subtitle">{siteConfig.hero.subtitle}</p>
+        {isIncumbent && trustData.proposals > 0 && (
+          <div class="trust-elements">
+            <div class="trust-item">
+              <span class="trust-number">{trustData.proposals}</span>
+              <span class="trust-label">件の提案</span>
+            </div>
+            <div class="trust-item">
+              <span class="trust-number">{trustData.questions}</span>
+              <span class="trust-label">回の質問</span>
+            </div>
+            <div class="trust-item">
+              <span class="trust-number">{trustData.cases}</span>
+              <span class="trust-label">件の対応</span>
+            </div>
+          </div>
+        )}
+      </div>
+      <img src={THEME_IMAGES.default.hero} alt={`${siteConfig.politician.name}の写真`} class="hero-image" loading="eager" />
+    </div>
+  </section>
+
+  {/* ========== TOP3: 斜め分割（画像を斜めにクリップ） ========== */}
+  <section class="hero-section hero-layout-3" data-hero-layout="3">
+    <div class="hero-diagonal">
+      <div class="hero-diagonal-image">
+        <img src={THEME_IMAGES.default.hero} alt={`${siteConfig.politician.name}の写真`} loading="eager" />
+      </div>
+      <div class="hero-diagonal-content">
+        <h1 class="hero-title">{siteConfig.hero.title}</h1>
+        <p class="hero-subtitle">{siteConfig.hero.subtitle}</p>
+        {isIncumbent && trustData.proposals > 0 && (
+          <div class="trust-elements">
+            <div class="trust-item">
+              <span class="trust-number">{trustData.proposals}</span>
+              <span class="trust-label">件の提案</span>
+            </div>
+            <div class="trust-item">
+              <span class="trust-number">{trustData.questions}</span>
+              <span class="trust-label">回の質問</span>
+            </div>
+            <div class="trust-item">
+              <span class="trust-number">{trustData.cases}</span>
+              <span class="trust-label">件の対応</span>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   </section>
@@ -67,51 +180,944 @@ const formatDate = (date: Date) => {
     <div class="two-column-layout">
       <!-- メインコンテンツ -->
       <div class="main-content">
-        <section>
-          <h2>{siteConfig.greeting.title}</h2>
-          {siteConfig.greeting.message.split('\n\n').map((paragraph) => (
-            <p>{paragraph}</p>
-          ))}
+        <!-- =====================================
+             3-2. 重点ブロック（TOP中段）
+             ===================================== -->
+
+        <!-- 重点政策：レイアウト切り替え対応 -->
+
+        {/* ========== 政策レイアウト1: カード全体リンク ========== */}
+        <section class="section-block policy-section policy-layout-1" data-policy-layout="1">
+          <h2 class="section-title">重点政策</h2>
+          {featuredPolicies.length > 0 ? (
+            <div class="policy-cards policy-cards-linked">
+              {featuredPolicies.map((policy) => (
+                <a href={withBase(`/policy/${policy.data.slug}/`)} class="policy-card-link-wrapper">
+                  <article class="policy-card">
+                    <span class="policy-category">{policy.data.category}</span>
+                    <h3 class="policy-card-title">{policy.data.title}</h3>
+                    <p class="policy-card-summary" set:html={formatSummary(policy.data.summary)}></p>
+                    <span class="policy-card-arrow">→</span>
+                  </article>
+                </a>
+              ))}
+            </div>
+          ) : (
+            <p class="no-content">政策を準備中です。</p>
+          )}
+          <div class="section-more">
+            <a href={withBase('/policy/')} class="btn btn-outline">政策一覧を見る</a>
+          </div>
         </section>
 
-        <section class="mt-4">
-          <h2>最新の活動報告</h2>
+        {/* ========== 政策レイアウト2: アコーディオン（プルダウン） ========== */}
+        <section class="section-block policy-section policy-layout-2" data-policy-layout="2">
+          <h2 class="section-title">重点政策</h2>
+          {featuredPolicies.length > 0 ? (
+            <div class="policy-accordion">
+              {featuredPolicies.map((policy) => (
+                <details class="policy-accordion-item">
+                  <summary class="policy-accordion-header">
+                    <span class="policy-category">{policy.data.category}</span>
+                    <span class="policy-accordion-title">{policy.data.title}</span>
+                  </summary>
+                  <div class="policy-accordion-content">
+                    <p set:html={formatSummary(policy.data.summary)}></p>
+                    <a href={withBase(`/policy/${policy.data.slug}/`)} class="policy-detail-link">
+                      詳しく見る →
+                    </a>
+                  </div>
+                </details>
+              ))}
+            </div>
+          ) : (
+            <p class="no-content">政策を準備中です。</p>
+          )}
+          <div class="section-more">
+            <a href={withBase('/policy/')} class="btn btn-outline">政策一覧を見る</a>
+          </div>
+        </section>
+
+        {/* ========== 政策レイアウト3: タイムライン風（縦並びリスト） ========== */}
+        <section class="section-block policy-section policy-layout-3" data-policy-layout="3">
+          <h2 class="section-title">重点政策</h2>
+          {featuredPolicies.length > 0 ? (
+            <div class="policy-timeline">
+              {featuredPolicies.map((policy, index) => (
+                <a href={withBase(`/policy/${policy.data.slug}/`)} class="policy-timeline-item">
+                  <div class="policy-timeline-number">{index + 1}</div>
+                  <div class="policy-timeline-content">
+                    <span class="policy-category">{policy.data.category}</span>
+                    <h3 class="policy-timeline-title">{policy.data.title}</h3>
+                    <p class="policy-timeline-summary" set:html={formatSummary(policy.data.summary)}></p>
+                  </div>
+                </a>
+              ))}
+            </div>
+          ) : (
+            <p class="no-content">政策を準備中です。</p>
+          )}
+          <div class="section-more">
+            <a href={withBase('/policy/')} class="btn btn-outline">政策一覧を見る</a>
+          </div>
+        </section>
+
+        <!-- 最新活動：3件（議会/地域/メディアを混ぜる） -->
+        <section class="section-block">
+          <h2 class="section-title">最新の活動報告</h2>
           {latestActivities.length > 0 ? (
-            <ul class="news-list">
+            <ul class="activity-list">
               {latestActivities.map((entry) => (
-                <li class="news-item">
-                  <a href={withBase(`/activity/${entry.id.replace('.md', '')}/`)} class="news-link">
-                    <div class="news-date">{formatDate(entry.data.date)}</div>
-                    <div class="news-title">{entry.data.title}</div>
-                    <div class="news-description">{entry.data.description}</div>
+                <li class="activity-item">
+                  <a href={withBase(`/activity/${entry.id.replace('.md', '')}/`)} class="activity-link">
+                    {entry.data.category && (
+                      <span class="activity-category">{entry.data.category}</span>
+                    )}
+                    <time class="activity-date" datetime={entry.data.date.toISOString()}>
+                      {formatDate(entry.data.date)}
+                    </time>
+                    <h3 class="activity-title">{entry.data.title}</h3>
+                    <p class="activity-description">{entry.data.description}</p>
                   </a>
                 </li>
               ))}
             </ul>
           ) : (
-            <p>現在、活動報告はありません。</p>
+            <p class="no-content">現在、活動報告はありません。</p>
           )}
-          <div class="mt-2">
-            <a href={withBase('/activity/')} class="btn">活動報告一覧を見る</a>
+          <div class="section-more">
+            <a href={withBase('/activity/')} class="btn btn-outline">活動報告一覧を見る</a>
+          </div>
+        </section>
+
+        <!-- SP向け：CTA（よくある質問の上に配置） -->
+        <section class="mobile-cta">
+          <div class="mobile-cta-content">
+            <h2>{siteConfig.hero.title}</h2>
+            <p>{siteConfig.hero.subtitle}</p>
+            <div class="mobile-cta-buttons">
+              <a href={withBase(siteConfig.cta.primary.url)} class="btn btn-primary">
+                {siteConfig.cta.primary.label}
+              </a>
+              <a href={withBase(siteConfig.cta.secondary.url)} class="btn btn-outline">
+                {siteConfig.cta.secondary.label}
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <!-- FAQ：3件（誤解されやすい点を先回り） -->
+        <section class="section-block">
+          <h2 class="section-title">よくある質問</h2>
+          {featuredFaq.length > 0 ? (
+            <div class="faq-list">
+              {featuredFaq.map((item) => (
+                <details class="faq-item">
+                  <summary class="faq-question">{item.question}</summary>
+                  <p class="faq-answer">{item.answer}</p>
+                </details>
+              ))}
+            </div>
+          ) : (
+            <p class="no-content">FAQを準備中です。</p>
+          )}
+          <div class="section-more">
+            <a href={withBase('/faq/')} class="btn btn-outline">よくある質問一覧</a>
           </div>
         </section>
       </div>
 
-      <!-- サイドバー（PCのみ表示） -->
+      <!-- =====================================
+           サイドバー（PCのみ表示）
+           ===================================== -->
       <aside class="sidebar">
-        <div class="sidebar-widget">
-          <h3>プロフィール</h3>
-          <p><strong>{profile.name}</strong></p>
-          <p>{profile.shortBio}</p>
-          <a href={withBase('/profile/')} class="btn mt-2" style="width: 100%;">詳しく見る</a>
+        <!-- 3-3. プロフィール（短）：写真 + 200字 + 「詳しく」 -->
+        <div class="sidebar-widget profile-widget">
+          <div class="profile-image-wrapper">
+            <img
+              src={withImageBase(profile.photo)}
+              alt={`${profile.name}のプロフィール写真`}
+              class="profile-image"
+              loading="lazy"
+            />
+          </div>
+          <h3 class="profile-name">{profile.name}</h3>
+          {profile.position && <p class="profile-position">{profile.position}</p>}
+          <p class="profile-bio">{profile.shortBio}</p>
+          <a href={withBase('/profile/')} class="btn btn-outline" style="width: 100%;">
+            プロフィールを見る
+          </a>
         </div>
 
-        <div class="sidebar-widget">
-          <h3>{siteConfig.cta.primary.label}</h3>
-          <p>ご意見・ご要望をお聞かせください。</p>
-          <a href={withBase(siteConfig.cta.primary.url)} class="btn btn-secondary mt-2" style="width: 100%;">{siteConfig.cta.primary.label}</a>
+        <!-- 3-3. 相談・要望（再掲CTA） -->
+        <div class="sidebar-widget cta-widget">
+          <h3>ご相談・ご要望</h3>
+          <p>地域の課題やご意見をお聞かせください。一つひとつ丁寧にお応えします。</p>
+          <a href={withBase(siteConfig.cta.primary.url)} class="btn btn-primary" style="width: 100%;">
+            {siteConfig.cta.primary.label}
+          </a>
         </div>
+
+        <!-- SNSフォロー -->
+        {(siteConfig.social.twitter || siteConfig.social.facebook || siteConfig.social.instagram || siteConfig.social.youtube || siteConfig.social.line) && (
+          <div class="sidebar-widget social-widget">
+            <h3>SNSで最新情報</h3>
+            <div class="social-links">
+              {siteConfig.social.twitter && (
+                <a href={siteConfig.social.twitter} class="social-link" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+                  X
+                </a>
+              )}
+              {siteConfig.social.facebook && (
+                <a href={siteConfig.social.facebook} class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                  FB
+                </a>
+              )}
+              {siteConfig.social.instagram && (
+                <a href={siteConfig.social.instagram} class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                  IG
+                </a>
+              )}
+              {siteConfig.social.youtube && (
+                <a href={siteConfig.social.youtube} class="social-link" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                  YT
+                </a>
+              )}
+              {siteConfig.social.line && (
+                <a href={siteConfig.social.line} class="social-link" target="_blank" rel="noopener noreferrer" aria-label="LINE">
+                  LINE
+                </a>
+              )}
+            </div>
+          </div>
+        )}
       </aside>
     </div>
   </div>
 </main>
+
+<style>
+  /* =====================================
+     ファーストビュー
+     ===================================== */
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary-hero {
+    background: #fff;
+    color: #043e80;
+    padding: 0.875rem 2rem;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+
+  .btn-primary-hero:hover {
+    background: #f0f0f0;
+    text-decoration: none;
+  }
+
+  .btn-secondary-hero {
+    background: transparent;
+    color: #fff;
+    padding: 0.875rem 2rem;
+    font-weight: bold;
+    border: 2px solid #fff;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+
+  .btn-secondary-hero:hover {
+    background: rgba(255, 255, 255, 0.1);
+    text-decoration: none;
+  }
+
+  /* 信頼要素 */
+  .trust-elements {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .trust-item {
+    text-align: center;
+  }
+
+  .trust-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .trust-label {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .trust-updated {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .trust-elements--newcomer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .trust-item-text {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #fff;
+    font-size: 0.9375rem;
+  }
+
+  .trust-label-icon {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.75rem;
+  }
+
+  /* =====================================
+     セクション共通
+     ===================================== */
+  .section-block {
+    margin-bottom: 3rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    color: #043e80;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #043e80;
+  }
+
+  .section-more {
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+
+  .btn-outline {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    color: #043e80;
+    border: 2px solid #043e80;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: all 0.2s;
+  }
+
+  .btn-outline:hover {
+    background: #043e80;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: #043e80;
+    color: #fff;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background 0.2s;
+  }
+
+  .btn-primary:hover {
+    background: #032f5e;
+    text-decoration: none;
+  }
+
+  .no-content {
+    color: #666;
+    padding: 2rem;
+    text-align: center;
+    background: #f9f9f9;
+    border-radius: 8px;
+  }
+
+  /* =====================================
+     重点政策セクション切り替え
+     ===================================== */
+  .policy-section[data-policy-layout] {
+    display: none;
+  }
+  .policy-section[data-policy-layout].active {
+    display: block;
+  }
+
+  /* 共通スタイル */
+  .policy-category {
+    display: inline-block;
+    background: #e8f0f8;
+    color: #043e80;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+  }
+
+  /* =====================================
+     政策レイアウト1: カード全体リンク
+     ===================================== */
+  .policy-cards {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .policy-cards {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .policy-card-link-wrapper {
+    display: block;
+    text-decoration: none;
+  }
+
+  .policy-card-link-wrapper:hover {
+    text-decoration: none;
+  }
+
+  .policy-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-left: 4px solid #043e80;
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: all 0.2s;
+    height: 100%;
+    position: relative;
+  }
+
+  .policy-card-link-wrapper:hover .policy-card {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-left-color: #f5b500;
+    transform: translateY(-2px);
+  }
+
+  .policy-card .policy-category {
+    margin-bottom: 0.75rem;
+  }
+
+  .policy-card-title {
+    font-size: 1.125rem;
+    color: #043e80;
+    margin: 0 0 0.75rem;
+    line-height: 1.4;
+  }
+
+  .policy-card-summary {
+    font-size: 0.9375rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+
+  /* 強調テキスト（*で囲んだ部分） - :globalで動的HTMLにも適用 */
+  :global(.emphasis) {
+    color: #c41e3a;
+    font-weight: 900;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+
+  .policy-card-arrow {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    font-size: 1.25rem;
+    color: #043e80;
+    opacity: 0;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .policy-card-link-wrapper:hover .policy-card-arrow {
+    opacity: 1;
+    transform: translateX(4px);
+  }
+
+  /* =====================================
+     政策レイアウト2: アコーディオン
+     ===================================== */
+  .policy-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .policy-accordion-item {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .policy-accordion-header {
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    padding-right: 2.5rem;
+  }
+
+  .policy-accordion-header::-webkit-details-marker {
+    display: none;
+  }
+
+  .policy-accordion-header::after {
+    content: '+';
+    position: absolute;
+    right: 1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.25rem;
+    color: #043e80;
+  }
+
+  .policy-accordion-item[open] .policy-accordion-header::after {
+    content: '−';
+  }
+
+  .policy-accordion-title {
+    font-weight: bold;
+    color: #333;
+    flex: 1;
+    font-size: 1.25rem;
+  }
+
+  .policy-accordion-content {
+    padding: 0 1.25rem 1.25rem;
+    border-top: 1px solid #e0e0e0;
+  }
+
+  .policy-accordion-content p {
+    color: #555;
+    line-height: 1.6;
+    margin: 1rem 0;
+  }
+
+  .policy-detail-link {
+    display: inline-block;
+    font-size: 0.875rem;
+    color: #043e80;
+    font-weight: bold;
+  }
+
+  /* =====================================
+     政策レイアウト3: タイムライン風
+     ===================================== */
+  .policy-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .policy-timeline-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .policy-timeline-item:hover {
+    text-decoration: none;
+    border-color: #043e80;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .policy-timeline-number {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    background: #043e80;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+
+  .policy-timeline-item:hover .policy-timeline-number {
+    background: #f5b500;
+    color: #333;
+  }
+
+  .policy-timeline-content {
+    flex: 1;
+  }
+
+  .policy-timeline-content .policy-category {
+    margin-bottom: 0.5rem;
+  }
+
+  .policy-timeline-title {
+    font-size: 1.125rem;
+    color: #043e80;
+    margin: 0 0 0.5rem;
+    line-height: 1.4;
+  }
+
+  .policy-timeline-summary {
+    font-size: 0.9375rem;
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* =====================================
+     活動報告リスト
+     ===================================== */
+  .activity-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .activity-item {
+    margin-bottom: 1rem;
+  }
+
+  .activity-link {
+    display: block;
+    padding: 1.25rem;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+
+  .activity-link:hover {
+    background: #f8f9fa;
+    border-color: #043e80;
+    text-decoration: none;
+  }
+
+  .activity-category {
+    display: inline-block;
+    background: #f5b500;
+    color: #333;
+    font-size: 0.75rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    margin-right: 0.5rem;
+  }
+
+  .activity-date {
+    font-size: 0.875rem;
+    color: #666;
+  }
+
+  .activity-title {
+    font-size: 1.0625rem;
+    color: #043e80;
+    margin: 0.5rem 0;
+  }
+
+  .activity-description {
+    font-size: 0.9375rem;
+    color: #555;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* =====================================
+     FAQ
+     ===================================== */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .faq-item {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .faq-question {
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    font-weight: bold;
+    color: #333;
+    list-style: none;
+    position: relative;
+    padding-right: 2.5rem;
+  }
+
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-question::after {
+    content: '+';
+    position: absolute;
+    right: 1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.25rem;
+    color: #043e80;
+  }
+
+  .faq-item[open] .faq-question::after {
+    content: '−';
+  }
+
+  .faq-answer {
+    padding: 0 1.25rem 1rem;
+    color: #555;
+    line-height: 1.6;
+    border-top: 1px solid #e0e0e0;
+    margin: 0;
+  }
+
+  /* =====================================
+     サイドバー
+     ===================================== */
+  .profile-widget {
+    text-align: center;
+  }
+
+  .profile-image-wrapper {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #043e80;
+  }
+
+  .profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profile-name {
+    font-size: 1.25rem;
+    color: #333;
+    margin: 0 0 0.25rem;
+    border: none;
+    padding: 0;
+  }
+
+  .profile-position {
+    font-size: 0.875rem;
+    color: #666;
+    margin: 0 0 0.75rem;
+  }
+
+  .profile-bio {
+    font-size: 0.9375rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .cta-widget h3 {
+    text-align: center;
+  }
+
+  .cta-widget p {
+    font-size: 0.9375rem;
+    color: #555;
+    margin-bottom: 1rem;
+  }
+
+  .social-widget h3 {
+    text-align: center;
+  }
+
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: #043e80;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: bold;
+    transition: background 0.2s;
+  }
+
+  .social-link:hover {
+    background: #032f5e;
+    text-decoration: none;
+  }
+
+  /* =====================================
+     CTAセクション（PC/SP共通）
+     ===================================== */
+  .mobile-cta {
+    display: block;
+    background: #f0f5fa;
+    padding: 2.5rem 2rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .mobile-cta h2 {
+    font-size: 1.5rem;
+    color: #043e80;
+    margin: 0 0 0.75rem;
+    border: none;
+    padding: 0;
+  }
+
+  .mobile-cta p {
+    color: #555;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+
+  .mobile-cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 767px) {
+    .mobile-cta {
+      padding: 2rem 1rem;
+    }
+
+    .mobile-cta h2 {
+      font-size: 1.25rem;
+    }
+
+    .mobile-cta-buttons {
+      flex-direction: column;
+    }
+
+    .mobile-cta-buttons .btn {
+      width: 100%;
+    }
+  }
+
+  /* =====================================
+     レスポンシブ調整
+     ===================================== */
+  @media (max-width: 767px) {
+    .hero-cta {
+      flex-direction: column;
+    }
+
+    .btn-primary-hero,
+    .btn-secondary-hero {
+      width: 100%;
+      text-align: center;
+    }
+
+    .trust-elements {
+      justify-content: center;
+    }
+
+    .trust-item {
+      min-width: 80px;
+    }
+
+    .policy-cards {
+      grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+      display: none;
+    }
+  }
+
+  /* =====================================
+     ヒーローレイアウト切り替え（デフォルトは非表示、JSで制御）
+     ===================================== */
+  .hero-section[data-hero-layout] {
+    display: none;
+  }
+  .hero-section[data-hero-layout].active {
+    display: block;
+  }
+  /* TOP1はflexなので上書き */
+  .hero-layout-1.active {
+    display: block;
+  }
+</style>
+
+<script>
+  // レイアウト切り替え用スクリプト
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    const topLayout = params.get('top') || '1'; // デフォルトはTOP1
+
+    // すべてのヒーローセクションを非表示
+    document.querySelectorAll('[data-hero-layout]').forEach(section => {
+      section.classList.remove('active');
+    });
+
+    // 指定されたレイアウトを表示
+    const activeSection = document.querySelector(`[data-hero-layout="${topLayout}"]`);
+    if (activeSection) {
+      activeSection.classList.add('active');
+    } else {
+      // 無効な値の場合はデフォルト（TOP1）を表示
+      const defaultSection = document.querySelector('[data-hero-layout="1"]');
+      if (defaultSection) defaultSection.classList.add('active');
+    }
+
+    // 政策セクションもTOPレイアウトに連動して切り替え
+    document.querySelectorAll('[data-policy-layout]').forEach(section => {
+      section.classList.remove('active');
+    });
+
+    const activePolicySection = document.querySelector(`[data-policy-layout="${topLayout}"]`);
+    if (activePolicySection) {
+      activePolicySection.classList.add('active');
+    } else {
+      // 無効な値の場合はデフォルト（レイアウト1）を表示
+      const defaultPolicySection = document.querySelector('[data-policy-layout="1"]');
+      if (defaultPolicySection) defaultPolicySection.classList.add('active');
+    }
+
+    // ヘッダーのスイッチャーリンクにactiveクラスを設定
+    document.querySelectorAll('.switcher-link[data-top-layout]').forEach(link => {
+      const linkTop = link.getAttribute('data-top-layout');
+      if (linkTop === topLayout) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+  })();
+</script>

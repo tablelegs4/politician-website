@@ -7,6 +7,7 @@ const currentTheme = getThemeFromUrl(Astro.url);
 
 // URLパラメータを保持する関数
 const themeParam = Astro.url.searchParams.get('theme');
+const topLayoutParam = Astro.url.searchParams.get('top');
 const themeQuery = themeParam ? `?theme=${themeParam}` : '';
 
 // ベースパスを適用したパスを生成する関数
@@ -19,6 +20,18 @@ const withBase = (path: string) => {
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
   return `${base}${cleanPath}${themeQuery}`;
 };
+
+// TOPレイアウト切り替え用のURL生成
+const getTopLayoutUrl = (layoutNum: number) => {
+  const base = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+  const params = new URLSearchParams();
+  if (themeParam) params.set('theme', themeParam);
+  params.set('top', String(layoutNum));
+  return `${base}/?${params.toString()}`;
+};
+
+// 現在のTOPレイアウト番号を取得
+const currentTopLayout = topLayoutParam ? parseInt(topLayoutParam, 10) : 1;
 ---
 
 <header class="site-header">
@@ -53,6 +66,19 @@ const withBase = (path: string) => {
           <li><a href={withBase('/contact/')}>お問い合わせ</a></li>
         </ul>
       </nav>
+
+      <!-- デバッグ用: TOPレイアウト切り替え -->
+      <div class="top-layout-switcher">
+        {[1, 2, 3].map((num) => (
+          <a
+            href={getTopLayoutUrl(num)}
+            class="switcher-link"
+            data-top-layout={num}
+          >
+            {num}
+          </a>
+        ))}
+      </div>
     </div>
   </div>
 </header>

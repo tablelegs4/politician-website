@@ -1,10 +1,10 @@
 ---
-title: "サンプル政策タイトル"
-slug: "sample-policy"
-order: 1
+title: "サンプル政策タイトル2"
+slug: "sample-policy2"
+order: 2
 featured: true
 summary: "ここに政策の要約（100〜140字）を記載します。課題と解決策を簡潔にまとめてください。"
-category: "福祉"
+category: "経済"
 ---
 
 ## 課題（現状）

@@ -109,9 +109,15 @@ img {
 
 /* SP: ハンバーガーメニュー（details/summary使用、JSなし） */
 @media (max-width: 767px) {
+  /* SP: details外のPC用navを非表示 */
+  .header-inner > .main-nav {
+    display: none;
+  }
+
   .nav-toggle {
     cursor: pointer;
     user-select: none;
+    position: relative;
   }
 
   .nav-toggle summary {
@@ -126,30 +132,41 @@ img {
   }
 
   .nav-toggle[open] summary {
-    margin-bottom: 1rem;
+    margin-bottom: 0;
   }
 
-  .main-nav {
+  /* ドロップダウンメニュー */
+  .nav-toggle .main-nav {
+    position: absolute;
+    top: 100%;
+    right: 0;
     background: #032f5e;
     padding: 1rem;
     border-radius: 4px;
+    min-width: 200px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 200;
   }
 
-  .main-nav ul {
+  .nav-toggle .main-nav ul {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0;
   }
 
-  .main-nav a {
+  .nav-toggle .main-nav a {
     color: #fff;
     display: block;
-    padding: 0.5rem;
+    padding: 0.75rem 1rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   }
 
-  .main-nav a:hover {
+  .nav-toggle .main-nav li:last-child a {
+    border-bottom: none;
+  }
+
+  .nav-toggle .main-nav a:hover {
     background: rgba(255, 255, 255, 0.1);
     text-decoration: none;
   }
@@ -157,7 +174,8 @@ img {
 
 /* PC: 常時表示ナビ */
 @media (min-width: 768px) {
-  .nav-toggle summary {
+  /* PC: details（ハンバーガー）を非表示 */
+  .nav-toggle {
     display: none;
   }
 
@@ -224,6 +242,16 @@ img {
 main {
   min-height: 60vh;
   padding: 2rem 0;
+}
+
+/* ヒーローセクションがある場合はmainの上部パディングを削除 */
+main:has(.hero-section),
+main:has(.hero-layout-1),
+main:has(.hero-layout-2),
+main:has(.hero-layout-3),
+main:has(.hero-layout-4),
+main:has(.hero-layout-5) {
+  padding-top: 0;
 }
 
 /* SP: 1カラム */

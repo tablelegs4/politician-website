@@ -18,21 +18,32 @@
 
 /* ===========================
    ヒーローセクション
+   1920x1080 (16:9) 画像を想定
    =========================== */
 .hero-section {
   background: linear-gradient(135deg, var(--modern-primary) 0%, var(--modern-accent) 100%);
-  background-size: cover;
-  background-position: center;
+  background-size: contain;
+  background-position: center center;
   background-repeat: no-repeat;
   color: #fff;
-  padding: 4rem 0;
   text-align: center;
   position: relative;
+  /* 16:9アスペクト比を維持 */
+  aspect-ratio: 16 / 9;
+  max-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 767px) {
   .hero-section {
-    padding: 6rem 0;
+    /* モバイルでは最小高さを確保しつつアスペクト比を調整 */
+    aspect-ratio: 16 / 10;
+    min-height: 300px;
+    max-height: 60vh;
+    padding: 1.5rem;
   }
 }
 
