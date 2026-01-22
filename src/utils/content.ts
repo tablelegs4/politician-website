@@ -85,10 +85,33 @@ export interface Profile {
   shortBio: string;
   fullBio: string;
   expertise: string[];
+  nickname?: string;
+  basicInfo?: {
+    birthYear?: string;
+    location?: string;
+    locationType?: 'birthplace' | 'residence';
+    electoralDistrict?: {
+      type?: string;
+      term?: number;
+      district: string;
+      cities?: string[];
+    };
+  };
+  personalInfo?: {
+    items: Array<{
+      title: string;
+      content: string;
+    }>;
+  };
   history: Array<{
     year: string;
     event: string;
   }>;
+  politicalBelief?: {
+    title: string;
+    detail: string;
+  } | string;
+  achievements?: string[];
   contact: {
     office: string;
     email: string;

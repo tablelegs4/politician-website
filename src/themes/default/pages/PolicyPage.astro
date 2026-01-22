@@ -17,6 +17,16 @@ const withBase = (path: string) => {
   return `${base}${cleanPath}${themeQuery}`;
 };
 
+// 画像パスにベースを適用
+const withImageBase = (path: string) => {
+  if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('//')) {
+    return path;
+  }
+  const base = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  return `${base}${cleanPath}`;
+};
+
 // コンテンツコレクションから政策を取得
 const allPolicies = await getCollection('policy');
 
@@ -36,12 +46,18 @@ const cleanSummary = (text: string) => text.replace(/\*([^*]+)\*/g, '$1');
 
 <main>
   <div class="container">
-    <h1>政策</h1>
+    <h1 class="page-title-with-kokusa">
+      政策
+      <img src={withImageBase('/images/common/kokusa/kokusa_hold_sign_1.png')} alt="" class="page-title-kokusa" />
+    </h1>
     <p class="policy-lead">暮らしを豊かにするための重点政策をご紹介します。</p>
 
     {featuredPolicies.length > 0 && (
       <section class="policy-section">
-        <h2 class="section-title">重点政策</h2>
+        <h2 class="section-title">
+          重点政策
+          <img src={withImageBase('/images/common/kokusa/kokusa_fistpump.png')} alt="" class="section-kokusa" />
+        </h2>
         <ul class="policy-list featured-list">
           {featuredPolicies.map((policy) => (
             <li class="policy-item featured">
@@ -59,7 +75,10 @@ const cleanSummary = (text: string) => text.replace(/\*([^*]+)\*/g, '$1');
 
     {otherPolicies.length > 0 && (
       <section class="policy-section">
-        <h2 class="section-title">その他の政策</h2>
+        <h2 class="section-title">
+          その他の政策
+          <img src={withImageBase('/images/common/kokusa/kokusa_think.png')} alt="" class="section-kokusa" />
+        </h2>
         <ul class="policy-list">
           {otherPolicies.map((policy) => (
             <li class="policy-item">
@@ -76,6 +95,7 @@ const cleanSummary = (text: string) => text.replace(/\*([^*]+)\*/g, '$1');
     )}
 
     <section class="cta-section">
+      <img src={withImageBase('/images/common/kokusa/kokusa_please.png')} alt="" class="cta-kokusa" />
       <p>政策について詳しく知りたい方、ご意見・ご質問がある方は、お気軽にお問い合わせください。</p>
       <div class="cta-buttons">
         <a href={withBase('/contact/')} class="btn btn-primary">相談・要望を送る</a>
@@ -214,6 +234,55 @@ const cleanSummary = (text: string) => text.replace(/\*([^*]+)\*/g, '$1');
 
     .policy-link {
       padding: 1.25rem;
+    }
+  }
+
+  /* こくさキャラクター装飾 */
+  .page-title-with-kokusa {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .page-title-kokusa {
+    height: 3rem;
+    width: auto;
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .section-kokusa {
+    height: 2rem;
+    width: auto;
+  }
+
+  .cta-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cta-kokusa {
+    height: 80px;
+    width: auto;
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 767px) {
+    .page-title-kokusa {
+      height: 2.5rem;
+    }
+
+    .section-kokusa {
+      height: 1.75rem;
+    }
+
+    .cta-kokusa {
+      height: 60px;
     }
   }
 </style>

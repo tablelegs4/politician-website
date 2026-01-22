@@ -81,12 +81,18 @@
 
 .hero-layout-1 .hero-full-image {
   width: 100%;
+  display: flex;
+  justify-content: center;
+  background: #fff;
 }
 
 .hero-layout-1 .hero-image-large {
-  width: 100%;
+  width: auto;
   height: auto;
+  max-width: 100%;
+  max-height: calc(100vh - 80px); /* ヘッダー分を引いた1画面に収める */
   display: block;
+  object-fit: contain;
 }
 
 .hero-layout-1 .hero-content-below {

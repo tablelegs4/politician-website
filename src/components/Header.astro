@@ -12,13 +12,34 @@ const themeQuery = themeParam ? `?theme=${themeParam}` : '';
 // ベースパスを適用したパスを生成する関数
 const baseUrl = import.meta.env.BASE_URL || '/';
 const withBase = (path: string) => {
-  if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('//')) {
+  if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('//') || path.startsWith('#')) {
     return path;
   }
   const base = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
   return `${base}${cleanPath}${themeQuery}`;
 };
+
+// ナビゲーション項目の定義
+// isExternal: true の場合はページ遷移（遷移アイコン表示）
+// PC用ナビ項目
+const navItemsPC = [
+  { label: 'トップ', href: '/', isExternal: false },
+  { label: '政策', href: '#policy', isExternal: false },
+  { label: '活動報告', href: '#activity', isExternal: false },
+  { label: 'プロフィール', href: '/profile/', isExternal: true },
+  { label: 'お問い合わせ', href: '/contact/', isExternal: true },
+  { label: 'プライバシーポリシー', href: '/privacy/', isExternal: true },
+];
+
+// SP用ナビ項目（プロフィールはTOPページのアンカーリンク）
+const navItemsSP = [
+  { label: 'トップ', href: '/', isExternal: false },
+  { label: '政策', href: '#policy', isExternal: false },
+  { label: '活動報告', href: '#activity', isExternal: false },
+  { label: 'プロフィール', href: '/#profile', isExternal: false },
+  { label: 'お問い合わせ', href: '/contact/', isExternal: true },
+];
 
 ---
 
@@ -31,15 +52,19 @@ const withBase = (path: string) => {
         </a>
       </div>
 
+      <!-- SP用ハンバーガーメニュー -->
       <details class="nav-toggle">
         <summary aria-label="メニューを開く">☰</summary>
         <nav class="main-nav" aria-label="メインナビゲーション">
           <ul>
-            <li><a href={withBase('/')}>トップ</a></li>
-            <li><a href={withBase('/profile/')}>プロフィール</a></li>
-            <li><a href={withBase('/policy/')}>政策</a></li>
-            <li><a href={withBase('/news/')}>お知らせ</a></li>
-            <li><a href={withBase('/contact/')}>お問い合わせ</a></li>
+            {navItemsSP.map((item) => (
+              <li>
+                <a href={withBase(item.href)} class={item.isExternal ? 'nav-external' : ''}>
+                  {item.label}
+                  {item.isExternal && <span class="external-icon" aria-hidden="true">↗</span>}
+                </a>
+              </li>
+            ))}
           </ul>
         </nav>
       </details>
@@ -47,14 +72,31 @@ const withBase = (path: string) => {
       <!-- PC用ナビはCSSで常時表示 -->
       <nav class="main-nav" aria-label="メインナビゲーション">
         <ul>
-          <li><a href={withBase('/')}>トップ</a></li>
-          <li><a href={withBase('/profile/')}>プロフィール</a></li>
-          <li><a href={withBase('/policy/')}>政策</a></li>
-          <li><a href={withBase('/news/')}>お知らせ</a></li>
-          <li><a href={withBase('/contact/')}>お問い合わせ</a></li>
+          {navItemsPC.map((item) => (
+            <li>
+              <a href={withBase(item.href)} class={item.isExternal ? 'nav-external' : ''}>
+                {item.label}
+                {item.isExternal && <span class="external-icon" aria-hidden="true">↗</span>}
+              </a>
+            </li>
+          ))}
         </ul>
       </nav>
 
     </div>
   </div>
 </header>
+
+<style>
+  /* 外部リンクアイコン */
+  .external-icon {
+    font-size: 0.75em;
+    margin-left: 0.25em;
+    opacity: 0.8;
+  }
+
+  .nav-external {
+    display: inline-flex;
+    align-items: center;
+  }
+</style>

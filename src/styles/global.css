@@ -11,6 +11,8 @@ html {
   font-size: 16px;
   line-height: 1.7;
   scroll-behavior: smooth;
+  /* ヘッダー固定時のスクロールオフセット */
+  scroll-padding-top: 90px;
 }
 
 body {
@@ -70,7 +72,7 @@ img {
 .site-header {
   background: #043e80;
   color: #fff;
-  padding: 1rem 0;
+  padding: 1.25rem 0;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -84,7 +86,7 @@ img {
 }
 
 .site-title {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: bold;
   color: #fff;
 }
@@ -97,16 +99,16 @@ img {
 }
 
 .header-logo {
-  height: 40px;
+  height: 56px;
   width: auto;
 }
 
 @media (max-width: 767px) {
   .site-header {
-    padding: 0.25rem 0;
+    padding: 0.5rem 0;
   }
   .header-logo {
-    height: 24px;
+    height: 36px;
   }
   .header-inner {
     position: relative;
@@ -192,12 +194,14 @@ img {
   .main-nav ul {
     list-style: none;
     display: flex;
-    gap: 2rem;
+    align-items: center;
+    gap: 2.5rem;
   }
 
   .main-nav a {
     color: #fff;
     font-weight: 500;
+    font-size: 1.0625rem;
     padding: 0.5rem 0;
     border-bottom: 2px solid transparent;
     transition: border-color 0.2s;
@@ -285,8 +289,9 @@ main:has(.hero-layout-5) {
 
   .sidebar {
     position: sticky;
-    top: 80px;
+    top: 100px;
     height: fit-content;
+    padding-top: 1rem;
   }
 }
 

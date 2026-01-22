@@ -2,20 +2,93 @@
   "name": "山田太郎",
   "nameReading": "やまだ たろう",
   "photo": "/images/profile.jpg",
-  "position": "",
-  "affiliation": "",
+  "position": "現：衆議院議員 新：公認内定予定候補者",
+  "affiliation": "国民民主党",
   "shortBio": "地域のために全力で働きます。",
   "fullBio": "この度は、私のウェブサイトをご覧いただき、誠にありがとうございます。\n\n私は地域に根ざした活動を通じて、すべての住民が安心して暮らせる社会の実現を目指しています。",
-  "expertise": [],
+  "expertise": [
+    "経済政策",
+    "子育て支援",
+    "地方創生"
+  ],
+  "nickname": "*改革*の*伝道師*",
+  "basicInfo": {
+    "birthYear": "1975年",
+    "location": "東京都世田谷区",
+    "locationType": "birthplace",
+    "electoralDistrict": {
+      "type": "衆議院",
+      "term": 2,
+      "district": "東京5区",
+      "cities": [
+        "目黒区",
+        "世田谷区（一部）"
+      ]
+    }
+  },
+  "personalInfo": {
+    "items": [
+      {
+        "title": "座右の銘",
+        "content": "為せば成る、為さねば成らぬ何事も"
+      },
+      {
+        "title": "尊敬する政治家",
+        "content": "田中角栄"
+      },
+      {
+        "title": "家族構成",
+        "content": "妻、長男（高校生）、長女（中学生）"
+      },
+      {
+        "title": "愛犬の名前",
+        "content": "シンバ（柴犬）"
+      },
+      {
+        "title": "朝の日課",
+        "content": "二度寝する"
+      }
+    ]
+  },
   "history": [
     {
-      "year": "",
-      "event": ""
+      "year": "1975年",
+      "event": "東京都世田谷区に生まれる"
+    },
+    {
+      "year": "1998年",
+      "event": "東京大学法学部卒業"
+    },
+    {
+      "year": "1998年",
+      "event": "財務省入省"
+    },
+    {
+      "year": "2008年",
+      "event": "財務省退官、民間シンクタンク勤務"
+    },
+    {
+      "year": "2017年",
+      "event": "衆議院議員初当選（東京5区）"
+    },
+    {
+      "year": "2021年",
+      "event": "衆議院議員再選（2期目）"
     }
   ],
+  "politicalBelief": {
+    "title": "手取りを増やし、暮らしを豊かに",
+    "detail": "働く人々の生活を第一に考えた政策を推進します。減税と経済成長の両立、子育て世代への支援強化、地方経済の活性化に全力で取り組みます。"
+  },
+  "achievements": [
+    "所得税減税法案を党内で主導（2023年）",
+    "子育て支援拡充法案の共同提出（2022年）",
+    "地元商店街活性化プロジェクトの立ち上げ",
+    "国会質問回数：通算87回"
+  ],
   "contact": {
-    "office": "",
-    "email": "",
-    "phone": ""
+    "office": "山田太郎事務所",
+    "email": "info@yamada-taro.example.jp",
+    "phone": "03-1234-5678"
   }
 }

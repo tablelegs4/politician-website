@@ -66,6 +66,7 @@
   "ogp": {
     "title": "山田太郎 公式サイト",
     "description": "すべての住民が安心して暮らせる社会の実現を目指して",
-    "image": "/images/ogp.jpg"
+    "image": "/images/ogp.jpg",
+    "faceImage": "/images/profile.jpg"
   }
 }
