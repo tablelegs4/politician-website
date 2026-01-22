@@ -38,8 +38,12 @@ const withImageBase = (path: string) => {
   return `${base}${cleanPath}`;
 };
 
+// 活動報告リンク設定
+const activityLinks = siteConfig.activityLinks || {};
+
 // noteの記事を取得（ビルド時に自動更新）
-const noteArticles = await getNoteArticles('closed_business', 5);
+const noteUsername = activityLinks.note ? activityLinks.note.replace('https://note.com/', '').replace(/\/$/, '') : '';
+const noteArticles = noteUsername ? await getNoteArticles(noteUsername, 5) : [];
 
 // 重点政策3件を取得
 let featuredPolicies: any[] = [];
@@ -194,8 +198,50 @@ const incumbentData = siteConfig.trustElements.incumbent;
         </section>
 
         <!-- 最新活動：noteから自動取得 -->
-        <section id="activity" class="section-block">
-          <h2 class="section-title"><span>最新の活動報告</span><span class="section-title-kokusa-wrapper"><img src={withImageBase('/images/common/kokusa/kokusa_run.png')} alt="" class="section-title-kokusa" /></span></h2>
+        <section id="activity" class="section-block activity-section">
+          <div class="activity-header">
+            <h2 class="section-title">
+              <span class="activity-title-text"><span class="activity-title-prefix">最新の</span>活動報告</span>
+              <span class="section-title-kokusa-wrapper activity-kokusa"><img src={withImageBase('/images/common/kokusa/kokusa_run.png')} alt="" class="section-title-kokusa" /></span>
+              <span class="activity-sns-links">
+              {activityLinks.youtube && (
+                <a href={activityLinks.youtube} class="activity-sns-link activity-sns-youtube" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                  </svg>
+                </a>
+              )}
+              {activityLinks.twitter && (
+                <a href={activityLinks.twitter} class="activity-sns-link activity-sns-x" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                  </svg>
+                </a>
+              )}
+              {activityLinks.instagram && (
+                <a href={activityLinks.instagram} class="activity-sns-link activity-sns-instagram" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                  </svg>
+                </a>
+              )}
+              {activityLinks.tiktok && (
+                <a href={activityLinks.tiktok} class="activity-sns-link activity-sns-tiktok" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                  </svg>
+                </a>
+              )}
+              {activityLinks.note && (
+                <a href={activityLinks.note} class="activity-sns-link activity-sns-note" target="_blank" rel="noopener noreferrer" aria-label="note">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12.73 16.96h1.86v-.92c.6.71 1.46 1.1 2.47 1.1 2.14 0 3.63-1.72 3.63-4.13 0-2.36-1.45-4.08-3.54-4.08-1.05 0-1.96.42-2.56 1.15V6.94h-1.86v10.02zm3.89-1.4c-1.33 0-2.24-1.05-2.24-2.57 0-1.53.91-2.6 2.24-2.6 1.32 0 2.2 1.05 2.2 2.6 0 1.53-.88 2.57-2.2 2.57zM3.31 8.93v1.52h2.59v6.51h1.87V8.93H3.31zm5.62 8.03h1.86v-4.73c0-1.04.68-1.83 1.63-1.83.95 0 1.48.67 1.48 1.72v4.84h1.86v-5.07c0-1.83-1.04-2.96-2.71-2.96-1.1 0-1.94.51-2.38 1.28h-.07l-.11-1.1H8.93v7.85z"/>
+                  </svg>
+                </a>
+              )}
+              </span>
+            </h2>
+          </div>
           {noteArticles.length > 0 ? (
             <ul class="note-article-list">
               {noteArticles.map((article) => (
@@ -229,16 +275,18 @@ const incumbentData = siteConfig.trustElements.incumbent;
           ) : (
             <p class="no-content">現在、活動報告はありません。</p>
           )}
-          <div class="section-more">
-            <a href="https://note.com/closed_business" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
-              noteで活動報告をもっと見る
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 0.5rem; vertical-align: middle;">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                <polyline points="15 3 21 3 21 9"></polyline>
-                <line x1="10" y1="14" x2="21" y2="3"></line>
-              </svg>
-            </a>
-          </div>
+          {activityLinks.note && (
+            <div class="section-more">
+              <a href={activityLinks.note} class="btn btn-outline" target="_blank" rel="noopener noreferrer">
+                noteで活動報告をもっと見る
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 0.5rem; vertical-align: middle;">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </a>
+            </div>
+          )}
         </section>
 
         <!-- 相談誘導セクション（活動報告の下） -->
@@ -375,6 +423,45 @@ const incumbentData = siteConfig.trustElements.incumbent;
           <a href={withBase('/profile/')} class="btn btn-outline" style="width: 100%;">
             プロフィールを見る
           </a>
+          {(activityLinks.youtube || activityLinks.twitter || activityLinks.instagram || activityLinks.tiktok || activityLinks.note) && (
+            <div class="profile-sns-links">
+              {activityLinks.youtube && (
+                <a href={activityLinks.youtube} class="profile-sns-link profile-sns-youtube" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                  </svg>
+                </a>
+              )}
+              {activityLinks.twitter && (
+                <a href={activityLinks.twitter} class="profile-sns-link profile-sns-x" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                  </svg>
+                </a>
+              )}
+              {activityLinks.instagram && (
+                <a href={activityLinks.instagram} class="profile-sns-link profile-sns-instagram" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                  </svg>
+                </a>
+              )}
+              {activityLinks.tiktok && (
+                <a href={activityLinks.tiktok} class="profile-sns-link profile-sns-tiktok" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                  </svg>
+                </a>
+              )}
+              {activityLinks.note && (
+                <a href={activityLinks.note} class="profile-sns-link profile-sns-note" target="_blank" rel="noopener noreferrer" aria-label="note">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12.73 16.96h1.86v-.92c.6.71 1.46 1.1 2.47 1.1 2.14 0 3.63-1.72 3.63-4.13 0-2.36-1.45-4.08-3.54-4.08-1.05 0-1.96.42-2.56 1.15V6.94h-1.86v10.02zm3.89-1.4c-1.33 0-2.24-1.05-2.24-2.57 0-1.53.91-2.6 2.24-2.6 1.32 0 2.2 1.05 2.2 2.6 0 1.53-.88 2.57-2.2 2.57zM3.31 8.93v1.52h2.59v6.51h1.87V8.93H3.31zm5.62 8.03h1.86v-4.73c0-1.04.68-1.83 1.63-1.83.95 0 1.48.67 1.48 1.72v4.84h1.86v-5.07c0-1.83-1.04-2.96-2.71-2.96-1.1 0-1.94.51-2.38 1.28h-.07l-.11-1.1H8.93v7.85z"/>
+                  </svg>
+                </a>
+              )}
+            </div>
+          )}
         </div>
 
         <!-- 3-3. 相談・要望（再掲CTA） -->
@@ -813,6 +900,120 @@ const incumbentData = siteConfig.trustElements.incumbent;
   }
 
   /* =====================================
+     活動報告セクション
+     ===================================== */
+  .activity-section .section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: nowrap;
+  }
+
+  .activity-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .activity-kokusa {
+    flex-shrink: 0;
+  }
+
+  .activity-sns-links {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+  }
+
+  .activity-sns-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    transition: all 0.2s;
+    color: #fff;
+  }
+
+  .activity-sns-link:hover {
+    transform: scale(1.1);
+    text-decoration: none;
+  }
+
+  .activity-sns-link svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .activity-sns-youtube {
+    background: #ff0000;
+  }
+
+  .activity-sns-youtube:hover {
+    background: #cc0000;
+  }
+
+  .activity-sns-x {
+    background: #000;
+  }
+
+  .activity-sns-x:hover {
+    background: #333;
+  }
+
+  .activity-sns-instagram {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  }
+
+  .activity-sns-instagram:hover {
+    opacity: 0.9;
+  }
+
+  .activity-sns-tiktok {
+    background: #000;
+  }
+
+  .activity-sns-tiktok:hover {
+    background: #333;
+  }
+
+  .activity-sns-note {
+    background: #41c9b4;
+  }
+
+  .activity-sns-note:hover {
+    background: #35a897;
+  }
+
+  @media (max-width: 767px) {
+    .activity-section .section-title {
+      flex-wrap: nowrap;
+    }
+
+    .activity-kokusa {
+      display: none;
+    }
+
+    .activity-title-prefix {
+      display: none;
+    }
+
+    .activity-sns-link {
+      width: 28px;
+      height: 28px;
+    }
+
+    .activity-sns-link svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .activity-sns-links {
+      gap: 0.375rem;
+    }
+  }
+
+  /* =====================================
      note記事リスト
      ===================================== */
   .note-article-list {
@@ -874,7 +1075,7 @@ const incumbentData = siteConfig.trustElements.incumbent;
   }
 
   .note-article-title {
-    font-size: 1rem;
+    font-size: 1.125rem;
     color: #043e80;
     margin: 0 0 0.5rem;
     line-height: 1.4;
@@ -1108,6 +1309,70 @@ const incumbentData = siteConfig.trustElements.incumbent;
     font-size: 0.875rem;
     color: #666;
     margin: 0 0 0.75rem;
+  }
+
+  /* プロフィールウィジェット SNSリンク */
+  .profile-sns-links {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .profile-sns-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    transition: all 0.2s;
+    color: #fff;
+  }
+
+  .profile-sns-link:hover {
+    transform: scale(1.1);
+    text-decoration: none;
+  }
+
+  .profile-sns-youtube {
+    background: #ff0000;
+  }
+
+  .profile-sns-youtube:hover {
+    background: #cc0000;
+  }
+
+  .profile-sns-x {
+    background: #000;
+  }
+
+  .profile-sns-x:hover {
+    background: #333;
+  }
+
+  .profile-sns-instagram {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  }
+
+  .profile-sns-instagram:hover {
+    opacity: 0.9;
+  }
+
+  .profile-sns-tiktok {
+    background: #000;
+  }
+
+  .profile-sns-tiktok:hover {
+    background: #333;
+  }
+
+  .profile-sns-note {
+    background: #41c9b4;
+  }
+
+  .profile-sns-note:hover {
+    background: #35a897;
   }
 
   .profile-bio {

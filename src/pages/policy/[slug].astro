@@ -81,6 +81,49 @@ const withBase = (path: string) => {
       </article>
     </div>
   </main>
+
+  <script>
+    // ロードマップセクションをグラフィカルに変換
+    document.addEventListener('DOMContentLoaded', () => {
+      const content = document.querySelector('.policy-content');
+      if (!content) return;
+
+      // 「進め方（ロードマップ）」のh2を探す
+      const roadmapH2 = content.querySelector('h2[id*="進め方"], h2[id*="ロードマップ"], h2[id*="roadmap"]');
+      if (!roadmapH2) return;
+
+      // ロードマップh2の次の兄弟要素を収集（次のh2またはhrまで）
+      const elements: Element[] = [];
+      let current = roadmapH2.nextElementSibling;
+      while (current && current.tagName !== 'H2' && current.tagName !== 'HR') {
+        elements.push(current);
+        current = current.nextElementSibling;
+      }
+
+      // ロードマップセクションのコンテナを作成
+      const sectionDiv = document.createElement('div');
+      sectionDiv.className = 'roadmap-section';
+
+      let currentPhase: HTMLDivElement | null = null;
+
+      elements.forEach(el => {
+        if (el.tagName === 'H3') {
+          // 新しいフェーズを開始
+          currentPhase = document.createElement('div');
+          currentPhase.className = 'roadmap-phase';
+          currentPhase.appendChild(el.cloneNode(true));
+          sectionDiv.appendChild(currentPhase);
+        } else if (el.tagName === 'UL' && currentPhase) {
+          // 現在のフェーズにulを追加
+          currentPhase.appendChild(el.cloneNode(true));
+        }
+      });
+
+      // 元の要素を削除してセクションを挿入
+      elements.forEach(el => el.remove());
+      roadmapH2.after(sectionDiv);
+    });
+  </script>
 </Layout>
 
 <style>
@@ -161,6 +204,73 @@ const withBase = (path: string) => {
     border: none;
     border-top: 1px solid #e0e0e0;
     margin: 2rem 0;
+  }
+
+  /* ロードマップセクション用コンテナ */
+  .policy-content :global(.roadmap-section) {
+    position: relative;
+    padding-left: 3rem;
+    margin: 2rem 0;
+  }
+
+  .policy-content :global(.roadmap-section)::before {
+    content: '';
+    position: absolute;
+    left: 0.9375rem;
+    top: 1.5rem;
+    bottom: 1.5rem;
+    width: 3px;
+    background: linear-gradient(180deg, #043e80 0%, #e8f0f8 100%);
+  }
+
+  .policy-content :global(.roadmap-phase) {
+    position: relative;
+    margin-bottom: 2rem;
+  }
+
+  .policy-content :global(.roadmap-phase h3) {
+    position: relative;
+    font-size: 1.25rem;
+    color: #043e80;
+    margin: 0 0 1rem;
+    padding-left: 0.5rem;
+  }
+
+  .policy-content :global(.roadmap-phase h3::before) {
+    content: '';
+    position: absolute;
+    left: -3rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2rem;
+    height: 2rem;
+    background: linear-gradient(135deg, #043e80 0%, #0a5bb5 100%);
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(4, 62, 128, 0.3);
+  }
+
+  .policy-content :global(.roadmap-phase ul) {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 0.5rem;
+  }
+
+  .policy-content :global(.roadmap-phase li) {
+    position: relative;
+    padding: 0.5rem 0 0.5rem 1.5rem;
+    font-size: 1.0625rem;
+  }
+
+  .policy-content :global(.roadmap-phase li::before) {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0.5rem;
+    height: 0.5rem;
+    background: #043e80;
+    border-radius: 50%;
   }
 
   .policy-footer {
@@ -267,6 +377,85 @@ const withBase = (path: string) => {
     margin-right: 0.5rem;
   }
 
+  /* PC版の文字サイズ拡大 */
+  @media (min-width: 768px) {
+    .policy-detail {
+      max-width: 960px;
+    }
+
+    .policy-header h1 {
+      font-size: 2.5rem;
+    }
+
+    .policy-summary {
+      font-size: 1.375rem;
+    }
+
+    .policy-content {
+      font-size: 1.25rem;
+      line-height: 2;
+    }
+
+    .policy-content :global(h2) {
+      font-size: 2rem;
+      margin: 3.5rem 0 1.5rem;
+    }
+
+    .policy-content :global(h3) {
+      font-size: 1.5rem;
+      margin: 2.5rem 0 1.25rem;
+    }
+
+    .policy-content :global(p) {
+      font-size: 1.25rem;
+    }
+
+    .policy-content :global(li) {
+      font-size: 1.25rem;
+    }
+
+    .cta-message {
+      font-size: 1.25rem;
+    }
+
+    .btn {
+      font-size: 1.125rem;
+      padding: 1.125rem 2.25rem;
+    }
+
+    .related-policies h2 {
+      font-size: 1.5rem;
+    }
+
+    .related-policies a {
+      font-size: 1.125rem;
+      padding: 1rem 1.25rem;
+    }
+
+    /* ロードマップのタイムライン - PC版サイズ調整 */
+    .policy-content :global(.roadmap-section) {
+      padding-left: 3.5rem;
+    }
+
+    .policy-content :global(.roadmap-section)::before {
+      left: 1.1875rem;
+    }
+
+    .policy-content :global(.roadmap-phase h3) {
+      font-size: 1.5rem;
+    }
+
+    .policy-content :global(.roadmap-phase h3::before) {
+      left: -3.5rem;
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+
+    .policy-content :global(.roadmap-phase li) {
+      font-size: 1.25rem;
+    }
+  }
+
   @media (max-width: 767px) {
     .policy-header h1 {
       font-size: 1.5rem;
@@ -280,6 +469,25 @@ const withBase = (path: string) => {
       display: block;
       width: 100%;
       text-align: center;
+    }
+
+    /* SPではタイムラインを簡略化 */
+    .policy-content :global(.roadmap-section) {
+      padding-left: 2.25rem;
+    }
+
+    .policy-content :global(.roadmap-section)::before {
+      left: 0.6875rem;
+    }
+
+    .policy-content :global(.roadmap-phase h3) {
+      font-size: 1.0625rem;
+    }
+
+    .policy-content :global(.roadmap-phase h3::before) {
+      left: -2.25rem;
+      width: 1.5rem;
+      height: 1.5rem;
     }
   }
 </style>
