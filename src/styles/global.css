@@ -15,6 +15,12 @@ html {
   scroll-padding-top: 90px;
 }
 
+@media (max-width: 767px) {
+  html {
+    scroll-padding-top: 60px;
+  }
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", "Hiragino Sans", sans-serif;
   color: #333;
@@ -70,13 +76,17 @@ img {
    ヘッダー（SP/PC差別化）
    =========================== */
 .site-header {
-  background: #043e80;
+  background: linear-gradient(180deg, #054a96 0%, #032f5e 100%);
   color: #fff;
   padding: 1.25rem 0;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 -3px 0 0 #f5b500, 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.site-header .container {
+  max-width: 100%;
 }
 
 .header-inner {
@@ -189,6 +199,11 @@ img {
   /* PC: details（ハンバーガー）を非表示 */
   .nav-toggle {
     display: none;
+  }
+
+  /* PC: ナビを右端に配置 */
+  .header-inner > .main-nav {
+    margin-left: auto;
   }
 
   .main-nav ul {

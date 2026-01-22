@@ -32,13 +32,14 @@ const navItemsPC = [
   { label: 'プライバシーポリシー', href: '/privacy/', isExternal: true },
 ];
 
-// SP用ナビ項目（プロフィールはTOPページのアンカーリンク）
+// SP用ナビ項目（全てTOPページ内のアンカーリンク、ページ遷移なし）
 const navItemsSP = [
-  { label: 'トップ', href: '/', isExternal: false },
+  { label: 'トップ', href: '#top', isExternal: false },
   { label: '政策', href: '#policy', isExternal: false },
+  { label: 'プロフィール', href: '#profile', isExternal: false },
   { label: '活動報告', href: '#activity', isExternal: false },
-  { label: 'プロフィール', href: '/#profile', isExternal: false },
-  { label: 'お問い合わせ', href: '/contact/', isExternal: true },
+  { label: 'よくある質問', href: '#faq', isExternal: false },
+  { label: '応援する', href: '#support', isExternal: false },
 ];
 
 ---
@@ -46,14 +47,17 @@ const navItemsSP = [
 <header class="site-header">
   <div class="container">
     <div class="header-inner">
-      <div class="site-title">
-        <a href={withBase('/')}>
-          <img src={THEME_IMAGES[currentTheme].logo} alt="山田太郎" class="header-logo" />
-        </a>
+      <div class="header-left">
+        <div class="site-title">
+          <a href={withBase('/')}>
+            <img src={THEME_IMAGES[currentTheme].logo} alt="山田太郎" class="header-logo" />
+          </a>
+        </div>
+        <img src={withBase('/images/common/kokusa/kokusa_banzai.png')} alt="コクサ" class="header-kokusa" />
       </div>
 
       <!-- SP用ハンバーガーメニュー -->
-      <details class="nav-toggle">
+      <details class="nav-toggle" id="sp-menu">
         <summary aria-label="メニューを開く">☰</summary>
         <nav class="main-nav" aria-label="メインナビゲーション">
           <ul>
@@ -68,6 +72,8 @@ const navItemsSP = [
           </ul>
         </nav>
       </details>
+      <!-- メニュー外タップで閉じる用オーバーレイ -->
+      <div class="menu-overlay" id="menu-overlay"></div>
 
       <!-- PC用ナビはCSSで常時表示 -->
       <nav class="main-nav" aria-label="メインナビゲーション">
@@ -88,6 +94,31 @@ const navItemsSP = [
 </header>
 
 <style>
+  /* ヘッダー左側（ロゴ＋コクサ） */
+  .header-left {
+    display: flex;
+    align-items: center;
+  }
+
+  /* ヘッダーのコクサ画像 */
+  .header-kokusa {
+    height: 80px;
+    width: auto;
+    object-fit: cover;
+    object-position: top;
+    clip-path: inset(0 0 30% 0);
+    margin-left: -10px;
+    margin-bottom: -24px;
+  }
+
+  @media (max-width: 767px) {
+    .header-kokusa {
+      height: 50px;
+      margin-left: 8px;
+      margin-bottom: -15px;
+    }
+  }
+
   /* 外部リンクアイコン */
   .external-icon {
     font-size: 0.75em;
@@ -99,4 +130,45 @@ const navItemsSP = [
     display: inline-flex;
     align-items: center;
   }
+
+  /* メニュー外タップで閉じる用オーバーレイ */
+  .menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+  }
+
+  @media (max-width: 767px) {
+    .nav-toggle[open] ~ .menu-overlay {
+      display: block;
+    }
+  }
 </style>
+
+<script>
+  // メニュー外タップで閉じる
+  document.addEventListener('DOMContentLoaded', () => {
+    const menu = document.getElementById('sp-menu');
+    const overlay = document.getElementById('menu-overlay');
+
+    if (overlay && menu) {
+      overlay.addEventListener('click', () => {
+        menu.removeAttribute('open');
+      });
+    }
+
+    // メニュー内のリンククリックでメニューを閉じる
+    if (menu) {
+      const links = menu.querySelectorAll('a');
+      links.forEach(link => {
+        link.addEventListener('click', () => {
+          menu.removeAttribute('open');
+        });
+      });
+    }
+  });
+</script>
