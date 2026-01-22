@@ -74,6 +74,13 @@ export interface SiteConfig {
     description: string;
     image: string;
   };
+  activityLinks?: {
+    note?: string;
+    youtube?: string;
+    twitter?: string;
+    instagram?: string;
+    tiktok?: string;
+  };
 }
 
 export interface Profile {
