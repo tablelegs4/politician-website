@@ -1,0 +1,285 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const policyEntries = await getCollection('policy');
+  return policyEntries.map(entry => ({
+    params: { slug: entry.data.slug || entry.id.replace('.md', '') },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'policy'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+// 関連政策を取得（同じカテゴリの他の政策）
+const allPolicies = await getCollection('policy');
+const relatedPolicies = allPolicies
+  .filter(p => p.data.slug !== entry.data.slug && p.data.category === entry.data.category)
+  .slice(0, 2);
+
+// ベースパスを適用
+const baseUrl = import.meta.env.BASE_URL || '/';
+const withBase = (path: string) => {
+  const base = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  return `${base}${cleanPath}`;
+};
+---
+
+<Layout
+  title={entry.data.title}
+  description={entry.data.summary.replace(/\*([^*]+)\*/g, '$1').slice(0, 160)}
+  ogType="article"
+>
+  <main>
+    <div class="container">
+      <article class="policy-detail">
+        <header class="policy-header">
+          <span class="policy-category">{entry.data.category}</span>
+          <h1>{entry.data.title}</h1>
+          <p class="policy-summary">{entry.data.summary.replace(/\*([^*]+)\*/g, '$1')}</p>
+        </header>
+
+        <div class="policy-content">
+          <Content />
+        </div>
+
+        <footer class="policy-footer">
+          <div class="policy-cta">
+            <p class="cta-message">この政策についてご意見・ご質問がありましたら、お気軽にお問い合わせください。</p>
+            <a href={withBase('/contact/')} class="btn btn-primary">
+              この政策について相談する
+            </a>
+          </div>
+
+          <div class="policy-nav">
+            <a href={withBase('/policy/')} class="btn">← 政策一覧に戻る</a>
+          </div>
+
+          {relatedPolicies.length > 0 && (
+            <div class="related-policies">
+              <h2>関連する政策</h2>
+              <ul>
+                {relatedPolicies.map(policy => (
+                  <li>
+                    <a href={withBase(`/policy/${policy.data.slug || policy.id.replace(/\.mdx?$/, '')}/`)}>
+                      <span class="related-category">{policy.data.category}</span>
+                      {policy.data.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </footer>
+      </article>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .policy-detail {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .policy-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid #043e80;
+  }
+
+  .policy-category {
+    display: inline-block;
+    background: #e8f0f8;
+    color: #043e80;
+    font-size: 0.875rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 0.75rem;
+  }
+
+  .policy-header h1 {
+    font-size: 1.75rem;
+    color: #043e80;
+    margin: 0 0 1rem;
+    line-height: 1.4;
+  }
+
+  .policy-summary {
+    font-size: 1.0625rem;
+    color: #555;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .policy-content {
+    line-height: 1.8;
+  }
+
+  .policy-content :global(h2) {
+    font-size: 1.375rem;
+    color: #043e80;
+    margin: 2.5rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .policy-content :global(h3) {
+    font-size: 1.125rem;
+    color: #333;
+    margin: 1.5rem 0 0.75rem;
+  }
+
+  .policy-content :global(ul),
+  .policy-content :global(ol) {
+    padding-left: 1.5rem;
+    margin: 1rem 0;
+  }
+
+  .policy-content :global(li) {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+  }
+
+  .policy-content :global(p) {
+    margin: 1rem 0;
+  }
+
+  .policy-content :global(strong) {
+    color: #c41e3a;
+    font-weight: 700;
+  }
+
+  .policy-content :global(hr) {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: 2rem 0;
+  }
+
+  .policy-footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e0e0e0;
+  }
+
+  .policy-cta {
+    background: #f0f5fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .cta-message {
+    margin: 0 0 1rem;
+    color: #555;
+  }
+
+  .policy-nav {
+    margin-bottom: 2rem;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    color: #043e80;
+    border: 2px solid #043e80;
+    border-radius: 4px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn:hover {
+    background: #043e80;
+    color: #fff;
+  }
+
+  .btn-primary {
+    background: #043e80;
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    background: #032f5e;
+    border-color: #032f5e;
+  }
+
+  .related-policies {
+    background: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 8px;
+  }
+
+  .related-policies h2 {
+    font-size: 1.125rem;
+    color: #333;
+    margin: 0 0 1rem;
+    padding: 0;
+    border: none;
+  }
+
+  .related-policies ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .related-policies li {
+    margin-bottom: 0.75rem;
+  }
+
+  .related-policies li:last-child {
+    margin-bottom: 0;
+  }
+
+  .related-policies a {
+    display: block;
+    padding: 0.75rem 1rem;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    color: #043e80;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .related-policies a:hover {
+    border-color: #043e80;
+    background: #f0f5fa;
+  }
+
+  .related-category {
+    display: inline-block;
+    background: #e8f0f8;
+    color: #043e80;
+    font-size: 0.75rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    margin-right: 0.5rem;
+  }
+
+  @media (max-width: 767px) {
+    .policy-header h1 {
+      font-size: 1.5rem;
+    }
+
+    .policy-cta {
+      padding: 1.25rem;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>

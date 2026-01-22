@@ -1,5 +1,6 @@
 ---
 // デフォルトテーマの政策ページ
+import { getCollection } from 'astro:content';
 
 // URLパラメータを保持する関数
 const themeParam = Astro.url.searchParams.get('theme');
@@ -16,57 +17,203 @@ const withBase = (path: string) => {
   return `${base}${cleanPath}${themeQuery}`;
 };
 
-const policies = [
-  {
-    title: '子育て支援の充実',
-    description: '保育園の待機児童ゼロを実現し、すべての子どもが安心して育つ環境を整備します。また、子育て世帯への経済的支援を拡充し、教育費の負担軽減を図ります。',
-  },
-  {
-    title: '高齢者福祉の向上',
-    description: '地域包括ケアシステムを強化し、高齢者が住み慣れた地域で安心して暮らせる体制を構築します。介護施設の充実と介護人材の確保に全力で取り組みます。',
-  },
-  {
-    title: '防災・減災対策',
-    description: '地震や台風などの自然災害に備え、避難所の整備と防災訓練の強化を推進します。地域の防災力を高め、住民の命と財産を守ります。',
-  },
-  {
-    title: '地域経済の活性化',
-    description: '中小企業・地元商店街への支援を強化し、雇用の創出と地域経済の循環を促進します。若者が定着できる魅力的な地域づくりを目指します。',
-  },
-  {
-    title: '教育環境の整備',
-    description: '学校施設の老朽化対策を進め、ICT教育の充実と教員の働き方改革を推進します。すべての子どもが質の高い教育を受けられる環境を整えます。',
-  },
-  {
-    title: '環境保全と脱炭素社会',
-    description: '再生可能エネルギーの導入を促進し、脱炭素社会の実現を目指します。緑豊かな環境を次世代に引き継ぐため、環境保全活動を推進します。',
-  },
-  {
-    title: '交通インフラの充実',
-    description: 'コミュニティバスの拡充と道路の安全性向上に取り組みます。すべての住民が移動しやすい交通網を整備し、地域の利便性を高めます。',
-  },
-];
+// コンテンツコレクションから政策を取得
+const allPolicies = await getCollection('policy');
+
+// 重点政策（featured: true）を先にソート
+const featuredPolicies = allPolicies
+  .filter(p => p.data.featured)
+  .sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+
+// 通常政策（featured: false または未設定）
+const otherPolicies = allPolicies
+  .filter(p => !p.data.featured)
+  .sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+
+// summaryからマークダウン記法を除去するヘルパー
+const cleanSummary = (text: string) => text.replace(/\*([^*]+)\*/g, '$1');
 ---
 
 <main>
   <div class="container">
     <h1>政策</h1>
-    <p>地域の未来を見据えた7つの重点政策を推進します。</p>
+    <p class="policy-lead">暮らしを豊かにするための重点政策をご紹介します。</p>
 
-    <ul class="policy-list mt-4">
-      {policies.map((policy, index) => (
-        <li class="policy-item">
-          <h3>{index + 1}. {policy.title}</h3>
-          <p>{policy.description}</p>
-        </li>
-      ))}
-    </ul>
+    {featuredPolicies.length > 0 && (
+      <section class="policy-section">
+        <h2 class="section-title">重点政策</h2>
+        <ul class="policy-list featured-list">
+          {featuredPolicies.map((policy) => (
+            <li class="policy-item featured">
+              <a href={withBase(`/policy/${policy.data.slug || policy.id.replace(/\.mdx?$/, '')}/`)} class="policy-link">
+                <span class="policy-category">{policy.data.category}</span>
+                <h3>{policy.data.title}</h3>
+                <p class="policy-summary">{cleanSummary(policy.data.summary)}</p>
+                <span class="policy-more">政策根拠を見る →</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
 
-    <section class="mt-4 text-center">
+    {otherPolicies.length > 0 && (
+      <section class="policy-section">
+        <h2 class="section-title">その他の政策</h2>
+        <ul class="policy-list">
+          {otherPolicies.map((policy) => (
+            <li class="policy-item">
+              <a href={withBase(`/policy/${policy.data.slug || policy.id.replace(/\.mdx?$/, '')}/`)} class="policy-link">
+                <span class="policy-category">{policy.data.category}</span>
+                <h3>{policy.data.title}</h3>
+                <p class="policy-summary">{cleanSummary(policy.data.summary)}</p>
+                <span class="policy-more">詳しく見る →</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <section class="cta-section">
       <p>政策について詳しく知りたい方、ご意見・ご質問がある方は、お気軽にお問い合わせください。</p>
-      <div class="mt-2">
-        <a href={withBase('/contact/')} class="btn">お問い合わせ</a>
+      <div class="cta-buttons">
+        <a href={withBase('/contact/')} class="btn btn-primary">相談・要望を送る</a>
       </div>
     </section>
   </div>
 </main>
+
+<style>
+  .policy-lead {
+    font-size: 1.125rem;
+    color: #555;
+    margin-bottom: 2rem;
+  }
+
+  .policy-section {
+    margin-bottom: 3rem;
+  }
+
+  .section-title {
+    font-size: 1.25rem;
+    color: #043e80;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #043e80;
+  }
+
+  .policy-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .featured-list {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  .policy-item {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+
+  .policy-item:hover {
+    border-color: #043e80;
+    box-shadow: 0 4px 12px rgba(4, 62, 128, 0.1);
+  }
+
+  .policy-item.featured {
+    border-left: 4px solid #043e80;
+  }
+
+  .policy-link {
+    display: block;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .policy-category {
+    display: inline-block;
+    background: #e8f0f8;
+    color: #043e80;
+    font-size: 0.75rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    margin-bottom: 0.75rem;
+  }
+
+  .policy-item h3 {
+    font-size: 1.125rem;
+    color: #043e80;
+    margin: 0 0 0.75rem;
+    line-height: 1.4;
+  }
+
+  .policy-summary {
+    font-size: 0.9375rem;
+    color: #555;
+    line-height: 1.7;
+    margin: 0 0 1rem;
+  }
+
+  .policy-more {
+    font-size: 0.875rem;
+    color: #043e80;
+    font-weight: 600;
+  }
+
+  .cta-section {
+    text-align: center;
+    padding: 2rem;
+    background: #f9f9f9;
+    border-radius: 8px;
+  }
+
+  .cta-section p {
+    margin-bottom: 1rem;
+    color: #555;
+  }
+
+  .cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-primary {
+    background: #043e80;
+    color: #fff;
+    border: 2px solid #043e80;
+  }
+
+  .btn-primary:hover {
+    background: #032f5e;
+    border-color: #032f5e;
+  }
+
+  @media (max-width: 767px) {
+    .featured-list {
+      grid-template-columns: 1fr;
+    }
+
+    .policy-link {
+      padding: 1.25rem;
+    }
+  }
+</style>

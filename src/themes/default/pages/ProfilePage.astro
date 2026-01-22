@@ -23,29 +23,70 @@ const withBase = (path: string) => {
 
     <section class="card">
       <h2>基本情報</h2>
-      <table style="width: 100%; border-collapse: collapse;">
-        <tr style="border-bottom: 1px solid #e0e0e0;">
-          <th style="padding: 0.75rem; text-align: left; width: 30%; background: #f9f9f9;">氏名</th>
-          <td style="padding: 0.75rem;">山田 太郎（やまだ たろう）</td>
-        </tr>
-        <tr style="border-bottom: 1px solid #e0e0e0;">
-          <th style="padding: 0.75rem; text-align: left; background: #f9f9f9;">生年月日</th>
-          <td style="padding: 0.75rem;">1975年4月15日</td>
-        </tr>
-        <tr style="border-bottom: 1px solid #e0e0e0;">
-          <th style="padding: 0.75rem; text-align: left; background: #f9f9f9;">出身地</th>
-          <td style="padding: 0.75rem;">東京都</td>
-        </tr>
-        <tr style="border-bottom: 1px solid #e0e0e0;">
-          <th style="padding: 0.75rem; text-align: left; background: #f9f9f9;">学歴</th>
-          <td style="padding: 0.75rem;">○○大学法学部卒業</td>
-        </tr>
-        <tr>
-          <th style="padding: 0.75rem; text-align: left; background: #f9f9f9;">趣味</th>
-          <td style="padding: 0.75rem;">読書、ジョギング</td>
-        </tr>
-      </table>
+      <dl class="profile-list">
+        <div class="profile-item">
+          <dt>氏名</dt>
+          <dd>山田 太郎（やまだ たろう）</dd>
+        </div>
+        <div class="profile-item">
+          <dt>生年月日</dt>
+          <dd>1975年4月15日</dd>
+        </div>
+        <div class="profile-item">
+          <dt>出身地</dt>
+          <dd>東京都</dd>
+        </div>
+        <div class="profile-item">
+          <dt>学歴</dt>
+          <dd>○○大学法学部卒業</dd>
+        </div>
+        <div class="profile-item">
+          <dt>趣味</dt>
+          <dd>読書、ジョギング</dd>
+        </div>
+      </dl>
     </section>
+
+    <style>
+      .profile-list {
+        margin: 0;
+      }
+
+      .profile-item {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #e0e0e0;
+      }
+
+      .profile-item:last-child {
+        border-bottom: none;
+      }
+
+      .profile-item dt {
+        width: 8rem;
+        flex-shrink: 0;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .profile-item dd {
+        flex: 1;
+        margin: 0;
+        min-width: 0;
+      }
+
+      @media (max-width: 480px) {
+        .profile-item {
+          flex-direction: column;
+          gap: 0.25rem;
+        }
+
+        .profile-item dt {
+          width: auto;
+        }
+      }
+    </style>
 
     <section class="mt-4">
       <h2>経歴</h2>

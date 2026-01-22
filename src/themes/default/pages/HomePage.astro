@@ -140,7 +140,7 @@ const incumbentData = siteConfig.trustElements.incumbent;
           {featuredPolicies.length > 0 ? (
             <div class="policy-cards policy-cards-linked">
               {featuredPolicies.map((policy) => (
-                <a href={withBase(`/policy/${policy.data.slug}/`)} class="policy-card-link-wrapper">
+                <a href={withBase(`/policy/${policy.data.slug || policy.id.replace(/\.mdx?$/, '')}/`)} class="policy-card-link-wrapper">
                   <article class="policy-card">
                     <span class="policy-category">{policy.data.category}</span>
                     <h3 class="policy-card-title">{policy.data.title}</h3>
@@ -157,6 +157,21 @@ const incumbentData = siteConfig.trustElements.incumbent;
             <a href={withBase('/policy/')} class="btn btn-outline">政策一覧を見る</a>
           </div>
         </section>
+
+        <!-- 伝えたいこと：政治家の動機・原体験 -->
+        {siteConfig.messages && siteConfig.messages.length > 0 && (
+          <section class="section-block messages-section">
+            <h2 class="section-title">伝えたいこと</h2>
+            <div class="messages-list">
+              {siteConfig.messages.map((item) => (
+                <div class="message-item">
+                  <h3 class="message-question">{item.question}</h3>
+                  <p class="message-answer">{item.answer}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         <!-- 最新活動：3件（議会/地域/メディアを混ぜる） -->
         <section class="section-block">
@@ -616,6 +631,60 @@ const incumbentData = siteConfig.trustElements.incumbent;
   .policy-card-link-wrapper:hover .policy-card-arrow {
     opacity: 1;
     transform: translateX(4px);
+  }
+
+  /* =====================================
+     伝えたいこと
+     ===================================== */
+  .messages-section {
+    background: #f8fafc;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 3rem;
+  }
+
+  .messages-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .message-item {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-left: 4px solid #043e80;
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+
+  .message-question {
+    font-size: 1.125rem;
+    color: #043e80;
+    margin: 0 0 1rem;
+    padding: 0;
+    border: none;
+  }
+
+  .message-question::before {
+    content: 'Q. ';
+    font-weight: bold;
+  }
+
+  .message-answer {
+    font-size: 0.9375rem;
+    color: #555;
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  @media (max-width: 767px) {
+    .messages-section {
+      padding: 1.5rem 1rem;
+    }
+
+    .message-item {
+      padding: 1rem;
+    }
   }
 
   /* =====================================

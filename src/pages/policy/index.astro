@@ -1,9 +1,13 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getThemeFromUrl } from '../../config/theme';
+import { getSiteConfig } from '../../utils/content';
 
 // URLパラメータからテーマを取得
 const currentTheme = getThemeFromUrl(Astro.url);
+
+// サイト設定を取得
+const siteConfig = getSiteConfig();
 
 // テーマに応じた政策ページコンポーネントを動的にインポート
 const PolicyPage = currentTheme === 'modern'
@@ -18,7 +22,7 @@ const themeStyles = currentTheme === 'modern'
 
 <Layout
   title="政策"
-  description="山田太郎の主要政策をご紹介します。子育て支援、高齢者福祉、防災対策など7つの重点政策。"
+  description={`${siteConfig.politician.name}の政策一覧。重点政策と全ての政策をご紹介します。`}
 >
   <style is:global set:html={themeStyles}></style>
   <PolicyPage />
