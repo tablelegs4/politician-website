@@ -28,23 +28,23 @@ canvaテンプレートプロジェクトを参照
 
 | No | 種別 | ファイル名 | 画像サイズ | ファイル形式 | 備考 | チェック |
 |----|------|------------|------------|--------------|------|----------|
-| 1 | ヒーロー画像 | hero.jpg | 1920px × 1080px | jpg | - | [ ] |
-| 2 | プロフィール写真 | profile.jpg | 800px × 800px | jpg | - | [ ] |
-| 3 | ロゴ画像 | logo.jpg | 400px × 100px | jpg | - | [ ] |
-| 4 | OGP画像 | ogp.jpg | 1200px × 630px | jpg | SNSでシェアされた際に表示 | [ ] |
-| 5 | ファビコン | favicon.svg | 48px × 48px | svg | 要透過処理（URL欄の右側や検索結果に表示される小さなアイコン） | [ ] |
-| 6 | 地域を象徴する場所での活動写真 | activity-hero.jpg | 1200px × 800px | jpg | - | [ ] |
+| 1 | ヒーロー画像 | hero.jpg | 1920px × 1080px | jpg | - |  |
+| 2 | プロフィール写真 | profile.jpg | 800px × 800px | jpg | - |  |
+| 3 | ロゴ画像 | logo.jpg | 400px × 100px | jpg | - |  |
+| 4 | OGP画像 | ogp.jpg | 1200px × 630px | jpg | SNSでシェアされた際に表示 |  |
+| 5 | ファビコン | favicon.svg | 48px × 48px | svg | 要透過処理（URL欄の右側や検索結果に表示される小さなアイコン） |  |
+| 6 | 地域を象徴する場所での活動写真 | activity-hero.jpg | 1200px × 800px | jpg | - |  |
 
 ### 2.2 コンテンツ仕様
 ファイルテンプレートフォルダを参照
 
 | No | 種別 | ファイル名 | ファイル形式 | 役割・用途 | 備考 | チェック |
 |----|------|------------|--------------|------------|------|----------|
-| 1 | サイト基本情報 | src/data/site.json | json | サイト全体の設定 | サイト名・説明・連絡先等 | [ ] |
-| 2 | プロフィール | src/data/profile.json | json | 人物情報 | 経歴・考え方の要約 | [ ] |
-| 3 | FAQ | src/data/faq.json | json | 懸念点の整理 | 空でも可 | [ ] |
-| 4 | 重点政策1～3 | src/content/policy/policy1～3.md | md | 詳細な政策内容 |  | [ ] |
-| 5 | 政策4～7 | src/content/policy/policy-list.md | md | 政策内容 |  | [ ] |
+| 1 | サイト基本情報 | src/data/site.json | json | サイト全体の設定 | サイト名・説明・連絡先等 |  |
+| 2 | プロフィール | src/data/profile.json | json | 人物情報 | 経歴・考え方の要約 |  |
+| 3 | FAQ | src/data/faq.json | json | 懸念点の整理 | 空でも可 |  |
+| 4 | 重点政策1～3 | src/content/policy/policy1～3.md | md | 詳細な政策内容 |  |  |
+| 5 | 政策4～7 | src/content/policy/policy-list.md | md | 政策内容 |  |  |
 
 
 ## 3. 制作開始前チェックリスト
