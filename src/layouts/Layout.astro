@@ -4,6 +4,12 @@ import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 import { getSiteConfig } from '../utils/content';
 
+// ========================================
+// プロトタイプ用: 文字サイズ切り替えボタン表示フラグ
+// true: 表示, false: 非表示
+// ========================================
+const SHOW_FONT_SIZE_TOGGLE = true;
+
 interface Props {
   title: string;
   description: string;
@@ -72,10 +78,10 @@ const withBase = (path: string) => {
     <!-- テーマカラー -->
     <meta name="theme-color" content="#043e80" />
 
-    <!-- 手書き風フォント（Google Fonts） -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Yuji+Syuku&display=swap" rel="stylesheet" />
 
     <meta name="generator" content={Astro.generator} />
   </head>
@@ -83,5 +89,130 @@ const withBase = (path: string) => {
     <Header />
     <slot />
     <Footer />
+
+    {/* SP用フローティング文字サイズ切り替えボタン */}
+    {SHOW_FONT_SIZE_TOGGLE && (
+      <div class="font-size-toggle" id="fontSizeToggle">
+        <button class="font-size-btn" data-size="small" aria-label="文字を小さく">小</button>
+        <button class="font-size-btn active" data-size="medium" aria-label="文字を標準に">中</button>
+        <button class="font-size-btn" data-size="large" aria-label="文字を大きく">大</button>
+      </div>
+    )}
+
+    <style>
+      /* フローティング文字サイズ切り替えボタン（SP専用） */
+      .font-size-toggle {
+        display: none;
+      }
+
+      @media (max-width: 767px) {
+        .font-size-toggle {
+          display: flex;
+          position: fixed;
+          bottom: 20px;
+          right: 16px;
+          z-index: 1000;
+          background: #fff;
+          border-radius: 24px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+          padding: 4px;
+          gap: 2px;
+        }
+
+        .font-size-btn {
+          width: 36px;
+          height: 36px;
+          border: none;
+          border-radius: 50%;
+          background: transparent;
+          color: #666;
+          font-size: 12px;
+          font-weight: bold;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .font-size-btn:hover {
+          background: #f0f0f0;
+        }
+
+        .font-size-btn.active {
+          background: #043e80;
+          color: #fff;
+        }
+
+        .font-size-btn:focus-visible {
+          outline: 2px solid #043e80;
+          outline-offset: 2px;
+        }
+      }
+
+      /* 文字サイズ変更クラス（本文テキストのみに適用、ヒーロー・見出しは除外） */
+      :global(html.font-size-small .container:not(.hero-content-below *) p:not(.hero-subtitle)),
+      :global(html.font-size-small .container .main-content p),
+      :global(html.font-size-small .container .main-content li),
+      :global(html.font-size-small .container .sidebar p),
+      :global(html.font-size-small .container .card-description),
+      :global(html.font-size-small .container .policy-card-summary),
+      :global(html.font-size-small .container .faq-detail),
+      :global(html.font-size-small .container .message-answer) {
+        font-size: 13px;
+      }
+
+      :global(html.font-size-large .container .main-content p),
+      :global(html.font-size-large .container .main-content li),
+      :global(html.font-size-large .container .sidebar p),
+      :global(html.font-size-large .container .card-description),
+      :global(html.font-size-large .container .policy-card-summary),
+      :global(html.font-size-large .container .faq-detail),
+      :global(html.font-size-large .container .message-answer) {
+        font-size: 20px;
+      }
+
+      /* フローティングボタンの位置固定 */
+      .font-size-toggle {
+        bottom: 20px !important;
+        right: 16px !important;
+      }
+    </style>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const toggle = document.getElementById('fontSizeToggle');
+        if (!toggle) return;
+
+        const buttons = toggle.querySelectorAll('.font-size-btn');
+        const html = document.documentElement;
+
+        // LocalStorageから保存されたサイズを復元
+        const savedSize = localStorage.getItem('fontSize') || 'medium';
+        applyFontSize(savedSize);
+
+        buttons.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const size = btn.dataset.size;
+            applyFontSize(size);
+            localStorage.setItem('fontSize', size);
+          });
+        });
+
+        function applyFontSize(size: string) {
+          // クラスをリセット
+          html.classList.remove('font-size-small', 'font-size-large');
+
+          // 新しいサイズクラスを適用
+          if (size === 'small') {
+            html.classList.add('font-size-small');
+          } else if (size === 'large') {
+            html.classList.add('font-size-large');
+          }
+
+          // ボタンのアクティブ状態を更新
+          buttons.forEach(b => {
+            b.classList.toggle('active', b.dataset.size === size);
+          });
+        }
+      });
+    </script>
   </body>
 </html>

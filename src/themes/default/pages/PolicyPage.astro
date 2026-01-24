@@ -94,6 +94,13 @@ const cleanSummary = (text: string) => text.replace(/\*([^*]+)\*/g, '$1');
       </section>
     )}
 
+    <section class="message-link-section">
+      <a href={withBase('/#message')} class="message-link">
+        <span class="message-link-text">魂のメッセージを見る</span>
+        <span class="message-link-arrow">→</span>
+      </a>
+    </section>
+
     <section class="cta-section">
       <img src={withImageBase('/images/common/kokusa/kokusa_please.png')} alt="" class="cta-kokusa" />
       <p>政策について詳しく知りたい方、ご意見・ご質問がある方は、お気軽にお問い合わせください。</p>
@@ -186,6 +193,45 @@ const cleanSummary = (text: string) => text.replace(/\*([^*]+)\*/g, '$1');
     font-size: 0.875rem;
     color: #043e80;
     font-weight: 600;
+  }
+
+  /* 魂のメッセージリンクセクション */
+  .message-link-section {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .message-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: #f8fafc;
+    border: 2px solid #043e80;
+    border-radius: 8px;
+    color: #043e80;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .message-link:hover {
+    background: #043e80;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .message-link-text {
+    font-size: 1rem;
+  }
+
+  .message-link-arrow {
+    font-size: 1.25rem;
+    transition: transform 0.2s;
+  }
+
+  .message-link:hover .message-link-arrow {
+    transform: translateX(4px);
   }
 
   .cta-section {
