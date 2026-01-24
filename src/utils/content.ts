@@ -62,24 +62,18 @@ export interface SiteConfig {
     address: string;
     formUrl: string;
   };
-  social: {
-    twitter: string;
-    facebook: string;
-    instagram: string;
-    youtube: string;
-    line: string;
+  activityLinks?: {
+    note?: string;
+    youtube?: string;
+    twitter?: string;
+    facebook?: string;
+    instagram?: string;
+    tiktok?: string;
   };
   ogp: {
     title: string;
     description: string;
     image: string;
-  };
-  activityLinks?: {
-    note?: string;
-    youtube?: string;
-    twitter?: string;
-    instagram?: string;
-    tiktok?: string;
   };
 }
 

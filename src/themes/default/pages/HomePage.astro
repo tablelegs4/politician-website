@@ -477,33 +477,28 @@ const incumbentData = siteConfig.trustElements.incumbent;
         </div>
 
         <!-- SNSフォロー -->
-        {(siteConfig.social.twitter || siteConfig.social.facebook || siteConfig.social.instagram || siteConfig.social.youtube || siteConfig.social.line) && (
+        {(activityLinks.twitter || activityLinks.facebook || activityLinks.instagram || activityLinks.youtube) && (
           <div class="sidebar-widget social-widget">
             <h3>SNSで最新情報</h3>
             <div class="social-links">
-              {siteConfig.social.twitter && (
-                <a href={siteConfig.social.twitter} class="social-link" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+              {activityLinks.twitter && (
+                <a href={activityLinks.twitter} class="social-link" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
                   X
                 </a>
               )}
-              {siteConfig.social.facebook && (
-                <a href={siteConfig.social.facebook} class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              {activityLinks.facebook && (
+                <a href={activityLinks.facebook} class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                   FB
                 </a>
               )}
-              {siteConfig.social.instagram && (
-                <a href={siteConfig.social.instagram} class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              {activityLinks.instagram && (
+                <a href={activityLinks.instagram} class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                   IG
                 </a>
               )}
-              {siteConfig.social.youtube && (
-                <a href={siteConfig.social.youtube} class="social-link" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+              {activityLinks.youtube && (
+                <a href={activityLinks.youtube} class="social-link" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
                   YT
-                </a>
-              )}
-              {siteConfig.social.line && (
-                <a href={siteConfig.social.line} class="social-link" target="_blank" rel="noopener noreferrer" aria-label="LINE">
-                  LINE
                 </a>
               )}
             </div>
@@ -515,6 +510,16 @@ const incumbentData = siteConfig.trustElements.incumbent;
 </main>
 
 <style>
+  /* =====================================
+     PC用: two-column-layout内の文字サイズを20%増
+     （左右90%表示を前提）
+     ===================================== */
+  @media (min-width: 768px) {
+    .two-column-layout {
+      font-size: 1.2rem; /* ベースを20%増 */
+    }
+  }
+
   /* =====================================
      ファーストビュー
      ===================================== */
@@ -1739,12 +1744,12 @@ const incumbentData = siteConfig.trustElements.incumbent;
      ===================================== */
   .section-title {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     gap: 0.75rem;
   }
 
   .section-title-kokusa {
-    height: 3.5rem;
+    height: 4rem;
     width: auto;
     flex-shrink: 0;
   }
@@ -1755,15 +1760,19 @@ const incumbentData = siteConfig.trustElements.incumbent;
     flex-shrink: 0;
   }
 
-  /* SP用こくさラッパー（下部フェードアウト） */
+  /* こくさラッパー（下線を基準に画像の下部20%を切る） */
   .section-title-kokusa-wrapper {
     display: inline-flex;
-    align-items: flex-start;
+    align-items: flex-start; /* 画像を上から表示し下部を切る */
     flex-shrink: 0;
+    height: 4.8rem; /* 画像の80%を表示（6rem * 0.8） */
+    overflow: hidden;
+    align-self: flex-end; /* wrapper自体を下線にくっつける */
+    margin-bottom: -0.5rem; /* padding-bottom分を相殺 */
   }
 
   .section-title-kokusa-wrapper .section-title-kokusa {
-    height: 3.5rem;
+    height: 6rem;
   }
 
   .consultation-kokusa {
@@ -1828,39 +1837,20 @@ const incumbentData = siteConfig.trustElements.incumbent;
   }
 
   @media (max-width: 767px) {
-    /* SP: こくさ画像を大きく表示し、下20%をフェードアウトでカット */
+    /* SP: こくさ画像を大きく表示し、下部20%をカット（PCと同じ方法） */
     .section-title-kokusa-wrapper {
-      height: 2.8rem;
+      height: 5.6rem; /* 画像の80%を表示（7rem * 0.8） */
       overflow: hidden;
-      position: relative;
-    }
-
-    .section-title-kokusa-wrapper::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 20%;
-      background: linear-gradient(to bottom, transparent 0%, #fff 80%);
-      pointer-events: none;
-    }
-
-    /* 背景がグレー系のセクション用 */
-    .messages-section .section-title-kokusa-wrapper::after {
-      background: linear-gradient(to bottom, transparent 0%, #f8fafc 80%);
-    }
-
-    .support-section .section-title-kokusa-wrapper::after {
-      background: linear-gradient(to bottom, transparent 0%, #fafbfc 80%);
+      align-self: flex-end;
+      margin-bottom: -0.5rem;
     }
 
     .section-title-kokusa-wrapper .section-title-kokusa {
-      height: 3.5rem;
+      height: 7rem;
     }
 
     .section-title-kokusa {
-      height: 2.5rem;
+      height: 5.6rem;
     }
 
     .support-card-kokusa {

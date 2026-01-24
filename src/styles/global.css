@@ -17,7 +17,7 @@ html {
 
 @media (max-width: 767px) {
   html {
-    scroll-padding-top: 60px;
+    scroll-padding-top: 70px;
   }
 }
 
@@ -64,167 +64,11 @@ img {
   }
 }
 
-/* PC: 最大幅制限 */
+/* PC: 最大幅制限（90%表示） */
 @media (min-width: 768px) {
   .container {
-    max-width: 1200px;
-    padding: 0 2rem;
-  }
-}
-
-/* ===========================
-   ヘッダー（SP/PC差別化）
-   =========================== */
-.site-header {
-  background: linear-gradient(180deg, #054a96 0%, #032f5e 100%);
-  color: #fff;
-  padding: 1.25rem 0;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: inset 0 -3px 0 0 #f5b500, 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.site-header .container {
-  max-width: 100%;
-}
-
-.header-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.site-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #fff;
-}
-
-.site-title a {
-  color: inherit;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-}
-
-.header-logo {
-  height: 56px;
-  width: auto;
-}
-
-@media (max-width: 767px) {
-  .site-header {
-    padding: 0.5rem 0;
-  }
-  .header-logo {
-    height: 36px;
-  }
-  .header-inner {
-    position: relative;
-  }
-  .nav-toggle {
-    order: 10;
-    margin-left: auto;
-  }
-}
-
-/* SP: ハンバーガーメニュー（details/summary使用、JSなし） */
-@media (max-width: 767px) {
-  /* SP: details外のPC用navを非表示 */
-  .header-inner > .main-nav {
-    display: none;
-  }
-
-  .nav-toggle {
-    cursor: pointer;
-    user-select: none;
-    position: relative;
-  }
-
-  .nav-toggle summary {
-    list-style: none;
-    font-size: 1.25rem;
-    color: #fff;
-    padding: 0.25rem;
-  }
-
-  .nav-toggle summary::-webkit-details-marker {
-    display: none;
-  }
-
-  .nav-toggle[open] summary {
-    margin-bottom: 0;
-  }
-
-  /* ドロップダウンメニュー */
-  .nav-toggle .main-nav {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: #032f5e;
-    padding: 1rem;
-    border-radius: 4px;
-    min-width: 200px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    z-index: 200;
-  }
-
-  .nav-toggle .main-nav ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .nav-toggle .main-nav a {
-    color: #fff;
-    display: block;
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  }
-
-  .nav-toggle .main-nav li:last-child a {
-    border-bottom: none;
-  }
-
-  .nav-toggle .main-nav a:hover {
-    background: rgba(255, 255, 255, 0.1);
-    text-decoration: none;
-  }
-}
-
-/* PC: 常時表示ナビ */
-@media (min-width: 768px) {
-  /* PC: details（ハンバーガー）を非表示 */
-  .nav-toggle {
-    display: none;
-  }
-
-  /* PC: ナビを右端に配置 */
-  .header-inner > .main-nav {
-    margin-left: auto;
-  }
-
-  .main-nav ul {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    gap: 2.5rem;
-  }
-
-  .main-nav a {
-    color: #fff;
-    font-weight: 500;
-    font-size: 1.0625rem;
-    padding: 0.5rem 0;
-    border-bottom: 2px solid transparent;
-    transition: border-color 0.2s;
-  }
-
-  .main-nav a:hover {
-    border-bottom-color: #fff;
-    text-decoration: none;
+    max-width: 80%;
+    padding: 0 1rem;
   }
 }
 
