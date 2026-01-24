@@ -56,23 +56,17 @@
     "address": "",
     "formUrl": ""
   },
-  "social": {
-    "twitter": "",
-    "facebook": "",
-    "instagram": "",
-    "youtube": "",
-    "line": ""
-  },
   "activityLinks": {
     "note": "https://note.com/closed_business",
     "youtube": "https://www.youtube.com/@KOKUMIN_SHOBON",
     "twitter": "https://x.com/notifications",
+    "facebook": "",
     "instagram": "",
     "tiktok": "https://www.tiktok.com/@kokumin_shobon"
   },
   "ogp": {
     "title": "山田太郎 公式サイト",
-    "description": "すべての住民が安心して暮らせる社会の実現を目指して",
+    "description": "〇〇県〇区 山田太郎 公式サイト 〇〇市、〇〇市、〇〇市",
     "image": "/images/ogp.jpg",
     "faceImage": "/images/profile.jpg"
   }
