@@ -181,7 +181,7 @@ const withBase = (path: string) => {
         const toggle = document.getElementById('fontSizeToggle');
         if (!toggle) return;
 
-        const buttons = toggle.querySelectorAll('.font-size-btn');
+        const buttons = toggle.querySelectorAll<HTMLButtonElement>('.font-size-btn');
         const html = document.documentElement;
 
         // LocalStorageから保存されたサイズを復元
@@ -191,8 +191,10 @@ const withBase = (path: string) => {
         buttons.forEach(btn => {
           btn.addEventListener('click', () => {
             const size = btn.dataset.size;
-            applyFontSize(size);
-            localStorage.setItem('fontSize', size);
+            if (size) {
+              applyFontSize(size);
+              localStorage.setItem('fontSize', size);
+            }
           });
         });
 
