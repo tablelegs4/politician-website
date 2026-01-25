@@ -48,24 +48,22 @@ const hasAchievements = profile.achievements && profile.achievements.length > 0;
       <img src={withImageBase('/images/common/kokusa/kokusa_salute.png')} alt="" class="page-title-kokusa" />
     </h1>
 
-    <!-- プロフィールヘッダー：写真 + 二つ名 + 名前 + 選挙区 -->
+    <!-- プロフィールヘッダー：二つ名 + 名前 + 写真 + 選挙区 -->
     <section class="profile-header">
-      <div class="profile-header-image">
-        <div class="profile-header-image-wrapper">
-        <img
-          src={withImageBase(profile.photo)}
-          alt={`${profile.name}のプロフィール写真`}
-          class="profile-main-image"
-          loading="eager"
-        />
-        </div>
-      </div>
-      <div class="profile-header-info">
+      <div class="profile-header-content">
         {profile.nickname && <p class="profile-nickname" set:html={formatWithEmphasis(profile.nickname)} />}
         <h2 class="profile-fullname">
-          {profile.name}
-          {profile.nameReading && <span class="profile-reading">（{profile.nameReading}）</span>}
+          {profile.nameReading && <ruby>{profile.name}<rp>(</rp><rt>{profile.nameReading}</rt><rp>)</rp></ruby>}
+          {!profile.nameReading && profile.name}
         </h2>
+        <div class="profile-header-image-wrapper">
+          <img
+            src={withImageBase(profile.photo)}
+            alt={`${profile.name}のプロフィール写真`}
+            class="profile-main-image"
+            loading="eager"
+          />
+        </div>
         {profile.basicInfo?.electoralDistrict && profile.basicInfo.electoralDistrict.district && (
           <p class="profile-district">
             {profile.basicInfo.electoralDistrict.type && `${profile.basicInfo.electoralDistrict.type} `}
@@ -191,127 +189,84 @@ const hasAchievements = profile.achievements && profile.achievements.length > 0;
   /* プロフィールヘッダー */
   .profile-header {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    text-align: center;
     background: #f8fafc;
-    border-radius: 2px;
+    border-radius: 8px;
+    padding: 1rem;
   }
 
-  .mobile-header-image-wrapper {
+  .profile-header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0;
+  }
+
+  .profile-header-image-wrapper {
     width: 100%;
     overflow: hidden;
     margin: 0.5rem 0;
   }
 
-  .mobile-header-image {
+  .profile-main-image {
     width: 100%;
     height: auto;
     display: block;
   }
 
-  .profile-main-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .profile-header-info {
-    flex: 1;
-  }
-
   .profile-nickname {
     font-size: 2rem;
-    color: #043e80;
-    font-weight: bold;
-    margin: 0 0 0.5rem;
+    color: #000000;
+    font-weight: 900;
+    margin: 0;
+    font-family: 'Noto Sans JP', "BIZ UDPGothic", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+    white-space: nowrap;
   }
 
   .profile-fullname {
-    font-size: 1.5rem;
-    color: #333;
-    margin: 0 0 0.5rem;
+    font-size: 3rem;
+    color: #000000;
+    margin: 0;
     border: none;
     padding: 0;
+    font-weight: 900;
+    font-family: 'Noto Sans JP', "BIZ UDPGothic", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
   }
 
-  .profile-reading {
-    font-size: 1rem;
+  .profile-fullname rt {
+    font-size: 0.5em;
     font-weight: normal;
     color: #666;
   }
 
   .profile-district {
     font-size: 0.9375rem;
-    color: #555;
-    margin: 0;
+    color: #000000;
+    margin: 0 0 0.75rem;
     line-height: 1.6;
   }
 
   .profile-cities {
     display: block;
     font-size: 0.875rem;
-    color: #666;
+    color: #000000;
     margin-top: 0.25rem;
   }
 
   @media (max-width: 600px) {
     .profile-header {
-      flex-direction: column;
-      text-align: center;
       padding: 1rem;
-      gap: 0;
-    }
-
-    .profile-header-image {
-      width: 200px;
-      height: 200px;
-      margin: 0.5rem auto;
-      order: 3;
-      border: 3px solid #043e80;
-    }
-
-    .profile-header-info {
-      display: contents;
     }
 
     .profile-nickname {
       font-size: 2rem;
-    font-style: bold;
-    color: #000000;
-    border: none;
-    padding: 0;
-    font-weight: 900;
-    font-family: 'Noto Sans JP', "BIZ UDPGothic", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
-      order: 1;
     }
 
     .profile-fullname {
-      font-size: 1.25rem;
-      color: #333;
-      margin: 0;
-      border: none;
-      padding: 0;
-      order: 2;
-    }
-
-    .profile-reading {
-      font-size: 1rem;
-      font-weight: normal;
-      color: #666;
-    }
-
-    .profile-district {
-      font-size: 0.9375rem;
-      color: #333;
-      margin: 0 0 0.75rem;
-      line-height: 1.6;
-      order: 4;
-    }
-
-    .profile-cities {
-      display: block;
-      font-size: 0.875rem;
-      color: #666;
-      margin-top: 0.25rem;
+      font-size: 3rem;
     }
   }
 
