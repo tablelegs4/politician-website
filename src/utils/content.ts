@@ -91,7 +91,7 @@ export interface Profile {
     activityArea?: string;       // 活動地域
     birthYear?: string;          // 生年
     currentAddress?: string;     // 現住所
-    birthplace?: string;         // 出身地
+    birthplace?: string;         // 出身地（任意）
     education?: string;          // 最終学歴
     motto?: string;              // 座右の銘
     respectedPerson?: string;    // 尊敬する人物
