@@ -1774,7 +1774,9 @@ const incumbentData = siteConfig.trustElements.incumbent;
   .section-title-kokusa {
     height: 4rem;
     width: auto;
+    max-width: 100%;
     flex-shrink: 0;
+    object-fit: contain;
   }
 
   .support-card-kokusa {
@@ -1938,17 +1940,6 @@ const incumbentData = siteConfig.trustElements.incumbent;
   /* 強調表示（アスタリスク囲み） */
   .emphasis {
     color: #c41e3a;
-    font-weight: bold;
-    text-decoration: none;
-ar {
-      display: none;
-    }
+    font-weight: 900;
   }
-
 </style>
-
-<style is:global>
-  /* 強調表示（アスタリスク囲み） */
-  .emphasis {
-    color: #c41e3a;
-    font-weight: bold;
