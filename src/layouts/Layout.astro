@@ -147,26 +147,25 @@ const withBase = (path: string) => {
         }
       }
 
-      /* 文字サイズ変更クラス（本文テキストのみに適用、ヒーロー・見出しは除外） */
-      :global(html.font-size-small .container:not(.hero-content-below *) p:not(.hero-subtitle)),
-      :global(html.font-size-small .container .main-content p),
+      /* 文字サイズ変更クラス（本文テキストのみに適用、見出し・タイトル系は除外） */
+      :global(html.font-size-small .container .main-content p:not(.section-title):not(.mobile-profile-nickname)),
       :global(html.font-size-small .container .main-content li),
-      :global(html.font-size-small .container .sidebar p),
+      :global(html.font-size-small .container .sidebar p:not(.section-title)),
       :global(html.font-size-small .container .card-description),
       :global(html.font-size-small .container .policy-card-summary),
       :global(html.font-size-small .container .faq-detail),
       :global(html.font-size-small .container .message-answer) {
-        font-size: 13px;
+        font-size: 15px;
       }
 
-      :global(html.font-size-large .container .main-content p),
+      :global(html.font-size-large .container .main-content p:not(.section-title):not(.mobile-profile-nickname)),
       :global(html.font-size-large .container .main-content li),
-      :global(html.font-size-large .container .sidebar p),
+      :global(html.font-size-large .container .sidebar p:not(.section-title)),
       :global(html.font-size-large .container .card-description),
       :global(html.font-size-large .container .policy-card-summary),
       :global(html.font-size-large .container .faq-detail),
       :global(html.font-size-large .container .message-answer) {
-        font-size: 20px;
+        font-size: 21px;
       }
 
       /* フローティングボタンの位置固定 */
