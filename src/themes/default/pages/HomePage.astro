@@ -198,7 +198,7 @@ const showAchievementsOnTop = profile.showAchievementsOnTop && profile.achieveme
               <div class="mobile-profile-achievements">
                 <h4 class="mobile-achievements-title">実績</h4>
                 <ul class="mobile-achievements-list">
-                  {profile.achievements.map((item: string) => (
+                  {profile.achievements?.map((item: string) => (
                     <li>{item}</li>
                   ))}
                 </ul>
@@ -433,7 +433,7 @@ const showAchievementsOnTop = profile.showAchievementsOnTop && profile.achieveme
             <div class="sidebar-achievements">
               <h4 class="sidebar-achievements-title">実績</h4>
               <ul class="sidebar-achievements-list">
-                {profile.achievements.map((item: string) => (
+                {profile.achievements?.map((item: string) => (
                   <li>{item}</li>
                 ))}
               </ul>

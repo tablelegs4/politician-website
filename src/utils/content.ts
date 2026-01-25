@@ -115,6 +115,7 @@ export interface Profile {
     detail: string;
   } | string;
   achievements?: string[];
+  showAchievementsOnTop?: boolean;
   contact: {
     office: string;
     email: string;
