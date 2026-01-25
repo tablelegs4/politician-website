@@ -196,10 +196,15 @@ const hasAchievements = profile.achievements && profile.achievements.length > 0;
       )}
 
       <section class="mt-4 cta-with-kokusa">
-        <img src={withImageBase('/images/common/kokusa/kokusa_bow.png')} alt="" class="cta-kokusa" />
-        <div class="text-center">
-          <a href={withBase('/policy/')} class="btn">政策を見る</a>
-          <a href={withBase('/contact/')} class="btn btn-secondary" style="margin-left: 1rem;">お問い合わせ</a>
+        <div class="cta-image-wrapper">
+          <img src={withImageBase('/images/common/kokusa/kokusa_bow.png')} alt="" class="cta-kokusa" />
+        </div>
+        <div class="cta-buttons-wrapper">
+          <p class="cta-message">ご意見・ご要望を<br />お聞かせください！</p>
+          <div class="cta-buttons">
+            <a href={withBase('/policy/')} class="btn">政策を見る</a>
+            <a href={withBase('/contact/')} class="btn btn-secondary">お問い合わせ</a>
+          </div>
         </div>
       </section>
     </div>
@@ -370,17 +375,42 @@ const hasAchievements = profile.achievements && profile.achievements.length > 0;
   /* CTA */
   .cta-with-kokusa {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    gap: 1rem;
+    gap: 2rem;
     padding: 2rem;
     background: #f8fafc;
     border-radius: 8px;
   }
 
+  .cta-image-wrapper {
+    flex: 0 0 auto;
+  }
+
   .cta-kokusa {
-    height: 80px;
+    height: 160px;
     width: auto;
+  }
+
+  .cta-buttons-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .cta-message {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: bold;
+    color: #043e80;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
   }
 
   @media (max-width: 600px) {
@@ -392,8 +422,23 @@ const hasAchievements = profile.achievements && profile.achievements.length > 0;
       height: 7rem;
     }
 
+    .cta-with-kokusa {
+      flex-direction: row;
+      gap: 1.5rem;
+      padding: 1.5rem;
+    }
+
     .cta-kokusa {
-      height: 60px;
+      height: 120px;
+    }
+
+    .cta-buttons-wrapper {
+      align-items: flex-start;
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+      gap: 0.75rem;
     }
   }
 </style>
