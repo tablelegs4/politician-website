@@ -321,12 +321,19 @@ const showAchievementsOnTop = profile.showAchievementsOnTop && profile.achieveme
         <!-- FAQ：国民民主党によくある質問 -->
         <section id="faq" class="section-block faq-section">
           <h2 class="section-title faq-title-custom">
-            <span class="faq-title-name">山田たろうが答える！</span>
-            <span class="faq-title-main">国民民主党によくある質問！</span>
-            <span class="section-title-kokusa-wrapper"><img src={withImageBase('/images/common/kokusa/kokusa_think.png')} alt="" class="section-title-kokusa" /></span>
+            <span class="faq-title-kokusa"><img src={withImageBase('/images/common/kokusa/kokusa_confront.png')} alt="" /></span>
+            <span class="faq-title-text">
+              <span class="faq-title-name">{profile.nameReading}</span>
+              <span class="faq-title-sub">が答える！</span>
+              <!-- 【切り替え】2行版（現在有効）↓ -->
+              <span class="faq-title-main faq-title-main--two-line"><span class="faq-title-party">国民民主党に</span><span class="faq-title-faq">よくある質問！</span></span>
+              <!-- 【切り替え】1行版（使う場合は上をコメントアウトし、下を有効に）↓
+              <span class="faq-title-main">国民民主党によくある質問！</span>
+              -->
+            </span>
           </h2>
           <div class="faq-list">
-            <details class="faq-item" open>
+            <details class="faq-item">
               <summary class="faq-question">他の政党と違うところは？</summary>
               <div class="faq-answer">
                 <p class="faq-lead">我々は「対決より解決」です！</p>
@@ -1127,51 +1134,94 @@ const showAchievementsOnTop = profile.showAchievementsOnTop && profile.achieveme
   /* FAQセクションカスタムタイトル */
   .faq-section {
     background: #f8fafc;
-    padding: 2rem;
+    padding: 1rem 2rem 2rem 2rem;
     border-radius: 12px;
   }
 
   .faq-title-custom {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.25rem;
-    border-bottom: none;
-    padding-bottom: 1rem;
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
   }
 
-  .faq-title-custom .section-title-kokusa-wrapper {
-    position: absolute;
-    right: 0;
-    top: 0;
+  .faq-title-kokusa {
+    display: inline-flex;
+    align-items: flex-start;
+    flex-shrink: 0;
+    height: 4.8rem;
+    overflow: hidden;
+    align-self: flex-end;
+    margin-bottom: -0.5rem;
+  }
+
+  .faq-title-kokusa img {
+    height: 6rem;
+    width: auto;
+  }
+
+  .faq-title-text {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0;
   }
 
   .faq-title-name {
+    font-size: 2rem;
+    color: #043e80;
+    font-weight: bold;
+    line-height: 1.2;
+  }
+
+  .faq-title-sub {
+    text-align: right;
     font-size: 1rem;
-    color: #666;
-    font-weight: normal;
+    color: #043e80;
+    font-weight: bold;
+    line-height: 1.4;
   }
 
   .faq-title-main {
-    font-size: 1.5rem;
+    font-size: 1rem;
     color: #043e80;
     font-weight: bold;
+    line-height: 1.4;
+  }
+
+  /* 【切り替え】2行版用スタイル */
+  .faq-title-main--two-line {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .faq-title-main--two-line .faq-title-party {
+    align-self: flex-start;
+  }
+
+  .faq-title-main--two-line .faq-title-faq {
+    align-self: flex-end;
   }
 
   @media (max-width: 767px) {
     .faq-section {
-      padding: 1.5rem 1rem;
+      padding: 0.0rem 1rem 1.5rem 1rem;
     }
 
-    .faq-title-custom {
-      position: relative;
+    .faq-title-kokusa {
+      height: 5.6rem;
     }
 
-    .faq-title-custom .section-title-kokusa-wrapper {
-      position: static;
-      margin-top: 0.5rem;
+    .faq-title-kokusa img {
+      height: 7rem;
     }
 
     .faq-title-name {
+      font-style: bold;
+      font-size: 1.25rem;
+    }
+
+    .faq-title-sub {
+      font-style: bold;
       font-size: 0.875rem;
     }
 
