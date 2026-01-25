@@ -191,6 +191,23 @@ TOPページはすべてのコンテンツを1枚のWebページで網羅する�
   - 単なる経歴紹介に留めない
   - 価値観・経験・判断への影響を意識した構成とする
 
+- **基本情報データ構造**
+
+  | 項目 | フィールド名 | 必須 |
+  | --- | --- | --- |
+  | 氏名 | name | ○ |
+  | 活動地域 | activityArea | ○ |
+  | 生年 | birthYear | ○ |
+  | 現住所 | currentAddress | ○ |
+  | 出身地 | birthplace | ○ |
+  | 最終学歴 | education | ○ |
+  | 座右の銘 | motto | ○ |
+  | 尊敬する人物 | respectedPerson | ○ |
+  | 家族構成 | family | ○ |
+  | 趣味 | hobbies | - |
+  | 愛犬の名前 | petName | - |
+  | 朝の日課 | morningRoutine | - |
+
 ---
 
 ## 4. 本仕様の適用範囲

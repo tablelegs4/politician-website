@@ -13,42 +13,17 @@
   ],
   "nickname": "*土*の*匂*いがする*政治家*",
   "basicInfo": {
+    "activityArea": "東京5区（目黒区・世田谷区）",
     "birthYear": "1975年",
-    "location": "東京都世田谷区",
-    "locationType": "birthplace",
-    "electoralDistrict": {
-      "type": "衆議院議員",
-      "term": 2,
-      "district": "東京5区",
-      "cities": [
-        "目黒区",
-        "世田谷区（一部）"
-      ]
-    }
-  },
-  "personalInfo": {
-    "items": [
-      {
-        "title": "座右の銘",
-        "content": "為せば成る、為さねば成らぬ何事も"
-      },
-      {
-        "title": "尊敬する政治家",
-        "content": "田中角栄"
-      },
-      {
-        "title": "家族構成",
-        "content": "妻、長男（高校生）、長女（中学生）"
-      },
-      {
-        "title": "愛犬の名前",
-        "content": "シンバ（柴犬）"
-      },
-      {
-        "title": "朝の日課",
-        "content": "二度寝する"
-      }
-    ]
+    "currentAddress": "東京都目黒区",
+    "birthplace": "東京都世田谷区",
+    "education": "東京大学法学部卒業",
+    "motto": "為せば成る、為さねば成らぬ何事も",
+    "respectedPerson": "田中角栄",
+    "family": "妻、長男（高校生）、長女（中学生）",
+    "hobbies": "",
+    "petName": "シンバ（柴犬）",
+    "morningRoutine": "二度寝する"
   },
   "history": [
     {

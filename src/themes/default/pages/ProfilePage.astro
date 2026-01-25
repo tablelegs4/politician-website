@@ -61,15 +61,8 @@ const hasAchievements = profile.achievements && profile.achievements.length > 0;
               loading="eager"
             />
           </div>
-          {profile.basicInfo?.electoralDistrict && profile.basicInfo.electoralDistrict.district && (
-            <p class="profile-district">
-              {profile.basicInfo.electoralDistrict.type && `${profile.basicInfo.electoralDistrict.type} `}
-              {profile.basicInfo.electoralDistrict.term && `${profile.basicInfo.electoralDistrict.term}期 `}
-              {profile.basicInfo.electoralDistrict.district}
-              {profile.basicInfo.electoralDistrict.cities && profile.basicInfo.electoralDistrict.cities.length > 0 && (
-                <span class="profile-cities">（{profile.basicInfo.electoralDistrict.cities.join('、')}）</span>
-              )}
-            </p>
+          {profile.basicInfo?.activityArea && (
+            <p class="profile-district">{profile.basicInfo.activityArea}</p>
           )}
         </div>
       </section>
@@ -85,37 +78,72 @@ const hasAchievements = profile.achievements && profile.achievements.length > 0;
             <div class="profile-info-label">氏名</div>
             <div class="profile-info-value">{profile.name}{profile.nameReading && `（${profile.nameReading}）`}</div>
           </div>
+          {profile.basicInfo?.activityArea && (
+            <div class="profile-info-item">
+              <div class="profile-info-label">活動地域</div>
+              <div class="profile-info-value">{profile.basicInfo.activityArea}</div>
+            </div>
+          )}
           {profile.basicInfo?.birthYear && (
             <div class="profile-info-item">
               <div class="profile-info-label">生年</div>
               <div class="profile-info-value">{profile.basicInfo.birthYear}</div>
             </div>
           )}
-          {profile.basicInfo?.location && (
+          {profile.basicInfo?.currentAddress && (
             <div class="profile-info-item">
-              <div class="profile-info-label">{profile.basicInfo.locationType === 'residence' ? '現住所' : '出身地'}</div>
-              <div class="profile-info-value">{profile.basicInfo.location}</div>
+              <div class="profile-info-label">現住所</div>
+              <div class="profile-info-value">{profile.basicInfo.currentAddress}</div>
             </div>
           )}
-          {profile.basicInfo?.electoralDistrict && profile.basicInfo.electoralDistrict.district && (
+          {profile.basicInfo?.birthplace && (
             <div class="profile-info-item">
-              <div class="profile-info-label">活動地域</div>
-              <div class="profile-info-value">
-                {profile.basicInfo.electoralDistrict.type && `${profile.basicInfo.electoralDistrict.type} `}
-                {profile.basicInfo.electoralDistrict.term && `${profile.basicInfo.electoralDistrict.term}期 `}
-                {profile.basicInfo.electoralDistrict.district}
-                {profile.basicInfo.electoralDistrict.cities && profile.basicInfo.electoralDistrict.cities.length > 0 && (
-                  <div class="district-cities">（{profile.basicInfo.electoralDistrict.cities.join('、')}）</div>
-                )}
-              </div>
+              <div class="profile-info-label">出身地</div>
+              <div class="profile-info-value">{profile.basicInfo.birthplace}</div>
             </div>
           )}
-          {profile.personalInfo?.items && profile.personalInfo.items.length > 0 && profile.personalInfo.items.map((item: { title: string; content: string }) => (
+          {profile.basicInfo?.education && (
             <div class="profile-info-item">
-              <div class="profile-info-label">{item.title}</div>
-              <div class="profile-info-value">{item.content}</div>
+              <div class="profile-info-label">最終学歴</div>
+              <div class="profile-info-value">{profile.basicInfo.education}</div>
             </div>
-          ))}
+          )}
+          {profile.basicInfo?.motto && (
+            <div class="profile-info-item">
+              <div class="profile-info-label">座右の銘</div>
+              <div class="profile-info-value">{profile.basicInfo.motto}</div>
+            </div>
+          )}
+          {profile.basicInfo?.respectedPerson && (
+            <div class="profile-info-item">
+              <div class="profile-info-label">尊敬する人物</div>
+              <div class="profile-info-value">{profile.basicInfo.respectedPerson}</div>
+            </div>
+          )}
+          {profile.basicInfo?.family && (
+            <div class="profile-info-item">
+              <div class="profile-info-label">家族構成</div>
+              <div class="profile-info-value">{profile.basicInfo.family}</div>
+            </div>
+          )}
+          {profile.basicInfo?.hobbies && (
+            <div class="profile-info-item">
+              <div class="profile-info-label">趣味</div>
+              <div class="profile-info-value">{profile.basicInfo.hobbies}</div>
+            </div>
+          )}
+          {profile.basicInfo?.petName && (
+            <div class="profile-info-item">
+              <div class="profile-info-label">愛犬の名前</div>
+              <div class="profile-info-value">{profile.basicInfo.petName}</div>
+            </div>
+          )}
+          {profile.basicInfo?.morningRoutine && (
+            <div class="profile-info-item">
+              <div class="profile-info-label">朝の日課</div>
+              <div class="profile-info-value">{profile.basicInfo.morningRoutine}</div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -225,12 +253,13 @@ const hasAchievements = profile.achievements && profile.achievements.length > 0;
     font-size: 3rem;
     border: none;
     padding: 0;
+    color: #000000;
   }
 
   .profile-fullname rt {
-    font-size: 0.5em;
+    font-size: 0.4em;
     font-weight: normal;
-    color: #666;
+    color: #000000;
   }
 
   .profile-district {

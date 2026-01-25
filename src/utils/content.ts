@@ -88,15 +88,17 @@ export interface Profile {
   expertise: string[];
   nickname?: string;
   basicInfo?: {
-    birthYear?: string;
-    location?: string;
-    locationType?: 'birthplace' | 'residence';
-    electoralDistrict?: {
-      type?: string;
-      term?: number;
-      district: string;
-      cities?: string[];
-    };
+    activityArea?: string;       // 活動地域
+    birthYear?: string;          // 生年
+    currentAddress?: string;     // 現住所
+    birthplace?: string;         // 出身地
+    education?: string;          // 最終学歴
+    motto?: string;              // 座右の銘
+    respectedPerson?: string;    // 尊敬する人物
+    family?: string;             // 家族構成
+    hobbies?: string;            // 趣味（任意）
+    petName?: string;            // 愛犬の名前（任意）
+    morningRoutine?: string;     // 朝の日課（任意）
   };
   personalInfo?: {
     items: Array<{

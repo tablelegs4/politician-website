@@ -185,15 +185,8 @@ const incumbentData = siteConfig.trustElements.incumbent;
                 loading="lazy"
               />
             </div>
-            {profile.basicInfo?.electoralDistrict && profile.basicInfo.electoralDistrict.district && (
-              <p class="mobile-profile-district">
-                {profile.basicInfo.electoralDistrict.type && `${profile.basicInfo.electoralDistrict.type} `}
-                {profile.basicInfo.electoralDistrict.term && `${profile.basicInfo.electoralDistrict.term}期 `}
-                {profile.basicInfo.electoralDistrict.district}
-                {profile.basicInfo.electoralDistrict.cities && profile.basicInfo.electoralDistrict.cities.length > 0 && (
-                  <span class="mobile-profile-cities">（{profile.basicInfo.electoralDistrict.cities.join('、')}）</span>
-                )}
-              </p>
+            {profile.basicInfo?.activityArea && (
+              <p class="mobile-profile-district">{profile.basicInfo.activityArea}</p>
             )}
             <a href={withBase('/profile/')} class="btn btn-outline mobile-profile-btn">
               詳しくプロフィールを見る
@@ -417,15 +410,8 @@ const incumbentData = siteConfig.trustElements.incumbent;
               loading="lazy"
             />
           </div>
-          {profile.basicInfo?.electoralDistrict && profile.basicInfo.electoralDistrict.district && (
-            <p class="profile-district">
-              {profile.basicInfo.electoralDistrict.type && `${profile.basicInfo.electoralDistrict.type} `}
-              {profile.basicInfo.electoralDistrict.term && `${profile.basicInfo.electoralDistrict.term}期 `}
-              {profile.basicInfo.electoralDistrict.district}
-              {profile.basicInfo.electoralDistrict.cities && profile.basicInfo.electoralDistrict.cities.length > 0 && (
-                <span class="profile-cities">（{profile.basicInfo.electoralDistrict.cities.join('、')}）</span>
-              )}
-            </p>
+          {profile.basicInfo?.activityArea && (
+            <p class="profile-district">{profile.basicInfo.activityArea}</p>
           )}
           <a href={withBase('/profile/')} class="btn btn-outline" style="width: 100%;">
             プロフィールを見る
