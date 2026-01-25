@@ -164,3 +164,14 @@ export function getFeaturedFaq(limit: number = 3): FaqItem[] {
     .sort((a, b) => a.order - b.order)
     .slice(0, limit);
 }
+
+/**
+ * テキストを整形してHTMLに変換
+ * - /n を <br> に変換
+ * - *テキスト* を <strong class="emphasis">テキスト</strong> に変換（強調表示）
+ */
+export function formatText(text: string): string {
+  return text
+    .replace(/\/n/g, '<br>')
+    .replace(/\*([^*]+)\*/g, '<strong class="emphasis">$1</strong>');
+}

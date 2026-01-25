@@ -52,7 +52,7 @@
     }
   ],
   "politicalBelief": {
-    "title": "手取りを増やし、暮らしを豊かに",
+    "title": "手取りを増やし、/n 暮らしを豊かに",
     "detail": "働く人々の生活を第一に考えた政策を推進します。減税と経済成長の両立、子育て世代への支援強化、地方経済の活性化に全力で取り組みます。"
   },
   "achievements": [
@@ -61,6 +61,7 @@
     "地元商店街活性化プロジェクトの立ち上げ",
     "国会質問回数：通算87回"
   ],
+  "showAchievementsOnTop": true,
   "contact": {
     "office": "山田太郎事務所",
     "email": "info@yamada-taro.example.jp",

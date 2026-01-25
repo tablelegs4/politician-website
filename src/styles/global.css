@@ -13,6 +13,7 @@ html {
   scroll-behavior: smooth;
   /* ヘッダー固定時のスクロールオフセット */
   scroll-padding-top: 90px;
+  overflow-x: hidden;
 }
 
 @media (max-width: 767px) {
@@ -25,7 +26,6 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", "Hiragino Sans", sans-serif;
   color: #333;
   background: #fff;
-  overflow-x: hidden;
 }
 
 a {
@@ -115,6 +115,8 @@ img {
 main {
   min-height: 60vh;
   padding: 2rem 0;
+  position: relative;
+  z-index: 1;
 }
 
 /* ヒーローセクションがある場合はmainの上部パディングを削除 */

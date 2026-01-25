@@ -83,6 +83,9 @@ const formatHeroTitle = (title: string) => {
 const isIncumbent = siteConfig.trustElements.mode === 'incumbent';
 const incumbentData = siteConfig.trustElements.incumbent;
 
+// TOPページに実績を表示するかの判定
+const showAchievementsOnTop = profile.showAchievementsOnTop && profile.achievements && profile.achievements.length > 0;
+
 ---
 
 <main id="top">
@@ -191,6 +194,16 @@ const incumbentData = siteConfig.trustElements.incumbent;
             <a href={withBase('/profile/')} class="btn btn-outline mobile-profile-btn">
               詳しくプロフィールを見る
             </a>
+            {showAchievementsOnTop && (
+              <div class="mobile-profile-achievements">
+                <h4 class="mobile-achievements-title">実績</h4>
+                <ul class="mobile-achievements-list">
+                  {profile.achievements.map((item: string) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
             {(activityLinks.youtube || activityLinks.twitter || activityLinks.instagram || activityLinks.tiktok || activityLinks.note) && (
               <div class="mobile-profile-sns-links">
                 {activityLinks.youtube && (
@@ -416,6 +429,16 @@ const incumbentData = siteConfig.trustElements.incumbent;
           <a href={withBase('/profile/')} class="btn btn-outline" style="width: 100%;">
             プロフィールを見る
           </a>
+          {showAchievementsOnTop && (
+            <div class="sidebar-achievements">
+              <h4 class="sidebar-achievements-title">実績</h4>
+              <ul class="sidebar-achievements-list">
+                {profile.achievements.map((item: string) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          )}
           {(activityLinks.youtube || activityLinks.twitter || activityLinks.instagram || activityLinks.tiktok || activityLinks.note) && (
             <div class="profile-sns-links">
               {activityLinks.youtube && (
@@ -1293,6 +1316,35 @@ const incumbentData = siteConfig.trustElements.incumbent;
     background: #35a897;
   }
 
+  /* サイドバー実績セクション */
+  .sidebar-achievements {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e0e0e0;
+    text-align: left;
+  }
+
+  .sidebar-achievements-title {
+    font-size: 0.9375rem;
+    font-weight: bold;
+    color: #043e80;
+    margin: 0 0 0.5rem;
+    padding: 0;
+    border: none;
+  }
+
+  .sidebar-achievements-list {
+    margin: 0;
+    padding-left: 1.125rem;
+    font-size: 0.8125rem;
+    color: #333;
+    line-height: 1.5;
+  }
+
+  .sidebar-achievements-list li {
+    margin-bottom: 0.25rem;
+  }
+
   .profile-bio {
     font-size: 0.9375rem;
     color: #555;
@@ -1439,6 +1491,34 @@ const incumbentData = siteConfig.trustElements.incumbent;
 
   .mobile-profile-sns-note:hover {
     background: #35a897;
+  }
+
+  /* SP向け実績セクション */
+  .mobile-profile-achievements {
+    font-size: 2rem;
+    width: 100%;
+    text-align: left;
+  }
+
+  .mobile-achievements-title {
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: left;
+    color: #043e80;
+    padding: 0;
+    border: none;
+  }
+
+  .mobile-achievements-list {
+    margin: 0;
+    padding-left: 1.25rem;
+    font-size: 0.875rem;
+    color: #333;
+    line-height: 1.6;
+  }
+
+  .mobile-achievements-list li {
+    margin-bottom: 0.25rem;
   }
 
   @media (max-width: 767px) {

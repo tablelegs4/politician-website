@@ -103,6 +103,7 @@ const navItemsSP = [
     background: linear-gradient(180deg, #054a96 0%, #032f5e 100%);
     color: #fff;
     padding: 1.25rem 0;
+    position: -webkit-sticky;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -181,6 +182,10 @@ const navItemsSP = [
   @media (max-width: 767px) {
     .site-header {
       padding: 0.3rem 0;
+      overflow: visible;
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
     }
     .site-header .container {
       padding-left: 5px;
@@ -199,6 +204,7 @@ const navItemsSP = [
       height: 80px;
       margin-left: 0px;
       margin-bottom: -37px;
+      z-index: 101;
     }
     .nav-toggle[open] ~ .menu-overlay {
       display: block;

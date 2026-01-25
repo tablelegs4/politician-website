@@ -1,13 +1,8 @@
 ---
 // デフォルトテーマのプロフィールページ（足立方式）
-import { getProfile } from '../../../utils/content';
+import { getProfile, formatText } from '../../../utils/content';
 
 const profile = getProfile();
-
-// アスタリスク囲みのテキストを強調表示に変換する関数
-const formatWithEmphasis = (text: string) => {
-  return text.replace(/\*([^*]+)\*/g, '<strong class="emphasis">$1</strong>');
-};
 
 // URLパラメータを保持する関数
 const themeParam = Astro.url.searchParams.get('theme');
@@ -48,7 +43,7 @@ const hasAchievements = profile.achievements && profile.achievements.length > 0;
       <!-- プロフィールヘッダー：二つ名 + 名前 + 写真 + 選挙区 -->
       <section class="profile-header">
         <div class="profile-header-content">
-          {profile.nickname && <p class="profile-nickname" set:html={formatWithEmphasis(profile.nickname)} />}
+          {profile.nickname && <p class="profile-nickname" set:html={formatText(profile.nickname)} />}
           <h2 class="profile-fullname">
             {profile.nameReading && <ruby>{profile.name}<rp>(</rp><rt>{profile.nameReading}</rt><rp>)</rp></ruby>}
             {!profile.nameReading && profile.name}
@@ -169,7 +164,7 @@ const hasAchievements = profile.achievements && profile.achievements.length > 0;
       {profile.politicalBelief && (
         <section class="mt-4">
           <h2 class="section-title-with-kokusa">
-            <span>政治信条</span>
+            <span>政治信条<br><span class="section-title-sub">(堅く信じ守っている考え)</span></span>
             <span class="section-kokusa-wrapper"><img src={withImageBase('/images/common/kokusa/kokusa_fistpump.png')} alt="" class="section-kokusa" /></span>
           </h2>
           <div class="political-belief">
@@ -177,8 +172,8 @@ const hasAchievements = profile.achievements && profile.achievements.length > 0;
               <p>{profile.politicalBelief}</p>
             ) : (
               <>
-                <p class="political-belief-title">{profile.politicalBelief.title}</p>
-                <p class="political-belief-detail">{profile.politicalBelief.detail}</p>
+                <p class="political-belief-title" set:html={formatText(profile.politicalBelief.title)} />
+                <p class="political-belief-detail" set:html={formatText(profile.politicalBelief.detail)} />
               </>
             )}
           </div>
@@ -348,6 +343,13 @@ const hasAchievements = profile.achievements && profile.achievements.length > 0;
     margin-bottom: 1.5rem;
     padding-bottom: 0.5rem;
     border-bottom: 2px solid #043e80;
+  }
+
+  .section-title-sub {
+    font-size: 0.85rem;
+    font-style: bold;
+    line-height: 1.2;
+    display: block;
   }
 
   /* こくさラッパー（下線を基準に画像の下部20%を切る） */
