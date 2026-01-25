@@ -9,17 +9,13 @@ import Layout from '../../layouts/Layout.astro';
   <main>
     <div class="container">
       <h1>お問い合わせ</h1>
-      <p>
-        ご意見・ご要望・ご質問など、お気軽にお問い合わせください。<br>
-        皆様の声を大切にし、地域の課題解決に全力で取り組みます。
-      </p>
 
-      <section class="card mt-4">
-        <h2>お問い合わせフォーム</h2>
+      <section class="contact-intro">
         <p>
-          下記のボタンから外部フォームへ移動し、お問い合わせ内容を送信してください。
+          ご意見・ご要望・ご質問など、お気軽にお問い合わせください。<br>
+          皆様の声を大切にし、地域の課題解決に全力で取り組みます。
         </p>
-        <div class="mt-2">
+        <div class="mt-3 text-center">
           <!-- 実際の運用時はGoogle Formなどの外部フォームURLに変更 -->
           <a
             href="https://forms.gle/example"
@@ -30,7 +26,7 @@ import Layout from '../../layouts/Layout.astro';
             お問い合わせフォームを開く
           </a>
         </div>
-        <p class="mt-2" style="font-size: 0.875rem; color: #666;">
+        <p class="note mt-2 text-center">
           ※ 外部サイト（Google Forms）が開きます
         </p>
       </section>
@@ -43,7 +39,7 @@ import Layout from '../../layouts/Layout.astro';
             〒100-0001<br>
             東京都○○区○○ 1-2-3
           </p>
-          <p class="mt-2">
+          <div class="mt-2 text-center">
             <a
               href="https://maps.google.com/?q=東京都○○区○○1-2-3"
               target="_blank"
@@ -52,13 +48,13 @@ import Layout from '../../layouts/Layout.astro';
             >
               Google Mapで見る
             </a>
-          </p>
+          </div>
         </div>
       </section>
 
       <section class="mt-4">
         <h2>ご注意事項</h2>
-        <ul style="line-height: 2; color: #555;">
+        <ul class="notice-list">
           <li>お問い合わせ内容によっては、回答にお時間をいただく場合がございます。</li>
           <li>ご記入いただいた個人情報は、<a href="/privacy/">プライバシーポリシー</a>に基づき適切に管理いたします。</li>
           <li>営業・宣伝目的のお問い合わせはご遠慮ください。</li>
@@ -67,3 +63,40 @@ import Layout from '../../layouts/Layout.astro';
     </div>
   </main>
 </Layout>
+
+<style>
+  .contact-intro {
+    color: #000;
+  }
+
+  .contact-intro p {
+    color: #000;
+    line-height: 1.8;
+  }
+
+  .note {
+    font-size: 0.875rem;
+    color: #333;
+  }
+
+  .card p,
+  .card strong {
+    color: #000;
+  }
+
+  .notice-list {
+    list-style: disc;
+    margin: 0;
+    padding-left: 1.25rem;
+    line-height: 2;
+    color: #000;
+  }
+
+  .notice-list li {
+    margin-bottom: 0.5rem;
+  }
+
+  .notice-list a {
+    color: #043e80;
+  }
+</style>
