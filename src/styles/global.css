@@ -77,8 +77,7 @@ img {
    =========================== */
 .site-footer {
   background: #f5f5f5;
-  padding: 2rem 0 1rem;
-  margin-top: 4rem;
+  padding: 0 0 1rem;
   border-top: 1px solid #ddd;
 }
 
@@ -375,6 +374,17 @@ h3 {
 }
 
 /* ===========================
+   プライバシーポリシーページ
+   =========================== */
+.privacy-page {
+  font-size: 1rem;
+}
+
+.privacy-page h1 {
+  font-size: 1.5rem;
+}
+
+/* ===========================
    アクセシビリティ強化
    =========================== */
 .sr-only {
@@ -405,3 +415,17 @@ h3 {
 .mb-2 { margin-bottom: 1rem; }
 .mb-3 { margin-bottom: 1.5rem; }
 .mb-4 { margin-bottom: 2rem; }
+
+/* ===========================
+   リスト（デフォルト）
+   =========================== */
+main ul:not([class]),
+main ol:not([class]) {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+main ul:not([class]) li,
+main ol:not([class]) li {
+  margin-bottom: 0.5rem;
+}

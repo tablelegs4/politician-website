@@ -1,5 +1,6 @@
 ---
 // フッターコンポーネント
+import profile from '../data/profile.json';
 const currentYear = new Date().getFullYear();
 
 // URLパラメータを保持する関数
@@ -28,9 +29,10 @@ const withBase = (path: string) => {
           <li><a href={withBase('/news/')}>お知らせ</a></li>
           <li><a href={withBase('/contact/')}>お問い合わせ</a></li>
           <li><a href={withBase('/privacy/')}>プライバシーポリシー</a></li>
+          <li><a href={withBase('/site-policy/')}>サイトポリシー</a></li>
         </ul>
       </nav>
-      <p class="copyright">&copy; {currentYear} 山田太郎. All rights reserved.</p>
+      <p class="copyright">&copy; {currentYear} {profile.name}. All rights reserved.</p>
     </div>
   </div>
 </footer>
