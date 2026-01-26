@@ -41,6 +41,9 @@ const withImageBase = (path: string) => {
 // 活動報告リンク設定
 const activityLinks = siteConfig.activityLinks || {};
 
+// 外部リンク設定
+const externalLinks = siteConfig.externalLinks || {};
+
 // noteの記事を取得（ビルド時に自動更新）
 const noteUsername = activityLinks.note ? activityLinks.note.replace('https://note.com/', '').replace(/\/$/, '') : '';
 const noteArticles = noteUsername ? await getNoteArticles(noteUsername, 5) : [];
@@ -379,12 +382,14 @@ const showAchievementsOnTop = profile.showAchievementsOnTop && profile.achieveme
           <h2 class="section-title"><span><span class="support-title-large">応援</span>お願いします！</span><span class="section-title-kokusa-wrapper"><img src={withImageBase('/images/common/kokusa/kokusa_bow.png')} alt="" class="section-title-kokusa" /></span></h2>
           <p class="support-lead">皆様のご支援が、政治活動の力になります！</p>
           <div class="support-cards">
-            <a href="https://www.dpfp.or.jp/supporter" target="_blank" rel="noopener noreferrer" class="support-card support-card-party">
-              <div class="support-card-text">
-                <h3 class="support-card-title">党員・サポーターになる</h3>
-                <p class="support-card-description">国民民主党を応援する</p>
-              </div>
-            </a>
+            {externalLinks.partySupporter && (
+              <a href={externalLinks.partySupporter} target="_blank" rel="noopener noreferrer" class="support-card support-card-party">
+                <div class="support-card-text">
+                  <h3 class="support-card-title">党員・サポーターになる</h3>
+                  <p class="support-card-description">国民民主党を応援する</p>
+                </div>
+              </a>
+            )}
             <a href={withBase('/support/#supporters-club')} class="support-card support-card-club">
               <div class="support-card-text">
                 <h3 class="support-card-title">後援会に入る</h3>

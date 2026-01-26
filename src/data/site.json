@@ -53,8 +53,13 @@
   "contact": {
     "email": "",
     "phone": "",
-    "address": "",
-    "formUrl": ""
+    "address": "東京都○○区○○ 1-2-3",
+    "postalCode": "100-0001",
+    "formUrl": "https://forms.gle/example",
+    "mapQuery": "東京都○○区○○1-2-3"
+  },
+  "externalLinks": {
+    "partySupporter": "https://www.dpfp.or.jp/supporter"
   },
   "activityLinks": {
     "note": "https://note.com/closed_business",
