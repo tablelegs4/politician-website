@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import tailwindcss from '@tailwindcss/vite';
 import dotenv from 'dotenv';
 
 // .envファイルを読み込む
@@ -20,6 +21,7 @@ export default defineConfig({
     inlineStylesheets: 'never', // CSSを外部ファイルとして保持
   },
   vite: {
+    plugins: [tailwindcss()],
     build: {
       cssMinify: true,
     },
