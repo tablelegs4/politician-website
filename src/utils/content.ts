@@ -61,6 +61,8 @@ export interface SiteConfig {
     phone: string;
     address: string;
     formUrl: string;
+    postalCode?: string;
+    mapQuery?: string;
   };
   activityLinks?: {
     note?: string;
@@ -69,6 +71,9 @@ export interface SiteConfig {
     facebook?: string;
     instagram?: string;
     tiktok?: string;
+  };
+  externalLinks?: {
+    partySupporter?: string;
   };
   ogp: {
     title: string;
