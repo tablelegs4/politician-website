@@ -113,7 +113,7 @@
 
 .hero-layout-1 .hero-content-below {
   background: linear-gradient(180deg, #032f5e 0%, #054a96 100%);
-  padding: 2.5rem 0;
+  padding: 2.5rem 0.75rem;
   position: relative;
   box-shadow: inset 0 3px 0 0 #f5b500;
 }
@@ -145,7 +145,7 @@
 
 @media (max-width: 767px) {
   .hero-layout-1 .hero-content-below {
-    padding: 1.5rem 0;
+    padding: 1rem 0.25rem;
   }
   .hero-layout-1 .hero-content-below .container {
     padding: 0;
@@ -154,10 +154,12 @@
     align-items: center;
   }
   .hero-layout-1 .hero-title {
-    font-size: 1.5rem;
+    font-size: clamp(1rem, 4.5vw, 1.5rem);
+    white-space: nowrap;
   }
   .hero-layout-1 .hero-subtitle {
-    font-size: 0.9375rem;
+    font-size: clamp(0.7rem, 2.8vw, 0.9375rem);
+    white-space: nowrap;
   }
   .hero-layout-1 .hero-cta {
     flex-direction: column;
