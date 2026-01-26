@@ -43,7 +43,7 @@
     aspect-ratio: 16 / 10;
     min-height: 300px;
     max-height: 60vh;
-    padding: 1.5rem;
+    padding: 1.5rem 0.5rem;
   }
 }
 

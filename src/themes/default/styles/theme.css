@@ -145,7 +145,7 @@
 
 @media (max-width: 767px) {
   .hero-layout-1 .hero-content-below {
-    padding: 1rem 0.25rem;
+    padding: 1rem 0.5rem;
   }
   .hero-layout-1 .hero-content-below .container {
     padding: 0;
@@ -231,7 +231,7 @@
     flex-direction: column;
   }
   .hero-layout-2 .hero-content {
-    padding: 2rem 1rem;
+    padding: 1.5rem 0.5rem;
     text-align: center;
   }
   .hero-layout-2 .hero-image {
@@ -298,7 +298,7 @@
     max-height: 60vh;
   }
   .hero-layout-3 .hero-overlay {
-    padding: 1.5rem;
+    padding: 1.5rem 0.5rem;
   }
   .hero-layout-3 .hero-title {
     font-size: 1.5rem;
@@ -396,10 +396,10 @@
 
 @media (max-width: 767px) {
   .hero-layout-4 {
-    padding: 2rem 1rem;
+    padding: 1.5rem 0.5rem;
   }
   .hero-layout-4 .hero-card-content {
-    padding: 1.5rem;
+    padding: 1.5rem 0.5rem;
   }
   .hero-layout-4 .hero-title {
     font-size: 1.5rem;
@@ -493,7 +493,7 @@
   }
   .hero-layout-5 .hero-diagonal-content {
     text-align: center;
-    padding: 2rem 1rem;
+    padding: 1.5rem 0.5rem;
     order: 1; /* モバイルではテキストを先に */
   }
   .hero-layout-5 .hero-diagonal-image {
