@@ -92,61 +92,14 @@ const withBase = (path: string) => {
 
     {/* SP用フローティング文字サイズ切り替えボタン */}
     {SHOW_FONT_SIZE_TOGGLE && (
-      <div class="font-size-toggle" id="fontSizeToggle">
-        <button class="font-size-btn" data-size="small" aria-label="文字を小さく">小</button>
-        <button class="font-size-btn active" data-size="medium" aria-label="文字を標準に">中</button>
-        <button class="font-size-btn" data-size="large" aria-label="文字を大きく">大</button>
+      <div class="font-size-toggle hidden max-md:flex fixed bottom-5 right-4 z-[1000] bg-white rounded-3xl shadow-[0_4px_12px_rgba(0,0,0,0.15)] p-1 gap-0.5 !bottom-5 !right-4" id="fontSizeToggle">
+        <button class="font-size-btn w-9 h-9 border-none rounded-full bg-transparent text-[#666] text-xs font-bold cursor-pointer transition-all duration-200 hover:bg-[#f0f0f0] focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2" data-size="small" aria-label="文字を小さく">小</button>
+        <button class="font-size-btn active w-9 h-9 border-none rounded-full bg-transparent text-[#666] text-xs font-bold cursor-pointer transition-all duration-200 hover:bg-[#f0f0f0] focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 [&.active]:bg-primary [&.active]:text-white" data-size="medium" aria-label="文字を標準に">中</button>
+        <button class="font-size-btn w-9 h-9 border-none rounded-full bg-transparent text-[#666] text-xs font-bold cursor-pointer transition-all duration-200 hover:bg-[#f0f0f0] focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 [&.active]:bg-primary [&.active]:text-white" data-size="large" aria-label="文字を大きく">大</button>
       </div>
     )}
 
     <style>
-      /* フローティング文字サイズ切り替えボタン（SP専用） */
-      .font-size-toggle {
-        display: none;
-      }
-
-      @media (max-width: 767px) {
-        .font-size-toggle {
-          display: flex;
-          position: fixed;
-          bottom: 20px;
-          right: 16px;
-          z-index: 1000;
-          background: #fff;
-          border-radius: 24px;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-          padding: 4px;
-          gap: 2px;
-        }
-
-        .font-size-btn {
-          width: 36px;
-          height: 36px;
-          border: none;
-          border-radius: 50%;
-          background: transparent;
-          color: #666;
-          font-size: 12px;
-          font-weight: bold;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-
-        .font-size-btn:hover {
-          background: #f0f0f0;
-        }
-
-        .font-size-btn.active {
-          background: #043e80;
-          color: #fff;
-        }
-
-        .font-size-btn:focus-visible {
-          outline: 2px solid #043e80;
-          outline-offset: 2px;
-        }
-      }
-
       /* 文字サイズ変更クラス（本文テキストのみに適用、見出し・タイトル系は除外） */
       :global(html.font-size-small .container .main-content p:not(.section-title):not(.mobile-profile-nickname)),
       :global(html.font-size-small .container .main-content li),
@@ -166,12 +119,6 @@ const withBase = (path: string) => {
       :global(html.font-size-large .container .faq-detail),
       :global(html.font-size-large .container .message-answer) {
         font-size: 21px;
-      }
-
-      /* フローティングボタンの位置固定 */
-      .font-size-toggle {
-        bottom: 20px !important;
-        right: 16px !important;
       }
     </style>
 
