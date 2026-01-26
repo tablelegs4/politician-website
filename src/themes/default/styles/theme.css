@@ -17,74 +17,26 @@
 
 /* ロゴ表示 */
 .logo-container {
-  text-align: center;
-  margin-bottom: 2rem;
+  @apply text-center mb-8;
 }
 
 .site-logo {
-  max-width: 150px;
-  height: auto;
-  margin: 0 auto;
-}
-
-@media (max-width: 767px) {
-  .site-logo {
-    max-width: 100px;
-  }
+  @apply max-w-[150px] h-auto mx-auto max-md:max-w-[100px];
 }
 
 /* ===========================
    ヒーローセクション共通
    =========================== */
 .hero-section {
-  margin: 0;
-  padding: 0;
-  width: 100%;
+  @apply m-0 p-0 w-full;
 }
 
 .hero-title {
-  font-size: 2rem;
-  font-weight: 900;
-  margin-bottom: 0.75rem;
-  line-height: 1.5;
-  color: #fff;
-  border: none;
-  padding: 0;
-  letter-spacing: 0.03em;
-}
-
-@media (min-width: 768px) {
-  .hero-title {
-    font-size: 3rem;
-  }
-}
-
-@media (min-width: 1200px) {
-  .hero-title {
-    font-size: 3.5rem;
-  }
+  @apply text-[2rem] md:text-[3rem] xl:text-[3.5rem] font-black mb-3 leading-normal text-white border-0 p-0 tracking-[0.03em];
 }
 
 .hero-subtitle {
-  font-size: 1.125rem;
-  margin-bottom: 0;
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.95);
-  white-space: nowrap;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-}
-
-@media (min-width: 768px) {
-  .hero-subtitle {
-    font-size: 1.375rem;
-  }
-}
-
-@media (min-width: 1200px) {
-  .hero-subtitle {
-    font-size: 1.5rem;
-  }
+  @apply text-lg md:text-[1.375rem] xl:text-2xl mb-0 leading-relaxed text-white/95 whitespace-nowrap font-medium tracking-[0.1em];
 }
 
 /* ===========================
@@ -92,158 +44,70 @@
    1920x1080 (16:9) 画像を想定
    =========================== */
 .hero-layout-1 {
-  background: #fff;
+  @apply bg-white;
 }
 
 .hero-layout-1 .hero-full-image {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  background: #fff;
+  @apply w-full flex justify-center bg-white;
 }
 
 .hero-layout-1 .hero-image-large {
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: calc(100vh - 80px); /* ヘッダー分を引いた1画面に収める */
-  display: block;
-  object-fit: contain;
+  @apply w-auto h-auto max-w-full max-h-[calc(100vh-80px)] block object-contain;
 }
 
 .hero-layout-1 .hero-content-below {
-  background: linear-gradient(180deg, #032f5e 0%, #054a96 100%);
-  padding: 2.5rem 0.75rem;
-  position: relative;
-  box-shadow: inset 0 3px 0 0 #f5b500;
+  @apply bg-gradient-to-b from-[#032f5e] to-[#054a96] px-3 py-10 max-md:px-2 max-md:py-4 relative shadow-[inset_0_3px_0_0_#f5b500];
 }
 
 .hero-layout-1 .hero-content-below .hero-title {
-  color: #fff;
-  text-align: center;
+  @apply text-white text-center max-md:text-[clamp(1rem,4.5vw,1.5rem)] max-md:whitespace-nowrap;
 }
 
 .hero-layout-1 .hero-content-below .hero-subtitle {
-  color: rgba(255, 255, 255, 0.9);
-  text-align: center;
-  width: 100%;
-  margin: 0;
+  @apply text-white/90 text-center w-full m-0 max-md:text-[clamp(0.7rem,2.8vw,0.9375rem)] max-md:whitespace-nowrap;
 }
 
 .hero-layout-1 .hero-content-below .hero-cta {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1.5rem;
-  flex-wrap: wrap;
+  @apply flex justify-center gap-4 mt-6 flex-wrap max-md:flex-col;
+}
+
+.hero-layout-1 .hero-content-below .hero-cta .btn {
+  @apply max-md:w-full max-md:text-center;
+}
+
+.hero-layout-1 .hero-content-below .container {
+  @apply max-md:p-0 max-md:flex max-md:flex-col max-md:items-center;
 }
 
 .hero-layout-1 .trust-elements {
-  justify-content: center;
-  margin-top: 2rem;
-}
-
-@media (max-width: 767px) {
-  .hero-layout-1 .hero-content-below {
-    padding: 1rem 0.5rem;
-  }
-  .hero-layout-1 .hero-content-below .container {
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .hero-layout-1 .hero-title {
-    font-size: clamp(1rem, 4.5vw, 1.5rem);
-    white-space: nowrap;
-  }
-  .hero-layout-1 .hero-subtitle {
-    font-size: clamp(0.7rem, 2.8vw, 0.9375rem);
-    white-space: nowrap;
-  }
-  .hero-layout-1 .hero-cta {
-    flex-direction: column;
-  }
-  .hero-layout-1 .hero-cta .btn {
-    width: 100%;
-    text-align: center;
-  }
+  @apply justify-center mt-8;
 }
 
 /* ===========================
    TOP2: 左右配置（テキスト左・画像右）
    =========================== */
 .hero-layout-2 {
-  background: #043e80;
+  @apply bg-primary;
 }
 
 .hero-layout-2 .hero-image-wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-
-@media (min-width: 768px) {
-  .hero-layout-2 .hero-image-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    align-items: center;
-    min-height: 480px;
-  }
+  @apply max-w-[1200px] mx-auto px-8 max-md:px-0 max-md:flex max-md:flex-col md:grid md:grid-cols-2 md:gap-8 md:items-center md:min-h-[480px];
 }
 
 .hero-layout-2 .hero-content {
-  color: white;
-  padding: 2.5rem 0;
-  text-align: center;
+  @apply text-white py-10 text-center max-md:py-6 max-md:px-2 md:py-12 md:order-1;
 }
 
-@media (min-width: 768px) {
-  .hero-layout-2 .hero-content {
-    padding: 3rem 0;
-    order: 1;
-  }
+.hero-layout-2 .hero-title {
+  @apply max-md:text-2xl;
+}
+
+.hero-layout-2 .hero-subtitle {
+  @apply max-md:text-[0.9375rem];
 }
 
 .hero-layout-2 .hero-image {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: 400px;
-  object-fit: cover;
-  object-position: center top;
-  border-radius: 8px;
-}
-
-@media (min-width: 768px) {
-  .hero-layout-2 .hero-image {
-    order: 2;
-    max-height: 480px;
-    border-radius: 12px;
-  }
-}
-
-@media (max-width: 767px) {
-  .hero-layout-2 .hero-image-wrapper {
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-  }
-  .hero-layout-2 .hero-content {
-    padding: 1.5rem 0.5rem;
-    text-align: center;
-  }
-  .hero-layout-2 .hero-image {
-    border-radius: 0;
-    max-height: 280px;
-  }
-  .hero-layout-2 .hero-title {
-    font-size: 1.5rem;
-  }
-  .hero-layout-2 .hero-subtitle {
-    font-size: 0.9375rem;
-  }
+  @apply block w-full h-auto max-h-[400px] object-cover object-top rounded-lg max-md:rounded-none max-md:max-h-[280px] md:order-2 md:max-h-[480px] md:rounded-xl;
 }
 
 /* ===========================
@@ -251,312 +115,161 @@
    1920x1080 (16:9) 画像を想定
    =========================== */
 .hero-layout-3 {
-  position: relative;
-  /* 16:9アスペクト比を維持 */
-  aspect-ratio: 16 / 9;
-  max-height: 80vh;
-  overflow: hidden;
+  @apply relative aspect-video max-h-[80vh] overflow-hidden max-md:aspect-[16/10] max-md:min-h-[300px] max-md:max-h-[60vh];
 }
 
 .hero-layout-3 .hero-bg-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
-  z-index: 1;
+  @apply absolute inset-0 w-full h-full bg-contain bg-center bg-no-repeat z-[1];
 }
 
 .hero-layout-3 .hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(4, 62, 128, 0.7);
-  padding: 2rem;
+  @apply absolute inset-0 z-[2] flex items-center justify-center bg-primary/70 p-8 max-md:px-2 max-md:py-6;
 }
 
 .hero-layout-3 .hero-content {
-  max-width: 800px;
-  text-align: center;
-  color: #fff;
+  @apply max-w-[800px] text-center text-white;
 }
 
-@media (max-width: 767px) {
-  .hero-layout-3 {
-    /* モバイルでは最小高さを確保しつつアスペクト比を調整 */
-    aspect-ratio: 16 / 10;
-    min-height: 300px;
-    max-height: 60vh;
-  }
-  .hero-layout-3 .hero-overlay {
-    padding: 1.5rem 0.5rem;
-  }
-  .hero-layout-3 .hero-title {
-    font-size: 1.5rem;
-  }
-  .hero-layout-3 .hero-subtitle {
-    font-size: 0.9375rem;
-  }
-  .hero-layout-3 .hero-cta {
-    flex-direction: column;
-  }
-  .hero-layout-3 .hero-cta .btn {
-    width: 100%;
-    text-align: center;
-  }
+.hero-layout-3 .hero-title {
+  @apply max-md:text-2xl;
+}
+
+.hero-layout-3 .hero-subtitle {
+  @apply max-md:text-[0.9375rem];
+}
+
+.hero-layout-3 .hero-cta {
+  @apply max-md:flex-col;
+}
+
+.hero-layout-3 .hero-cta .btn {
+  @apply max-md:w-full max-md:text-center;
 }
 
 /* ===========================
    TOP4: カード型レイアウト
    =========================== */
 .hero-layout-4 {
-  background: linear-gradient(135deg, #f0f5fa 0%, #e8f0f8 100%);
-  padding: 3rem 0;
+  @apply bg-gradient-to-br from-[#f0f5fa] to-[#e8f0f8] py-12 max-md:px-2 max-md:py-6 md:py-16;
 }
 
 .hero-layout-4 .hero-card-layout {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-@media (min-width: 768px) {
-  .hero-layout-4 {
-    padding: 4rem 0;
-  }
-  .hero-layout-4 .hero-card-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    align-items: stretch;
-  }
+  @apply flex flex-col gap-8 max-w-[1000px] mx-auto md:grid md:grid-cols-2 md:items-stretch;
 }
 
 .hero-layout-4 .hero-card {
-  background: #fff;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  @apply bg-white rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.1)];
 }
 
 .hero-layout-4 .hero-card-image {
-  padding: 0;
+  @apply p-0;
 }
 
 .hero-layout-4 .hero-card-image img {
-  width: 100%;
-  height: 100%;
-  min-height: 300px;
-  object-fit: cover;
-  object-position: center top;
-  display: block;
+  @apply w-full h-full min-h-[300px] object-cover object-top block;
 }
 
 .hero-layout-4 .hero-card-content {
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  @apply p-8 flex flex-col justify-center max-md:px-2 max-md:py-6;
 }
 
 .hero-layout-4 .hero-title {
-  color: #043e80;
-  font-size: 1.75rem;
+  @apply text-primary text-[1.75rem] max-md:text-2xl;
 }
 
 .hero-layout-4 .hero-subtitle {
-  color: #555;
+  @apply text-[#555];
 }
 
 .hero-layout-4 .hero-cta {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1.5rem;
-  flex-wrap: wrap;
+  @apply flex gap-4 mt-6 flex-wrap max-md:flex-col;
+}
+
+.hero-layout-4 .hero-cta .btn {
+  @apply max-md:w-full max-md:text-center;
 }
 
 .hero-layout-4 .trust-elements--dark .trust-number {
-  color: #043e80;
+  @apply text-primary;
 }
 
 .hero-layout-4 .trust-elements--dark .trust-label {
-  color: #555;
-}
-
-@media (max-width: 767px) {
-  .hero-layout-4 {
-    padding: 1.5rem 0.5rem;
-  }
-  .hero-layout-4 .hero-card-content {
-    padding: 1.5rem 0.5rem;
-  }
-  .hero-layout-4 .hero-title {
-    font-size: 1.5rem;
-  }
-  .hero-layout-4 .hero-cta {
-    flex-direction: column;
-  }
-  .hero-layout-4 .hero-cta .btn {
-    width: 100%;
-    text-align: center;
-  }
+  @apply text-[#555];
 }
 
 /* ===========================
    TOP5: 斜め分割（左テキスト・右画像）
    =========================== */
 .hero-layout-5 {
-  background: #043e80;
-  overflow: hidden;
+  @apply bg-primary overflow-hidden;
 }
 
 .hero-layout-5 .hero-diagonal {
-  display: flex;
-  flex-direction: column;
-  min-height: 500px;
-}
-
-@media (min-width: 768px) {
-  .hero-layout-5 .hero-diagonal {
-    flex-direction: row;
-    min-height: 550px;
-  }
+  @apply flex flex-col min-h-[500px] max-md:min-h-auto md:flex-row md:min-h-[550px];
 }
 
 /* テキストコンテンツ（左側） */
 .hero-layout-5 .hero-diagonal-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 2rem;
-  color: #fff;
-}
-
-@media (min-width: 768px) {
-  .hero-layout-5 .hero-diagonal-content {
-    flex: 0 0 50%;
-    padding: 3rem;
-    padding-right: 2rem;
-    order: 1; /* 左側に配置 */
-  }
+  @apply flex-1 flex flex-col justify-center p-8 text-white text-center order-1 max-md:px-2 max-md:py-6 md:flex-[0_0_50%] md:pr-8;
 }
 
 /* 画像（右側・斜めクリップ） */
 .hero-layout-5 .hero-diagonal-image {
-  position: relative;
-  flex: 1;
-  overflow: hidden;
-}
-
-.hero-layout-5 .hero-diagonal-image img {
-  width: 100%;
-  height: 100%;
-  min-height: 280px;
-  object-fit: contain;
-  object-position: center center;
-  display: block;
+  @apply relative flex-1 overflow-hidden order-2 md:flex-[0_0_50%];
+  /* clip-pathは従来CSSを維持 */
+  clip-path: none;
 }
 
 @media (min-width: 768px) {
   .hero-layout-5 .hero-diagonal-image {
-    flex: 0 0 50%;
-    order: 2; /* 右側に配置 */
     clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%);
   }
-  .hero-layout-5 .hero-diagonal-image img {
-    min-height: 550px;
-  }
+}
+
+.hero-layout-5 .hero-diagonal-image img {
+  @apply w-full h-full min-h-[280px] object-contain object-center block md:min-h-[550px];
+}
+
+.hero-layout-5 .hero-title {
+  @apply max-md:text-2xl;
+}
+
+.hero-layout-5 .hero-subtitle {
+  @apply max-md:text-[0.9375rem];
 }
 
 .hero-layout-5 .hero-cta {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1.5rem;
-  flex-wrap: wrap;
+  @apply flex gap-4 mt-6 flex-wrap max-md:flex-col;
 }
 
-@media (max-width: 767px) {
-  .hero-layout-5 .hero-diagonal {
-    min-height: auto;
-  }
-  .hero-layout-5 .hero-diagonal-content {
-    text-align: center;
-    padding: 1.5rem 0.5rem;
-    order: 1; /* モバイルではテキストを先に */
-  }
-  .hero-layout-5 .hero-diagonal-image {
-    order: 2; /* モバイルでは画像を後に */
-  }
-  .hero-layout-5 .hero-title {
-    font-size: 1.5rem;
-  }
-  .hero-layout-5 .hero-subtitle {
-    font-size: 0.9375rem;
-  }
-  .hero-layout-5 .hero-cta {
-    flex-direction: column;
-  }
-  .hero-layout-5 .hero-cta .btn {
-    width: 100%;
-  }
+.hero-layout-5 .hero-cta .btn {
+  @apply max-md:w-full;
 }
 
 /* ===========================
    信頼要素（共通）
    =========================== */
 .trust-elements {
-  display: flex;
-  gap: 2rem;
-  margin-top: 2rem;
-  flex-wrap: wrap;
-  align-items: center;
+  @apply flex gap-8 mt-8 flex-wrap items-center max-md:justify-center;
 }
 
 .trust-item {
-  text-align: center;
+  @apply text-center max-md:min-w-[70px];
 }
 
 .trust-number {
-  display: block;
-  font-size: 2rem;
-  font-weight: bold;
-  color: #fff;
+  @apply block text-[2rem] font-bold text-white max-md:text-2xl;
 }
 
 .trust-label {
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.9);
+  @apply text-sm text-white/90;
 }
 
 .trust-elements--dark .trust-number {
-  color: #043e80;
+  @apply text-primary;
 }
 
 .trust-elements--dark .trust-label {
-  color: #555;
-}
-
-@media (max-width: 767px) {
-  .trust-elements {
-    justify-content: center;
-  }
-  .trust-item {
-    min-width: 70px;
-  }
-  .trust-number {
-    font-size: 1.5rem;
-  }
+  @apply text-[#555];
 }
 
