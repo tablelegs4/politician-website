@@ -86,6 +86,37 @@ img {
 }
 
 /* ===========================
+   ヘッダー
+   =========================== */
+.header-logo {
+  @apply w-auto;
+  height: 60px;
+}
+
+.header-kokusa {
+  @apply w-auto object-cover object-top;
+  height: 67px;
+  max-width: 67px;
+  margin-left: 10px;
+  margin-bottom: -23px;
+  clip-path: inset(0 0 30% 0);
+}
+
+@media (max-width: 767px) {
+  .header-logo {
+    height: 30px;
+  }
+
+  .header-kokusa {
+    height: 50px;
+    max-width: 50px;
+    margin-left: 0;
+    margin-bottom: -5px;
+    z-index: 101;
+  }
+}
+
+/* ===========================
    フッター
    =========================== */
 .site-footer {
