@@ -74,5 +74,8 @@
     "description": "〇〇県〇区 山田太郎 公式サイト 〇〇市、〇〇市、〇〇市",
     "image": "/images/ogp.jpg",
     "faceImage": "/images/profile.jpg"
+  },
+  "analytics": {
+    "ga4MeasurementId": ""
   }
 }

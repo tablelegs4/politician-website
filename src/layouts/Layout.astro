@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import GoogleAnalytics from '../components/GoogleAnalytics.astro';
 import '../styles/global.css';
 import { getSiteConfig } from '../utils/content';
 
@@ -84,6 +85,9 @@ const withBase = (path: string) => {
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Yuji+Syuku&display=swap" rel="stylesheet" />
 
     <meta name="generator" content={Astro.generator} />
+
+    <!-- Google Analytics 4 -->
+    <GoogleAnalytics />
   </head>
   <body>
     <Header />

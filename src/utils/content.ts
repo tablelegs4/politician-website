@@ -80,6 +80,9 @@ export interface SiteConfig {
     description: string;
     image: string;
   };
+  analytics?: {
+    ga4MeasurementId?: string;
+  };
 }
 
 export interface Profile {

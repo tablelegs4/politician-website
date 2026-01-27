@@ -1,0 +1,28 @@
+---
+/**
+ * Google Analytics 4 (GA4) トラッキングコンポーネント
+ *
+ * site.jsonのanalytics.ga4MeasurementIdに測定IDを設定してください
+ * 例: "G-XXXXXXXXXX"
+ */
+import { getSiteConfig } from '../utils/content';
+
+const siteConfig = getSiteConfig();
+const measurementId = siteConfig.analytics?.ga4MeasurementId;
+
+// 測定IDが設定されていない場合はスクリプトを出力しない
+const shouldLoadAnalytics = measurementId && measurementId.trim() !== '';
+---
+
+{shouldLoadAnalytics && (
+  <>
+    <!-- Google tag (gtag.js) -->
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}></script>
+    <script define:vars={{ measurementId }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', measurementId);
+    </script>
+  </>
+)}
