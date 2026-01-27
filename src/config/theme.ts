@@ -1,8 +1,11 @@
 /**
  * テーマ設定
+<<<<<<< HEAD
  *
  * 現在はdefaultテーマのみ利用可能
  * 将来的にテーマを追加する場合は、defaultテーマをコピーして新規作成することを推奨
+=======
+>>>>>>> bdf00d5 (変更：モダンテーマのページとスタイルを削除し、デフォルトテーマに統一。テーマ設定を簡素化し、CSS変数を導入してスタイルの一貫性を向上。レスポンシブデザインの最適化を実施。)
  */
 
 export const THEMES = {
@@ -19,6 +22,7 @@ export const DEFAULT_THEME: ThemeType = 'default';
 /**
  * URLパラメータからテーマを取得する関数
  * @param url - 現在のURL
+<<<<<<< HEAD
  * @returns テーマ名（現在はdefaultのみ）
  */
 export function getThemeFromUrl(url: URL): ThemeType {
@@ -26,6 +30,11 @@ export function getThemeFromUrl(url: URL): ThemeType {
   if (themeParam === 'default') {
     return themeParam;
   }
+=======
+ * @returns テーマ名（default のみ）
+ */
+export function getThemeFromUrl(url: URL): ThemeType {
+>>>>>>> bdf00d5 (変更：モダンテーマのページとスタイルを削除し、デフォルトテーマに統一。テーマ設定を簡素化し、CSS変数を導入してスタイルの一貫性を向上。レスポンシブデザインの最適化を実施。)
   return DEFAULT_THEME;
 }
 

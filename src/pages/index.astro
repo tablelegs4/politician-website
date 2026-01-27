@@ -1,13 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import HomePage from '../themes/default/pages/HomePage.astro';
+<<<<<<< HEAD
 import themeStyles from '../themes/default/styles/theme.css?raw';
+=======
+import '../themes/default/styles/theme.css';
+>>>>>>> bdf00d5 (変更：モダンテーマのページとスタイルを削除し、デフォルトテーマに統一。テーマ設定を簡素化し、CSS変数を導入してスタイルの一貫性を向上。レスポンシブデザインの最適化を実施。)
 ---
 
 <Layout
   title="トップページ"
   description="山田太郎の公式ウェブサイト。地域に根ざした政治活動を行っています。"
 >
-  <style is:global set:html={themeStyles}></style>
   <HomePage />
 </Layout>

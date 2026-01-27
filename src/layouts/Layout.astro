@@ -100,6 +100,70 @@ const withBase = (path: string) => {
     )}
 
     <style>
+<<<<<<< HEAD
+=======
+      /* フローティング文字サイズ切り替えボタン（SP専用） */
+      .font-size-toggle {
+        display: none;
+      }
+
+      @media (max-width: 767px) {
+        .font-size-toggle {
+          display: flex;
+          position: fixed;
+          bottom: 20px;
+          right: 16px;
+          z-index: var(--z-font-toggle);
+          background: var(--color-bg);
+          border-radius: 24px;
+          box-shadow: var(--shadow-lg);
+          padding: 4px;
+          gap: 2px;
+        }
+
+        .font-size-btn {
+          width: 36px;
+          height: 36px;
+          border: none;
+          border-radius: var(--border-radius-full);
+          background: transparent;
+          color: var(--color-text-muted);
+          font-size: 12px;
+          font-weight: bold;
+          cursor: pointer;
+          transition: all var(--transition-base);
+        }
+
+        .font-size-btn:hover {
+          background: var(--color-bg-lighter);
+        }
+
+        .font-size-btn.active {
+          background: var(--color-primary);
+          color: #fff;
+        }
+
+        .font-size-btn:focus-visible {
+          outline: 2px solid var(--color-primary);
+          outline-offset: 2px;
+        }
+      }
+
+      /* iPhone SE (375px)専用 */
+      @media (max-width: 375px) {
+        .font-size-toggle {
+          bottom: 16px;
+          right: 12px;
+        }
+
+        .font-size-btn {
+          width: 32px;
+          height: 32px;
+          font-size: 11px;
+        }
+      }
+
+>>>>>>> bdf00d5 (変更：モダンテーマのページとスタイルを削除し、デフォルトテーマに統一。テーマ設定を簡素化し、CSS変数を導入してスタイルの一貫性を向上。レスポンシブデザインの最適化を実施。)
       /* 文字サイズ変更クラス（本文テキストのみに適用、見出し・タイトル系は除外） */
       :global(html.font-size-small .container .main-content p:not(.section-title):not(.mobile-profile-nickname)),
       :global(html.font-size-small .container .main-content li),

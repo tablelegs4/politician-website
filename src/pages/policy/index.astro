@@ -1,8 +1,14 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+<<<<<<< HEAD
 import { getSiteConfig } from '../../utils/content';
 import PolicyPage from '../../themes/default/pages/PolicyPage.astro';
 import themeStyles from '../../themes/default/styles/theme.css?raw';
+=======
+import PolicyPage from '../../themes/default/pages/PolicyPage.astro';
+import { getSiteConfig } from '../../utils/content';
+import '../../themes/default/styles/theme.css';
+>>>>>>> bdf00d5 (変更：モダンテーマのページとスタイルを削除し、デフォルトテーマに統一。テーマ設定を簡素化し、CSS変数を導入してスタイルの一貫性を向上。レスポンシブデザインの最適化を実施。)
 
 // サイト設定を取得
 const siteConfig = getSiteConfig();
@@ -12,6 +18,5 @@ const siteConfig = getSiteConfig();
   title="政策"
   description={`${siteConfig.politician.name}の政策一覧。重点政策と全ての政策をご紹介します。`}
 >
-  <style is:global set:html={themeStyles}></style>
   <PolicyPage />
 </Layout>

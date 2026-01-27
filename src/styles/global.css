@@ -27,6 +27,11 @@
 }
 
 /* ===========================
+   CSS変数のインポート
+   =========================== */
+@import './variables.css';
+
+/* ===========================
    リセット・ベース
    =========================== */
 * {
@@ -220,9 +225,10 @@ h3 {
 }
 
 /* ===========================
-   ボタン・CTA
+   ボタン・CTA（共通スタイル）
    =========================== */
 .btn {
+<<<<<<< HEAD
   @apply inline-block py-3 px-6 bg-primary text-white rounded font-bold text-center border-none cursor-pointer transition-colors duration-200;
 }
 
@@ -232,14 +238,84 @@ h3 {
 
 .btn:focus-visible {
   @apply outline-2 outline-primary outline-offset-2;
+=======
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius-sm);
+  font-weight: bold;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-decoration: none;
 }
 
+.btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+>>>>>>> bdf00d5 (変更：モダンテーマのページとスタイルを削除し、デフォルトテーマに統一。テーマ設定を簡素化し、CSS変数を導入してスタイルの一貫性を向上。レスポンシブデザインの最適化を実施。)
+}
+
+/* プライマリボタン */
+.btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--color-primary-dark);
+  text-decoration: none;
+}
+
+/* アウトラインボタン */
+.btn-outline {
+  background: transparent;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+}
+
+.btn-outline:hover {
+  background: var(--color-primary);
+  color: #fff;
+  text-decoration: none;
+}
+
+/* セカンダリボタン */
 .btn-secondary {
+<<<<<<< HEAD
   @apply bg-[#6c757d];
 }
 
 .btn-secondary:hover {
   @apply bg-[#5a6268];
+=======
+  background: #6c757d;
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  background: #5a6268;
+  text-decoration: none;
+}
+
+/* 大きいボタン */
+.btn-large {
+  padding: 1rem 2.5rem;
+  font-size: var(--font-lg);
+}
+
+/* iPhone SE (375px)専用 */
+@media (max-width: 375px) {
+  .btn {
+    padding: 0.625rem 1.25rem;
+    font-size: var(--font-sm);
+  }
+
+  .btn-large {
+    padding: 0.875rem 2rem;
+    font-size: var(--font-base);
+  }
+>>>>>>> bdf00d5 (変更：モダンテーマのページとスタイルを削除し、デフォルトテーマに統一。テーマ設定を簡素化し、CSS変数を導入してスタイルの一貫性を向上。レスポンシブデザインの最適化を実施。)
 }
 
 /* ===========================
@@ -343,6 +419,85 @@ h3 {
 }
 
 /* ===========================
+   こくさキャラクター（共通スタイル）
+   =========================== */
+.kokusa {
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+/* セクションタイトル横のこくさ */
+.section-title-kokusa-wrapper {
+  display: inline-flex;
+  align-items: flex-start;
+  flex-shrink: 0;
+  height: 4.8rem;
+  overflow: hidden;
+  align-self: flex-end;
+  margin-bottom: -0.5rem;
+}
+
+.section-title-kokusa-wrapper .section-title-kokusa {
+  height: 6rem;
+  width: auto;
+}
+
+.section-title-kokusa {
+  height: 4rem;
+  width: auto;
+  max-width: 100%;
+  flex-shrink: 0;
+}
+
+/* ヘッダーのこくさ */
+.header-kokusa {
+  height: 120px;
+  width: auto;
+  object-fit: cover;
+  object-position: top;
+  clip-path: inset(0 0 30% 0);
+  margin-left: 10px;
+  margin-bottom: -53px;
+  z-index: var(--z-header-kokusa);
+}
+
+@media (max-width: 767px) {
+  .header-kokusa {
+    height: 80px;
+    margin-left: 0;
+    margin-bottom: -37px;
+  }
+
+  .section-title-kokusa-wrapper {
+    height: 5.6rem;
+  }
+
+  .section-title-kokusa-wrapper .section-title-kokusa {
+    height: 7rem;
+  }
+
+  .section-title-kokusa {
+    height: 5.6rem;
+  }
+}
+
+/* iPhone SE (375px)専用 */
+@media (max-width: 375px) {
+  .header-kokusa {
+    height: 70px;
+    margin-bottom: -32px;
+  }
+
+  .section-title-kokusa-wrapper {
+    height: 5rem;
+  }
+
+  .section-title-kokusa-wrapper .section-title-kokusa {
+    height: 6.5rem;
+  }
+}
+
+/* ===========================
    アクセシビリティ強化
    =========================== */
 .sr-only {
@@ -378,4 +533,54 @@ main ol:not([class]) {
 main ul:not([class]) li,
 main ol:not([class]) li {
   @apply mb-2;
+}
+
+/* ===========================
+   iPhone SE (375px) 専用最適化
+   =========================== */
+@media (max-width: 375px) {
+  /* コンテナのパディング縮小 */
+  .container {
+    padding: 0 0.75rem !important;
+  }
+
+  /* セクション間マージン縮小 */
+  main {
+    padding: 1.5rem 0;
+  }
+
+  /* 見出しサイズ調整 */
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.375rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    margin: 1.5rem 0 0.75rem;
+  }
+
+  h3 {
+    font-size: 1.125rem;
+    margin: 1rem 0 0.5rem;
+  }
+
+  /* カードのパディング縮小 */
+  .card {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  /* サイドバーウィジェット */
+  .sidebar-widget {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  /* フッター */
+  .footer-nav ul {
+    gap: 0.75rem;
+    font-size: 0.8125rem;
+  }
 }
