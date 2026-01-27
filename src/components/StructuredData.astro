@@ -9,7 +9,7 @@ if (!siteConfig.jsonLd?.enabled) {
   return;
 }
 
-const structuredData = {
+const structuredData: Record<string, any> = {
   "@context": "https://schema.org",
   "@type": siteConfig.jsonLd.type || "Person",
   "name": siteConfig.politician.name,
@@ -46,7 +46,7 @@ if (siteConfig.jsonLd.areaServed) {
 }
 
 // SNSアカウント
-const sameAs = [];
+const sameAs: string[] = [];
 if (siteConfig.activityLinks?.twitter) sameAs.push(siteConfig.activityLinks.twitter);
 if (siteConfig.activityLinks?.facebook) sameAs.push(siteConfig.activityLinks.facebook);
 if (siteConfig.activityLinks?.instagram) sameAs.push(siteConfig.activityLinks.instagram);

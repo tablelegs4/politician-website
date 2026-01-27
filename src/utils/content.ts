@@ -75,13 +75,56 @@ export interface SiteConfig {
   externalLinks?: {
     partySupporter?: string;
   };
+  support?: {
+    supportersClubUrl?: string;
+    volunteerUrl?: string;
+    donationUrl?: string;
+  };
   ogp: {
     title: string;
     description: string;
     image: string;
+    faceImage?: string;
+    imageWidth?: string;
+    imageHeight?: string;
+    imageAlt?: string;
+  };
+  seo?: {
+    keywords?: string[];
+    metaDescription?: string;
+    author?: string;
+    robots?: string;
+    googleSiteVerification?: string;
+    bingSiteVerification?: string;
+  };
+  twitter?: {
+    site?: string;
+    creator?: string;
+    cardType?: string;
+  };
+  jsonLd?: {
+    enabled?: boolean;
+    type?: string;
+    additionalTypes?: string[];
+    jobTitle?: string;
+    affiliation?: {
+      name: string;
+      url: string;
+    };
+    areaServed?: {
+      type: string;
+      name: string;
+    };
   };
   analytics?: {
     ga4MeasurementId?: string;
+  };
+  locale?: {
+    primary?: string;
+    alternate?: string[];
+  };
+  verification?: {
+    methods?: string[];
   };
 }
 
