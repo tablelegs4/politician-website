@@ -77,7 +77,7 @@
   "ogp": {
     "title": "山田太郎 公式サイト",
     "description": "〇〇県〇区 山田太郎 公式サイト 〇〇市、〇〇市、〇〇市",
-    "image": "/images/ogp.png",
+    "image": "/images/ogp.png?v=2",
     "faceImage": "/images/profile.jpg",
     "imageWidth": "1200",
     "imageHeight": "630",
