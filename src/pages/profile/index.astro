@@ -1,25 +1,12 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getThemeFromUrl } from '../../config/theme';
-
-// URLパラメータからテーマを取得
-const currentTheme = getThemeFromUrl(Astro.url);
-
-// テーマに応じたプロフィールページコンポーネントを動的にインポート
-const ProfilePage = currentTheme === 'modern'
-  ? (await import('../../themes/modern/pages/ProfilePage.astro')).default
-  : (await import('../../themes/default/pages/ProfilePage.astro')).default;
-
-// テーマに応じたCSSをインポート
-const themeStyles = currentTheme === 'modern'
-  ? (await import('../../themes/modern/styles/theme.css?raw')).default
-  : (await import('../../themes/default/styles/theme.css?raw')).default;
+import ProfilePage from '../../themes/default/pages/ProfilePage.astro';
+import '../../themes/default/styles/theme.css';
 ---
 
 <Layout
   title="プロフィール"
   description="山田太郎のプロフィール・経歴・略歴をご紹介します。"
 >
-  <style is:global set:html={themeStyles}></style>
   <ProfilePage />
 </Layout>

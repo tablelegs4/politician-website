@@ -1,13 +1,9 @@
 /**
  * テーマ設定
- *
- * URLパラメータ ?theme=modern または ?theme=default でテーマを切り替え可能
- * パラメータがない場合は DEFAULT_THEME が使用されます
  */
 
 export const THEMES = {
   default: 'default',
-  modern: 'modern',
 } as const;
 
 export type ThemeType = typeof THEMES[keyof typeof THEMES];
@@ -19,14 +15,9 @@ export const DEFAULT_THEME: ThemeType = 'default';
 
 /**
  * URLパラメータからテーマを取得する関数
- * @param url - 現在のURL
- * @returns テーマ名（default または modern）
+ * @returns テーマ名（default のみ）
  */
-export function getThemeFromUrl(url: URL): ThemeType {
-  const themeParam = url.searchParams.get('theme');
-  if (themeParam === 'modern' || themeParam === 'default') {
-    return themeParam;
-  }
+export function getThemeFromUrl(): ThemeType {
   return DEFAULT_THEME;
 }
 
@@ -65,10 +56,6 @@ export const THEME_IMAGES = {
     hero: getImagePath('/images/hero-default.jpg'),
     logo: getImagePath('/images/logo.png'),
   },
-  modern: {
-    hero: getImagePath('/images/hero-modern.jpg'),
-    logo: getImagePath('/images/logo.png'),
-  },
 } as const;
 
 /**
@@ -89,9 +76,5 @@ export const THEME_CONFIG = {
   default: {
     name: 'デフォルトテーマ',
     description: '標準的な2カラムレイアウト',
-  },
-  modern: {
-    name: 'モダンテーマ',
-    description: 'モダンでスタイリッシュなデザイン',
   },
 } as const;

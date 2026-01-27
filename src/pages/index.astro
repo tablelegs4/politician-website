@@ -1,25 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getThemeFromUrl } from '../config/theme';
-
-// URLパラメータからテーマを取得
-const currentTheme = getThemeFromUrl(Astro.url);
-
-// テーマに応じたホームページコンポーネントを動的にインポート
-const HomePage = currentTheme === 'modern'
-  ? (await import('../themes/modern/pages/HomePage.astro')).default
-  : (await import('../themes/default/pages/HomePage.astro')).default;
-
-// テーマに応じたCSSをインポート
-const themeStyles = currentTheme === 'modern'
-  ? (await import('../themes/modern/styles/theme.css?raw')).default
-  : (await import('../themes/default/styles/theme.css?raw')).default;
+import HomePage from '../themes/default/pages/HomePage.astro';
+import '../themes/default/styles/theme.css';
 ---
 
 <Layout
   title="トップページ"
   description="山田太郎の公式ウェブサイト。地域に根ざした政治活動を行っています。"
 >
-  <style is:global set:html={themeStyles}></style>
   <HomePage />
 </Layout>
