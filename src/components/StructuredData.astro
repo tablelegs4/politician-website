@@ -3,11 +3,16 @@ import { getSiteConfig } from '../utils/content';
 
 const siteConfig = getSiteConfig();
 const siteUrl = import.meta.env.SITE || 'https://example.com';
+const baseUrl = import.meta.env.BASE_URL || '/';
 
 // 構造化データが有効な場合のみ出力
 if (!siteConfig.jsonLd?.enabled) {
   return;
 }
+
+// 画像パスをベースパス込みで生成
+const faceImagePath = siteConfig.ogp?.faceImage || '/images/profile.jpg';
+const faceImageWithBase = faceImagePath.startsWith('http') ? faceImagePath : `${baseUrl.replace(/\/$/, '')}${faceImagePath}`;
 
 const structuredData: Record<string, any> = {
   "@context": "https://schema.org",
@@ -15,7 +20,7 @@ const structuredData: Record<string, any> = {
   "name": siteConfig.politician.name,
   "description": siteConfig.siteDescription,
   "url": siteUrl,
-  "image": new URL(siteConfig.ogp?.faceImage || '/images/profile.jpg', siteUrl).href,
+  "image": new URL(faceImageWithBase, siteUrl).href,
 };
 
 // 追加タイプがあれば追加

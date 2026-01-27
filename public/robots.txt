@@ -4,7 +4,7 @@ User-agent: *
 Allow: /
 
 # サイトマップの場所
-Sitemap: https://example.com/sitemap-index.xml
+Sitemap: https://tablelegs4.github.io/politician-website/sitemap-index.xml
 
 # クロール頻度の推奨
 Crawl-delay: 1
