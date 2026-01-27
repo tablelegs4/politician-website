@@ -1,10 +1,10 @@
 import { getThemeFromUrl, type ThemeType } from '../config/theme';
 
 /**
- * 現在のテーマを取得（URLから）
+ * 現在のテーマを取得
  */
-export const getCurrentTheme = (url: URL): ThemeType => {
-  return getThemeFromUrl(url);
+export const getCurrentTheme = (): ThemeType => {
+  return getThemeFromUrl();
 };
 
 /**

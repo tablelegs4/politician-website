@@ -3,7 +3,7 @@
 import { THEME_IMAGES, getThemeFromUrl } from '../config/theme';
 
 // URLパラメータからテーマを取得
-const currentTheme = getThemeFromUrl(Astro.url);
+const currentTheme = getThemeFromUrl();
 
 // URLパラメータを保持する関数
 const themeParam = Astro.url.searchParams.get('theme');
