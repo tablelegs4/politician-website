@@ -2,6 +2,7 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import GoogleAnalytics from '../components/GoogleAnalytics.astro';
+import StructuredData from '../components/StructuredData.astro';
 import '../styles/global.css';
 import { getSiteConfig } from '../utils/content';
 
@@ -56,6 +57,21 @@ const withBase = (path: string) => {
     <!-- SEO -->
     <title>{fullTitle}</title>
     <link rel="canonical" href={canonicalUrl} />
+    {siteConfig.seo?.keywords && (
+      <meta name="keywords" content={siteConfig.seo.keywords.join(', ')} />
+    )}
+    {siteConfig.seo?.author && (
+      <meta name="author" content={siteConfig.seo.author} />
+    )}
+    {siteConfig.seo?.robots && (
+      <meta name="robots" content={siteConfig.seo.robots} />
+    )}
+    {siteConfig.seo?.googleSiteVerification && (
+      <meta name="google-site-verification" content={siteConfig.seo.googleSiteVerification} />
+    )}
+    {siteConfig.seo?.bingSiteVerification && (
+      <meta name="msvalidate.01" content={siteConfig.seo.bingSiteVerification} />
+    )}
 
     <!-- OGP -->
     <meta property="og:title" content={fullTitle} />
@@ -63,14 +79,29 @@ const withBase = (path: string) => {
     <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={ogImageUrl} />
+    {siteConfig.ogp?.imageWidth && (
+      <meta property="og:image:width" content={siteConfig.ogp.imageWidth} />
+    )}
+    {siteConfig.ogp?.imageHeight && (
+      <meta property="og:image:height" content={siteConfig.ogp.imageHeight} />
+    )}
+    {siteConfig.ogp?.imageAlt && (
+      <meta property="og:image:alt" content={siteConfig.ogp.imageAlt} />
+    )}
     <meta property="og:site_name" content={siteConfig.siteName} />
-    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:locale" content={siteConfig.locale?.primary || 'ja_JP'} />
 
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content={siteConfig.twitter?.cardType || 'summary_large_image'} />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
+    {siteConfig.twitter?.site && (
+      <meta name="twitter:site" content={siteConfig.twitter.site} />
+    )}
+    {siteConfig.twitter?.creator && (
+      <meta name="twitter:creator" content={siteConfig.twitter.creator} />
+    )}
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href={withBase('/favicon.ico')} />
@@ -85,6 +116,9 @@ const withBase = (path: string) => {
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Yuji+Syuku&display=swap" rel="stylesheet" />
 
     <meta name="generator" content={Astro.generator} />
+
+    <!-- 構造化データ（JSON-LD） -->
+    <StructuredData />
 
     <!-- Google Analytics 4 -->
     <GoogleAnalytics />

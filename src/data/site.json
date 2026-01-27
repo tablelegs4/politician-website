@@ -61,6 +61,11 @@
   "externalLinks": {
     "partySupporter": "https://www.dpfp.or.jp/supporter"
   },
+  "support": {
+    "supportersClubUrl": "https://forms.gle/example-supporters-club",
+    "volunteerUrl": "https://forms.gle/example-volunteer",
+    "donationUrl": "https://www.dpfp.or.jp/donation"
+  },
   "activityLinks": {
     "note": "https://note.com/closed_business",
     "youtube": "https://www.youtube.com/@KOKUMIN_SHOBON",
@@ -73,9 +78,57 @@
     "title": "山田太郎 公式サイト",
     "description": "〇〇県〇区 山田太郎 公式サイト 〇〇市、〇〇市、〇〇市",
     "image": "/images/ogp.jpg",
-    "faceImage": "/images/profile.jpg"
+    "faceImage": "/images/profile.jpg",
+    "imageWidth": "1200",
+    "imageHeight": "630",
+    "imageAlt": "山田太郎 公式サイト OGP画像"
+  },
+  "seo": {
+    "keywords": [
+      "山田太郎",
+      "国民民主党",
+      "〇〇県",
+      "〇〇区",
+      "経済成長",
+      "政治家",
+      "選挙",
+      "地域活動",
+      "市政",
+      "県政"
+    ],
+    "metaDescription": "〇〇県〇〇区選出の山田太郎公式サイト。経済成長で暮らしを豊かに、手取りを上げて明るく元気な暮らしを実現します。政策、活動報告、プロフィール、お問い合わせはこちら。",
+    "author": "山田太郎",
+    "robots": "index, follow",
+    "googleSiteVerification": "",
+    "bingSiteVerification": ""
+  },
+  "twitter": {
+    "site": "@",
+    "creator": "@",
+    "cardType": "summary_large_image"
+  },
+  "jsonLd": {
+    "enabled": true,
+    "type": "Person",
+    "additionalTypes": ["Politician"],
+    "jobTitle": "",
+    "affiliation": {
+      "name": "国民民主党",
+      "url": "https://www.dpfp.or.jp/"
+    },
+    "areaServed": {
+      "type": "AdministrativeArea",
+      "name": "〇〇県〇〇区"
+    }
   },
   "analytics": {
     "ga4MeasurementId": "G-W2Q83PF1X3"
+  },
+  "locale": {
+    "primary": "ja_JP",
+    "alternate": []
+  },
+  "verification": {
+    "methods": []
   }
 }

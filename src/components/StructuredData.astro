@@ -1,0 +1,85 @@
+---
+import { getSiteConfig } from '../utils/content';
+
+const siteConfig = getSiteConfig();
+const siteUrl = import.meta.env.SITE || 'https://example.com';
+
+// 構造化データが有効な場合のみ出力
+if (!siteConfig.jsonLd?.enabled) {
+  return;
+}
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": siteConfig.jsonLd.type || "Person",
+  "name": siteConfig.politician.name,
+  "description": siteConfig.siteDescription,
+  "url": siteUrl,
+  "image": new URL(siteConfig.ogp?.faceImage || '/images/profile.jpg', siteUrl).href,
+};
+
+// 追加タイプがあれば追加
+if (siteConfig.jsonLd.additionalTypes && siteConfig.jsonLd.additionalTypes.length > 0) {
+  structuredData["additionalType"] = siteConfig.jsonLd.additionalTypes;
+}
+
+// 職業・肩書き
+if (siteConfig.jsonLd.jobTitle) {
+  structuredData["jobTitle"] = siteConfig.jsonLd.jobTitle;
+}
+
+// 所属組織
+if (siteConfig.jsonLd.affiliation) {
+  structuredData["affiliation"] = {
+    "@type": "Organization",
+    "name": siteConfig.jsonLd.affiliation.name,
+    "url": siteConfig.jsonLd.affiliation.url
+  };
+}
+
+// 担当地域
+if (siteConfig.jsonLd.areaServed) {
+  structuredData["areaServed"] = {
+    "@type": siteConfig.jsonLd.areaServed.type || "AdministrativeArea",
+    "name": siteConfig.jsonLd.areaServed.name
+  };
+}
+
+// SNSアカウント
+const sameAs = [];
+if (siteConfig.activityLinks?.twitter) sameAs.push(siteConfig.activityLinks.twitter);
+if (siteConfig.activityLinks?.facebook) sameAs.push(siteConfig.activityLinks.facebook);
+if (siteConfig.activityLinks?.instagram) sameAs.push(siteConfig.activityLinks.instagram);
+if (siteConfig.activityLinks?.youtube) sameAs.push(siteConfig.activityLinks.youtube);
+if (siteConfig.activityLinks?.note) sameAs.push(siteConfig.activityLinks.note);
+if (siteConfig.activityLinks?.tiktok) sameAs.push(siteConfig.activityLinks.tiktok);
+
+if (sameAs.length > 0) {
+  structuredData["sameAs"] = sameAs;
+}
+
+// 連絡先情報
+if (siteConfig.contact?.email || siteConfig.contact?.phone || siteConfig.contact?.address) {
+  structuredData["contactPoint"] = {
+    "@type": "ContactPoint",
+    "contactType": "public inquiries"
+  };
+
+  if (siteConfig.contact.email) {
+    structuredData["contactPoint"]["email"] = siteConfig.contact.email;
+  }
+  if (siteConfig.contact.phone) {
+    structuredData["contactPoint"]["telephone"] = siteConfig.contact.phone;
+  }
+  if (siteConfig.contact.address) {
+    structuredData["address"] = {
+      "@type": "PostalAddress",
+      "streetAddress": siteConfig.contact.address,
+      "postalCode": siteConfig.contact.postalCode,
+      "addressCountry": "JP"
+    };
+  }
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />

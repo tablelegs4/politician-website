@@ -44,6 +44,9 @@ const activityLinks = siteConfig.activityLinks || {};
 // 外部リンク設定
 const externalLinks = siteConfig.externalLinks || {};
 
+// 支援リンク設定
+const supportLinks = siteConfig.support || {};
+
 // noteの記事を取得（ビルド時に自動更新）
 const noteUsername = activityLinks.note ? activityLinks.note.replace('https://note.com/', '').replace(/\/$/, '') : '';
 const noteArticles = noteUsername ? await getNoteArticles(noteUsername, 5) : [];
@@ -390,24 +393,30 @@ const showAchievementsOnTop = profile.showAchievementsOnTop && profile.achieveme
                 </div>
               </a>
             )}
-            <a href={withBase('/support/#supporters-club')} class="support-card support-card-club">
-              <div class="support-card-text">
-                <h3 class="support-card-title">後援会に入る</h3>
-                <p class="support-card-description">私をご支持くださる皆様の集まり</p>
-              </div>
-            </a>
-            <a href={withBase('/support/#volunteer')} class="support-card support-card-volunteer">
-              <div class="support-card-text">
-                <h3 class="support-card-title">ボランティアで応援する</h3>
-                <p class="support-card-description">ポスティング、ポスター掲示、<br />室内作業、イベントお手伝いなど</p>
-              </div>
-            </a>
-            <a href={withBase('/support/#donation')} class="support-card support-card-donation">
-              <div class="support-card-text">
-                <h3 class="support-card-title">寄付で応援する</h3>
-                <p class="support-card-description">私の一生懸命な政治活動を<br />資金面で支える</p>
-              </div>
-            </a>
+            {supportLinks.supportersClubUrl && (
+              <a href={supportLinks.supportersClubUrl} target="_blank" rel="noopener noreferrer" class="support-card support-card-club">
+                <div class="support-card-text">
+                  <h3 class="support-card-title">後援会に入る</h3>
+                  <p class="support-card-description">私をご支持くださる皆様の集まり</p>
+                </div>
+              </a>
+            )}
+            {supportLinks.volunteerUrl && (
+              <a href={supportLinks.volunteerUrl} target="_blank" rel="noopener noreferrer" class="support-card support-card-volunteer">
+                <div class="support-card-text">
+                  <h3 class="support-card-title">ボランティアで応援する</h3>
+                  <p class="support-card-description">ポスティング、ポスター掲示、<br />室内作業、イベントお手伝いなど</p>
+                </div>
+              </a>
+            )}
+            {supportLinks.donationUrl && (
+              <a href={supportLinks.donationUrl} target="_blank" rel="noopener noreferrer" class="support-card support-card-donation">
+                <div class="support-card-text">
+                  <h3 class="support-card-title">寄付で応援する</h3>
+                  <p class="support-card-description">私の一生懸命な政治活動を<br />資金面で支える</p>
+                </div>
+              </a>
+            )}
           </div>
         </section>
       </div>
