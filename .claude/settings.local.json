@@ -5,7 +5,8 @@
       "Bash(npm run build:*)",
       "Bash(dir:*)",
       "Bash(powershell -Command \"cd ''c:\\\\Users\\\\user\\\\00_work\\\\politician-website\\\\politician-website\\\\public\\\\images\\\\common''; Rename-Item ''こくみんうさぎ_いいね.png'' ''kokusa_thumbsup.png''; Rename-Item ''こくみんうさぎ_えいえいおー.png'' ''kokusa_rally.png''; Rename-Item ''こくみんうさぎ_おつかれさまです.png'' ''kokusa_otsukare.png''; Rename-Item ''こくみんうさぎ_お願い（祈願）.png'' ''kokusa_pray.png''; Rename-Item ''こくみんうさぎ_お願い（目キラキラ）.png'' ''kokusa_please.png''; Rename-Item ''こくみんうさぎ_ガッツポーズ.png'' ''kokusa_fistpump.png''; Rename-Item ''こくみんうさぎ_きく.png'' ''kokusa_listen.png''; Rename-Item ''こくみんうさぎ_ジャンプする.png'' ''kokusa_jump.png''; Rename-Item ''こくみんうさぎ_しょぼん.png'' ''kokusa_sad.png''; Rename-Item ''こくみんうさぎ_すわる.png'' ''kokusa_sit.png''\")",
-      "Bash(powershell -Command:*)"
+      "Bash(powershell -Command:*)",
+      "Bash(npx astro build)"
     ]
   }
 }

@@ -53,3 +53,4 @@ coverage/
 # doc/spec.md
 .claude/settings.local.json
 nul
+.claude/settings.local.json
