@@ -62,10 +62,14 @@ const cleanSummary = (text: string) => text.replace(/\*([^*]+)\*/g, '$1');
           {featuredPolicies.map((policy) => (
             <li class="policy-item featured">
               <a href={withBase(`/policy/${policy.data.slug || policy.id.replace(/\.mdx?$/, '')}/`)} class="policy-link">
-                <span class="policy-category">{policy.data.category}</span>
-                <h3>{policy.data.title}</h3>
-                <p class="policy-summary">{cleanSummary(policy.data.summary)}</p>
-                <span class="policy-more">政策根拠を見る →</span>
+                <div class="policy-content">
+                  <span class="policy-category">{policy.data.category}</span>
+                  <h3>{policy.data.title}</h3>
+                  <p class="policy-summary">{cleanSummary(policy.data.summary)}</p>
+                </div>
+                <div class="policy-footer">
+                  <span class="policy-more">政策の詳細を見る →</span>
+                </div>
               </a>
             </li>
           ))}
@@ -83,10 +87,14 @@ const cleanSummary = (text: string) => text.replace(/\*([^*]+)\*/g, '$1');
           {otherPolicies.map((policy) => (
             <li class="policy-item">
               <a href={withBase(`/policy/${policy.data.slug || policy.id.replace(/\.mdx?$/, '')}/`)} class="policy-link">
-                <span class="policy-category">{policy.data.category}</span>
-                <h3>{policy.data.title}</h3>
-                <p class="policy-summary">{cleanSummary(policy.data.summary)}</p>
-                <span class="policy-more">詳しく見る →</span>
+                <div class="policy-content">
+                  <span class="policy-category">{policy.data.category}</span>
+                  <h3>{policy.data.title}</h3>
+                  <p class="policy-summary">{cleanSummary(policy.data.summary)}</p>
+                </div>
+                <div class="policy-footer">
+                  <span class="policy-more">政策の詳細を見る →</span>
+                </div>
               </a>
             </li>
           ))}
@@ -144,35 +152,58 @@ const cleanSummary = (text: string) => text.replace(/\*([^*]+)\*/g, '$1');
 
   .policy-item {
     background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    transition: all 0.2s;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   }
 
   .policy-item:hover {
     border-color: #043e80;
-    box-shadow: 0 4px 12px rgba(4, 62, 128, 0.1);
+    box-shadow: 0 6px 20px rgba(4, 62, 128, 0.12);
+    transform: translateY(-3px);
+    background: linear-gradient(to bottom, #ffffff 0%, #f8fafc 100%);
   }
 
   .policy-item.featured {
-    border-left: 4px solid #043e80;
+    border-left: 5px solid #043e80;
+    box-shadow: 0 3px 12px rgba(4, 62, 128, 0.08);
+  }
+
+  .policy-item.featured:hover {
+    box-shadow: 0 8px 24px rgba(4, 62, 128, 0.15);
   }
 
   .policy-link {
-    display: block;
+    display: flex;
+    flex-direction: column;
     padding: 1.5rem;
     text-decoration: none;
     color: inherit;
+    height: 100%;
+  }
+
+  .policy-content {
+    flex-grow: 1;
+  }
+
+  .policy-footer {
+    padding-top: 1rem;
+    border-top: 1px solid #e8f0f8;
+    margin-top: 0.75rem;
   }
 
   .policy-category {
     display: inline-block;
-    background: #e8f0f8;
-    color: #043e80;
-    font-size: 0.75rem;
-    padding: 0.2rem 0.6rem;
-    border-radius: 4px;
-    margin-bottom: 0.75rem;
+    background: linear-gradient(135deg, #043e80 0%, #065ba8 100%);
+    color: #ffffff;
+    font-size: 0.875rem;
+    font-weight: 700;
+    padding: 0.375rem 1rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(4, 62, 128, 0.2);
+    letter-spacing: 0.02em;
   }
 
   .policy-item h3 {
@@ -180,19 +211,64 @@ const cleanSummary = (text: string) => text.replace(/\*([^*]+)\*/g, '$1');
     color: #043e80;
     margin: 0 0 0.75rem;
     line-height: 1.4;
+    font-weight: bold;
+  }
+
+  /* SP向けにタイトルをさらに大きく */
+  @media (max-width: 767px) {
+    .policy-item {
+      border-radius: 10px;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .policy-item h3 {
+      font-size: 1.25rem;
+      line-height: 1.5;
+    }
+
+    .policy-link {
+      padding: 1.75rem 1.5rem;
+    }
+
+    .policy-summary {
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .policy-category {
+      font-size: 0.9375rem;
+      padding: 0.4rem 1.1rem;
+    }
+
+    .policy-more {
+      font-size: 1rem;
+    }
+
+    .policy-footer {
+      padding-top: 0.875rem;
+    }
+
+    .policy-item:hover {
+      transform: translateY(-2px);
+    }
   }
 
   .policy-summary {
     font-size: 0.9375rem;
     color: #555;
     line-height: 1.7;
-    margin: 0 0 1rem;
+    margin: 0;
   }
 
   .policy-more {
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
     color: #043e80;
     font-weight: 600;
+    transition: all 0.2s;
+  }
+
+  .policy-item:hover .policy-more {
+    color: #f5b500;
   }
 
   /* 魂のメッセージリンクセクション */
