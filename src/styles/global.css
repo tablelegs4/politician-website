@@ -100,7 +100,7 @@ img {
 }
 
 .footer-nav a {
-  color: #555;
+  color: #000;
 }
 
 .copyright {
@@ -209,7 +209,7 @@ h3 {
 
 .card-description {
   line-height: 1.6;
-  color: #555;
+  color: #000;
 }
 
 /* ===========================
@@ -305,7 +305,7 @@ h3 {
 
 .news-description {
   font-size: 0.9375rem;
-  color: #555;
+  color: #000;
   line-height: 1.5;
 }
 
@@ -349,7 +349,7 @@ h3 {
   border-left: 4px solid #043e80;
   padding-left: 1rem;
   margin: 1rem 0;
-  color: #555;
+  color: #000;
   font-style: italic;
 }
 
