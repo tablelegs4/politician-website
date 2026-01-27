@@ -862,6 +862,14 @@ const showAchievementsOnTop = profile.showAchievementsOnTop && profile.achieveme
     }
   }
 
+  .policy-card-summary {
+    font-size: 0.9375rem;
+    color: #000000;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+    flex-grow: 1;
+  }
+
   .policy-card-title {
     font-size: clamp(1.125rem, 3vw, 1.25rem);
     color: #043e80;
@@ -885,7 +893,7 @@ const showAchievementsOnTop = profile.showAchievementsOnTop && profile.achieveme
     }
 
     .policy-card-summary {
-      font-size: 1rem;
+      font-size: 18px;
       line-height: 1.7;
       margin-bottom: 1rem;
     }
@@ -901,14 +909,6 @@ const showAchievementsOnTop = profile.showAchievementsOnTop && profile.achieveme
     .policy-card-link-wrapper:hover .policy-card {
       transform: translateY(-2px);
     }
-  }
-
-  .policy-card-summary {
-    font-size: 0.9375rem;
-    color: #555;
-    line-height: 1.6;
-    margin-bottom: 1.25rem;
-    flex-grow: 1;
   }
 
   /* 強調テキスト（*で囲んだ部分） - :globalで動的HTMLにも適用 */
@@ -1002,6 +1002,10 @@ const showAchievementsOnTop = profile.showAchievementsOnTop && profile.achieveme
 
     .message-item {
       padding: 1rem;
+    }
+
+    .message-answer {
+      font-size: 18px;
     }
   }
 
@@ -1311,6 +1315,10 @@ const showAchievementsOnTop = profile.showAchievementsOnTop && profile.achieveme
 
     .faq-lead {
       font-size: 1rem;
+    }
+
+    .faq-detail {
+      font-size: 18px;
     }
   }
 
