@@ -154,11 +154,11 @@
     align-items: center;
   }
   .hero-layout-1 .hero-title {
-    font-size: clamp(1rem, 4.5vw, 1.5rem);
+    font-size: clamp(1.25rem, 5.5vw, 1.75rem);
     white-space: nowrap;
   }
   .hero-layout-1 .hero-subtitle {
-    font-size: clamp(0.7rem, 2.8vw, 0.9375rem);
+    font-size: clamp(0.85rem, 3.5vw, 1.125rem);
     white-space: nowrap;
   }
   .hero-layout-1 .hero-cta {
