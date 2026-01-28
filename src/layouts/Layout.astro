@@ -134,9 +134,6 @@ const withBase = (path: string) => {
     {/* 文字サイズ切り替えボタン（全ページ共通） */}
     {SHOW_FONT_SIZE_TOGGLE && (
       <div class="font-size-toggle" id="fontSizeToggle">
-        <button class="font-size-btn" data-size="small" aria-label="文字を小さく（14px）">
-          <span class="font-size-preview" style="font-size: 14px;">あ</span>
-        </button>
         <button class="font-size-btn active" data-size="medium" aria-label="文字を標準（18px）">
           <span class="font-size-preview" style="font-size: 18px;">あ</span>
         </button>
@@ -213,24 +210,6 @@ const withBase = (path: string) => {
       }
 
       /* 文字サイズ変更クラス（地の文のみに適用、セクションタイトル・ヒーロー等は除外） */
-      /* 小サイズ（14px） */
-      :global(html.font-size-small .body-text),
-      :global(html.font-size-small .message-answer),
-      :global(html.font-size-small .policy-card-summary),
-      :global(html.font-size-small .faq-detail),
-      :global(html.font-size-small .note-article-description),
-      :global(html.font-size-small .support-card-description),
-      :global(html.font-size-small .consultation-cta-description),
-      :global(html.font-size-small .article-content p),
-      :global(html.font-size-small .article-content li),
-      :global(html.font-size-small .privacy-page p),
-      :global(html.font-size-small .privacy-page li),
-      :global(html.font-size-small .contact-intro p),
-      :global(html.font-size-small .notice-list li),
-      :global(html.font-size-small .card-description) {
-        font-size: 14px !important;
-      }
-
       /* 大サイズ（22px） */
       :global(html.font-size-large .body-text),
       :global(html.font-size-large .message-answer),
@@ -274,12 +253,10 @@ const withBase = (path: string) => {
 
         function applyFontSize(size: string) {
           // クラスをリセット
-          html.classList.remove('font-size-small', 'font-size-large');
+          html.classList.remove('font-size-large');
 
           // 新しいサイズクラスを適用
-          if (size === 'small') {
-            html.classList.add('font-size-small');
-          } else if (size === 'large') {
+          if (size === 'large') {
             html.classList.add('font-size-large');
           }
 

@@ -111,11 +111,7 @@ const showAchievementsOnTop = profile.showAchievementsOnTop && profile.achieveme
     <div class="hero-content-below">
       <div class="container">
         <h1 class="hero-title" id="hero-title" set:html={formatHeroTitle(heroTexts[0].title.replace(/\/n/g, '<br>'))}></h1>
-        {heroTexts[0].subtitle ? (
-          <p class="hero-subtitle" id="hero-subtitle" set:html={heroTexts[0].subtitle.replace(/\/n/g, '<br>')}></p>
-        ) : (
-          <p class="hero-subtitle" id="hero-subtitle" style="display:none"></p>
-        )}
+        <p class="hero-subtitle" id="hero-subtitle" style={heroTexts[0].subtitle ? '' : 'display:none'} set:html={heroTexts[0].subtitle ? heroTexts[0].subtitle.replace(/\/n/g, '<br>') : ''}></p>
         {isIncumbent && incumbentData.proposals > 0 && (
           <div class="trust-elements">
             <div class="trust-item">
@@ -139,15 +135,56 @@ const showAchievementsOnTop = profile.showAchievementsOnTop && profile.achieveme
   {/* ヒーローテキストのランダム選択（クライアントサイド） */}
   <script define:vars={{ heroTexts }}>
     (function() {
-      const idx = Math.floor(Math.random() * heroTexts.length);
-      const chosen = heroTexts[idx];
-      const titleEl = document.getElementById('hero-title');
-      const subtitleEl = document.getElementById('hero-subtitle');
+      // 各行が画面幅に収まるようフォントサイズを自動調整（改行は/nで明示的に指定）
+      function fitHeroTitle(el) {
+        if (!el || !el.parentElement) return;
+        var maxWidth = el.parentElement.clientWidth;
+        if (maxWidth <= 0) return;
+
+        // フォントサイズをリセット（CSSのベースサイズに戻す）
+        el.style.fontSize = '';
+        var baseFontSize = parseFloat(getComputedStyle(el).fontSize) || 56;
+        var minFontSize = 10;
+
+        // 各行の幅を測定するための一時要素
+        var measure = document.createElement('span');
+        measure.style.cssText = 'visibility:hidden;position:absolute;white-space:nowrap;font-weight:' + getComputedStyle(el).fontWeight + ';letter-spacing:' + getComputedStyle(el).letterSpacing + ';';
+        document.body.appendChild(measure);
+
+        // テキストを行ごとに分割（<br>で区切る）
+        var html = el.innerHTML;
+        var lines = html.split(/<br\s*\/?>/gi);
+
+        var fontSize = baseFontSize;
+        // 全行が収まる最大フォントサイズを探す
+        while (fontSize > minFontSize) {
+          measure.style.fontSize = fontSize + 'px';
+          var fits = true;
+          for (var i = 0; i < lines.length; i++) {
+            measure.innerHTML = lines[i];
+            if (measure.offsetWidth > maxWidth) {
+              fits = false;
+              break;
+            }
+          }
+          if (fits) break;
+          fontSize -= 0.5;
+        }
+
+        document.body.removeChild(measure);
+        el.style.fontSize = fontSize + 'px';
+      }
+
+      var idx = Math.floor(Math.random() * heroTexts.length);
+      var chosen = heroTexts[idx];
+      var titleEl = document.getElementById('hero-title');
+      var subtitleEl = document.getElementById('hero-subtitle');
       if (titleEl) {
-        const formatted = chosen.title
+        var formatted = chosen.title
           .replace(/\/n/g, '<br>')
           .replace(/\*([^*]+)\*/g, '<span class="hero-emphasis">$1</span>');
         titleEl.innerHTML = formatted;
+        fitHeroTitle(titleEl);
       }
       if (subtitleEl) {
         if (chosen.subtitle) {
@@ -157,6 +194,16 @@ const showAchievementsOnTop = profile.showAchievementsOnTop && profile.achieveme
           subtitleEl.style.display = 'none';
         }
       }
+
+      // ウィンドウリサイズ時にも再調整
+      var resizeTimer;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+          var el = document.getElementById('hero-title');
+          if (el) fitHeroTitle(el);
+        }, 100);
+      });
     })();
   </script>
 
@@ -655,6 +702,8 @@ const showAchievementsOnTop = profile.showAchievementsOnTop && profile.achieveme
     width: 100%;
     letter-spacing: 0.05em;
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    word-break: keep-all;
+    overflow-wrap: normal;
   }
 
   .hero-subtitle {
@@ -688,11 +737,6 @@ const showAchievementsOnTop = profile.showAchievementsOnTop && profile.achieveme
 
   /* レスポンシブ：スマートフォン */
   @media (max-width: 767px) {
-    .hero-title {
-      font-size: clamp(1rem, 5.5vw, 2.5rem);
-      white-space: nowrap;
-    }
-
     .hero-subtitle {
       font-weight: bold;
       font-size: clamp(0.7rem, 3.2vw, 1.375rem);
@@ -713,10 +757,6 @@ const showAchievementsOnTop = profile.showAchievementsOnTop && profile.achieveme
 
   /* レスポンシブ：小さいスマートフォン */
   @media (max-width: 480px) {
-    .hero-title {
-      font-size: clamp(0.85rem, 5vw, 2rem);
-    }
-
     .hero-subtitle {
       font-size: clamp(0.75rem, 4vw, 1.125rem);
     }
