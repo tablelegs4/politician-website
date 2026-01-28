@@ -39,13 +39,13 @@ export const PATTERN_DESCRIPTIONS: Record<ABTestPattern, string> = {
   C: 'パターン3: プロフィール→メッセージ→政策',
 };
 
-// LocalStorageのキー
+// SessionStorageのキー
 const STORAGE_KEY = 'homepage_ab_pattern';
 
 /**
  * ABテストパターンを取得
- * - 既存のパターンがあればそれを返す（ユーザー一貫性のため）
- * - なければランダムに割り当ててLocalStorageに保存
+ * - 既存のパターンがあればそれを返す（セッション内の一貫性のため）
+ * - なければランダムに割り当ててSessionStorageに保存
  */
 export function getABTestPattern(): ABTestPattern {
   // クライアントサイドでのみ実行
@@ -54,7 +54,7 @@ export function getABTestPattern(): ABTestPattern {
   }
 
   // 既存のパターンを確認
-  const stored = localStorage.getItem(STORAGE_KEY);
+  const stored = sessionStorage.getItem(STORAGE_KEY);
   if (stored && isValidPattern(stored)) {
     return stored as ABTestPattern;
   }
@@ -64,8 +64,8 @@ export function getABTestPattern(): ABTestPattern {
   const randomIndex = Math.floor(Math.random() * patterns.length);
   const pattern = patterns[randomIndex];
 
-  // LocalStorageに保存
-  localStorage.setItem(STORAGE_KEY, pattern);
+  // SessionStorageに保存
+  sessionStorage.setItem(STORAGE_KEY, pattern);
 
   return pattern;
 }

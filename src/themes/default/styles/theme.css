@@ -130,6 +130,13 @@
   margin: 0;
 }
 
+.hero-atention-image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
 .hero-layout-1 .hero-content-below .hero-cta {
   display: flex;
   justify-content: center;

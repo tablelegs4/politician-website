@@ -85,6 +85,9 @@ const formatHeroTitle = (title: string) => {
   return title.replace(/\*([^*]+)\*/g, '<span class="hero-emphasis">$1</span>');
 };
 
+// デバッグ: ヒーローテキストの代わりに注目画像を表示する（true で画像表示）
+const SHOW_HERO_IMAGE_INSTEAD = true;
+
 // 信頼要素の表示判定
 const isIncumbent = siteConfig.trustElements.mode === 'incumbent';
 const incumbentData = siteConfig.trustElements.incumbent;
@@ -107,23 +110,29 @@ const showAchievementsOnTop = profile.showAchievementsOnTop && profile.achieveme
     </div>
     <div class="hero-content-below">
       <div class="container">
-        <h1 class="hero-title" set:html={formatHeroTitle(siteConfig.hero.title)}></h1>
-        <p class="hero-subtitle">{siteConfig.hero.subtitle}</p>
-        {isIncumbent && incumbentData.proposals > 0 && (
-          <div class="trust-elements">
-            <div class="trust-item">
-              <span class="trust-number">{incumbentData.proposals}</span>
-              <span class="trust-label">件の提案</span>
-            </div>
-            <div class="trust-item">
-              <span class="trust-number">{incumbentData.questions}</span>
-              <span class="trust-label">回の質問</span>
-            </div>
-            <div class="trust-item">
-              <span class="trust-number">{incumbentData.cases}</span>
-              <span class="trust-label">件の対応</span>
-            </div>
-          </div>
+        {SHOW_HERO_IMAGE_INSTEAD ? (
+          <img src={withImageBase('/images/atention.png')} alt="注目" class="hero-atention-image" />
+        ) : (
+          <>
+            <h1 class="hero-title" set:html={formatHeroTitle(siteConfig.hero.title)}></h1>
+            <p class="hero-subtitle">{siteConfig.hero.subtitle}</p>
+            {isIncumbent && incumbentData.proposals > 0 && (
+              <div class="trust-elements">
+                <div class="trust-item">
+                  <span class="trust-number">{incumbentData.proposals}</span>
+                  <span class="trust-label">件の提案</span>
+                </div>
+                <div class="trust-item">
+                  <span class="trust-number">{incumbentData.questions}</span>
+                  <span class="trust-label">回の質問</span>
+                </div>
+                <div class="trust-item">
+                  <span class="trust-number">{incumbentData.cases}</span>
+                  <span class="trust-label">件の対応</span>
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
