@@ -85,8 +85,6 @@ const formatHeroTitle = (title: string) => {
   return title.replace(/\*([^*]+)\*/g, '<span class="hero-emphasis">$1</span>');
 };
 
-// ヒーローテキストのランダム表示用データ
-const heroTexts = siteConfig.heroTexts || [{ title: siteConfig.hero.title, subtitle: siteConfig.hero.subtitle }];
 
 // 信頼要素の表示判定
 const isIncumbent = siteConfig.trustElements.mode === 'incumbent';
@@ -103,109 +101,17 @@ const showAchievementsOnTop = profile.showAchievementsOnTop && profile.achieveme
        レイアウトパターン: ?top=1〜5 で切り替え（クライアントサイドJS）
        ===================================== -->
 
-  {/* ========== ヒーローセクション: テキストをランダム表示 ========== */}
+  {/* ========== ヒーローセクション: atention.png 表示 ========== */}
   <section class="hero-section hero-layout-1">
     <div class="hero-full-image">
       <img src={THEME_IMAGES.default.hero} alt={`${siteConfig.politician.name}の写真`} class="hero-image-large" loading="eager" />
     </div>
     <div class="hero-content-below">
       <div class="container">
-        <h1 class="hero-title" id="hero-title" set:html={formatHeroTitle(heroTexts[0].title.replace(/\/n/g, '<br>'))}></h1>
-        <p class="hero-subtitle" id="hero-subtitle" style={heroTexts[0].subtitle ? '' : 'display:none'} set:html={heroTexts[0].subtitle ? heroTexts[0].subtitle.replace(/\/n/g, '<br>') : ''}></p>
-        {isIncumbent && incumbentData.proposals > 0 && (
-          <div class="trust-elements">
-            <div class="trust-item">
-              <span class="trust-number">{incumbentData.proposals}</span>
-              <span class="trust-label">件の提案</span>
-            </div>
-            <div class="trust-item">
-              <span class="trust-number">{incumbentData.questions}</span>
-              <span class="trust-label">回の質問</span>
-            </div>
-            <div class="trust-item">
-              <span class="trust-number">{incumbentData.cases}</span>
-              <span class="trust-label">件の対応</span>
-            </div>
-          </div>
-        )}
+        <img src={withImageBase('/images/atention.png')} alt="注目" class="hero-atention-image" />
       </div>
     </div>
   </section>
-
-  {/* ヒーローテキストのランダム選択（クライアントサイド） */}
-  <script define:vars={{ heroTexts }}>
-    (function() {
-      // 各行が画面幅に収まるようフォントサイズを自動調整（改行は/nで明示的に指定）
-      function fitHeroTitle(el) {
-        if (!el || !el.parentElement) return;
-        var maxWidth = el.parentElement.clientWidth;
-        if (maxWidth <= 0) return;
-
-        // フォントサイズをリセット（CSSのベースサイズに戻す）
-        el.style.fontSize = '';
-        var baseFontSize = parseFloat(getComputedStyle(el).fontSize) || 56;
-        var minFontSize = 10;
-
-        // 各行の幅を測定するための一時要素
-        var measure = document.createElement('span');
-        measure.style.cssText = 'visibility:hidden;position:absolute;white-space:nowrap;font-weight:' + getComputedStyle(el).fontWeight + ';letter-spacing:' + getComputedStyle(el).letterSpacing + ';';
-        document.body.appendChild(measure);
-
-        // テキストを行ごとに分割（<br>で区切る）
-        var html = el.innerHTML;
-        var lines = html.split(/<br\s*\/?>/gi);
-
-        var fontSize = baseFontSize;
-        // 全行が収まる最大フォントサイズを探す
-        while (fontSize > minFontSize) {
-          measure.style.fontSize = fontSize + 'px';
-          var fits = true;
-          for (var i = 0; i < lines.length; i++) {
-            measure.innerHTML = lines[i];
-            if (measure.offsetWidth > maxWidth) {
-              fits = false;
-              break;
-            }
-          }
-          if (fits) break;
-          fontSize -= 0.5;
-        }
-
-        document.body.removeChild(measure);
-        el.style.fontSize = fontSize + 'px';
-      }
-
-      var idx = Math.floor(Math.random() * heroTexts.length);
-      var chosen = heroTexts[idx];
-      var titleEl = document.getElementById('hero-title');
-      var subtitleEl = document.getElementById('hero-subtitle');
-      if (titleEl) {
-        var formatted = chosen.title
-          .replace(/\/n/g, '<br>')
-          .replace(/\*([^*]+)\*/g, '<span class="hero-emphasis">$1</span>');
-        titleEl.innerHTML = formatted;
-        fitHeroTitle(titleEl);
-      }
-      if (subtitleEl) {
-        if (chosen.subtitle) {
-          subtitleEl.innerHTML = chosen.subtitle.replace(/\/n/g, '<br>');
-          subtitleEl.style.display = '';
-        } else {
-          subtitleEl.style.display = 'none';
-        }
-      }
-
-      // ウィンドウリサイズ時にも再調整
-      var resizeTimer;
-      window.addEventListener('resize', function() {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function() {
-          var el = document.getElementById('hero-title');
-          if (el) fitHeroTitle(el);
-        }, 100);
-      });
-    })();
-  </script>
 
 
   <div class="container">
