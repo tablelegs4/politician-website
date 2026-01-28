@@ -32,26 +32,27 @@ const anchor = (hash: string) => isTopPage ? hash : `/${hash}`;
 // isExternal: true の場合はページ遷移（遷移アイコン表示）
 // TOP画面のセクション順に合わせる: 政策 → メッセージ → プロフィール → 活動報告 → FAQ → 応援する → お問い合わせ
 // PC用ナビ項目
+// abSection: ABテスト対象のセクションID（並べ替え用）
 const navItemsPC = [
-  { label: 'トップ', href: '/', isExternal: false },
-  { label: '政策', href: anchor('#policy'), isExternal: false },
-  { label: '魂のメッセージ', href: anchor('#message'), isExternal: false },
-  { label: 'プロフィール', href: '/profile/', isExternal: true },
-  { label: '活動報告', href: anchor('#activity'), isExternal: false },
-  { label: 'お問い合わせ', href: '/contact/', isExternal: true },
-  { label: 'プライバシーポリシー', href: '/privacy/', isExternal: true },
+  { label: 'トップ', href: '/', isExternal: false, abSection: null },
+  { label: '政策', href: anchor('#policy'), isExternal: false, abSection: 'policy' },
+  { label: '魂のメッセージ', href: anchor('#message'), isExternal: false, abSection: 'message' },
+  { label: 'プロフィール', href: '/profile/', isExternal: true, abSection: 'profile' },
+  { label: '活動報告', href: anchor('#activity'), isExternal: false, abSection: null },
+  { label: 'お問い合わせ', href: '/contact/', isExternal: true, abSection: null },
+  { label: 'プライバシーポリシー', href: '/privacy/', isExternal: true, abSection: null },
 ];
 
 // SP用ナビ項目
 const navItemsSP = [
-  { label: 'トップ', href: isTopPage ? '#top' : '/', isExternal: false },
-  { label: '政策', href: anchor('#policy'), isExternal: false },
-  { label: '魂のメッセージ', href: anchor('#message'), isExternal: false },
-  { label: 'プロフィール', href: anchor('#profile'), isExternal: false },
-  { label: '活動報告', href: anchor('#activity'), isExternal: false },
-  { label: 'よくある質問', href: anchor('#faq'), isExternal: false },
-  { label: '応援する', href: anchor('#support'), isExternal: false },
-  { label: 'お問い合わせ', href: '/contact/', isExternal: true },
+  { label: 'トップ', href: isTopPage ? '#top' : '/', isExternal: false, abSection: null },
+  { label: '政策', href: anchor('#policy'), isExternal: false, abSection: 'policy' },
+  { label: '魂のメッセージ', href: anchor('#message'), isExternal: false, abSection: 'message' },
+  { label: 'プロフィール', href: anchor('#profile'), isExternal: false, abSection: 'profile' },
+  { label: '活動報告', href: anchor('#activity'), isExternal: false, abSection: null },
+  { label: 'よくある質問', href: anchor('#faq'), isExternal: false, abSection: null },
+  { label: '応援する', href: anchor('#support'), isExternal: false, abSection: null },
+  { label: 'お問い合わせ', href: '/contact/', isExternal: true, abSection: null },
 ];
 
 ---
@@ -74,7 +75,7 @@ const navItemsSP = [
         <nav class="main-nav" aria-label="メインナビゲーション">
           <ul>
             {navItemsSP.map((item) => (
-              <li>
+              <li data-ab-nav={item.abSection || undefined}>
                 <a href={withBase(item.href)} class={item.isExternal ? 'nav-external' : ''}>
                   {item.label}
                   {item.isExternal && <span class="external-icon" aria-hidden="true">↗</span>}
@@ -91,7 +92,7 @@ const navItemsSP = [
       <nav class="main-nav" aria-label="メインナビゲーション">
         <ul>
           {navItemsPC.map((item) => (
-            <li>
+            <li data-ab-nav={item.abSection || undefined}>
               <a href={withBase(item.href)} class={item.isExternal ? 'nav-external' : ''}>
                 {item.label}
                 {item.isExternal && <span class="external-icon" aria-hidden="true">↗</span>}
@@ -321,7 +322,7 @@ const navItemsSP = [
   }
 </style>
 
-<script>
+<script is:inline>
   // メニュー外タップで閉じる
   document.addEventListener('DOMContentLoaded', () => {
     const menu = document.getElementById('sp-menu');
@@ -342,5 +343,61 @@ const navItemsSP = [
         });
       });
     }
+
+    // ABテストパターンに応じてメニュー順序を変更
+    reorderNavByABTest();
   });
+
+  /**
+   * ABテストパターンに応じてナビゲーションメニューの順序を変更
+   * パターンA: 政策 → メッセージ → プロフィール（デフォルト）
+   * パターンB: メッセージ → 政策 → プロフィール
+   * パターンC: プロフィール → メッセージ → 政策
+   */
+  function reorderNavByABTest() {
+    const pattern = localStorage.getItem('homepage_ab_pattern');
+    if (!pattern || pattern === 'A') return; // パターンAはデフォルト順序
+
+    // パターン別の順序定義
+    const orders = {
+      B: ['message', 'policy', 'profile'],
+      C: ['profile', 'message', 'policy']
+    };
+
+    const order = orders[pattern];
+    if (!order) return;
+
+    // 全てのnavを処理（PC用とSP用）
+    document.querySelectorAll('.main-nav ul').forEach(navUl => {
+      // data-ab-nav属性を持つ項目を取得
+      const targetItems = {};
+      let firstTargetItem = null;
+
+      order.forEach(key => {
+        const item = navUl.querySelector(`li[data-ab-nav="${key}"]`);
+        if (item) {
+          targetItems[key] = item;
+          if (!firstTargetItem) firstTargetItem = item;
+        }
+      });
+
+      // 全ての対象項目が見つからない場合はスキップ
+      if (Object.keys(targetItems).length < 3 || !firstTargetItem) return;
+
+      // 指定順序で並べ替え
+      order.forEach((key, idx) => {
+        const item = targetItems[key];
+        if (item) {
+          if (idx === 0) {
+            firstTargetItem.parentNode.insertBefore(item, firstTargetItem);
+          } else {
+            const prevItem = targetItems[order[idx - 1]];
+            if (prevItem && prevItem.nextSibling) {
+              prevItem.parentNode.insertBefore(item, prevItem.nextSibling);
+            }
+          }
+        }
+      });
+    });
+  }
 </script>
