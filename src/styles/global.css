@@ -76,22 +76,68 @@ img {
    フッター
    =========================== */
 .site-footer {
-  background: #f5f5f5;
-  padding: 0 0 1rem;
-  border-top: 1px solid #ddd;
+  background: #333;
+  padding: 2rem 0 1rem;
+  border-top: 3px solid var(--theme-secondary, #f5b500);
 }
 
 .footer-content {
   text-align: center;
   font-size: 0.875rem;
-  color: #666;
+  color: #ccc;
 }
 
-.footer-nav {
-  margin-bottom: 1rem;
+/* 魂のメッセージ */
+.footer-message {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.footer-nav ul {
+.footer-message-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+@media (max-width: 767px) {
+  .footer-message-text {
+    font-size: 1rem;
+  }
+}
+
+/* メインナビゲーション */
+.footer-nav-main {
+  margin-bottom: 1.5rem;
+}
+
+.footer-nav-main ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.footer-nav-main a {
+  color: #fff;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-nav-main a:hover {
+  color: var(--theme-secondary, #f5b500);
+}
+
+/* SNSリンク */
+.footer-social {
+  margin-bottom: 1.5rem;
+}
+
+.footer-social ul {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
@@ -99,13 +145,62 @@ img {
   gap: 1rem;
 }
 
-.footer-nav a {
-  color: #000;
+.footer-social a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.footer-social a:hover {
+  background: var(--theme-secondary, #f5b500);
+  color: #333;
+}
+
+/* サブナビゲーション（ポリシー系） */
+.footer-nav-sub {
+  margin-bottom: 1rem;
+}
+
+.footer-nav-sub ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.footer-nav-sub a {
+  color: #999;
+  font-size: 0.75rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-nav-sub a:hover {
+  color: #fff;
 }
 
 .copyright {
   margin-top: 1rem;
-  color: #999;
+  color: #666;
+  font-size: 0.75rem;
+}
+
+@media (max-width: 767px) {
+  .footer-nav-main ul {
+    gap: 1rem;
+  }
+
+  .footer-nav-main a {
+    font-size: 0.875rem;
+  }
 }
 
 /* ===========================

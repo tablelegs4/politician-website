@@ -22,16 +22,28 @@ const withBase = (path: string) => {
 <footer class="site-footer">
   <div class="container">
     <div class="footer-content">
-      <nav class="footer-nav" aria-label="フッターナビゲーション">
+      <!-- メインナビゲーション（TOPページセクションへのアンカーリンク） -->
+      <nav class="footer-nav footer-nav-main" aria-label="フッターナビゲーション">
         <ul>
-          <li><a href={withBase('/profile/')}>プロフィール</a></li>
-          <li><a href={withBase('/policy/')}>政策</a></li>
-          <li><a href={withBase('/news/')}>お知らせ</a></li>
+          <li><a href={withBase('/#top')}>ホーム</a></li>
+          <li><a href={withBase('/#policy')}>政策</a></li>
+          <li><a href={withBase('/#message')}>魂のメッセージ</a></li>
+          <li><a href={withBase('/#profile')}>プロフィール</a></li>
+          <li><a href={withBase('/#activity')}>活動報告</a></li>
+          <li><a href={withBase('/#faq')}>よくある質問</a></li>
+          <li><a href={withBase('/#support')}>応援する</a></li>
           <li><a href={withBase('/contact/')}>お問い合わせ</a></li>
+        </ul>
+      </nav>
+
+      <!-- サブナビゲーション（ポリシー系） -->
+      <nav class="footer-nav footer-nav-sub" aria-label="ポリシー">
+        <ul>
           <li><a href={withBase('/privacy/')}>プライバシーポリシー</a></li>
           <li><a href={withBase('/site-policy/')}>サイトポリシー</a></li>
         </ul>
       </nav>
+
       <p class="copyright">&copy; {currentYear} {profile.name}. All rights reserved.</p>
     </div>
   </div>

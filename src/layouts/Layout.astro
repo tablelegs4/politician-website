@@ -10,7 +10,7 @@ import { getSiteConfig } from '../utils/content';
 // プロトタイプ用: 文字サイズ切り替えボタン表示フラグ
 // true: 表示, false: 非表示
 // ========================================
-const SHOW_FONT_SIZE_TOGGLE = false;
+const SHOW_FONT_SIZE_TOGGLE = true;
 
 interface Props {
   title: string;
@@ -131,88 +131,122 @@ const withBase = (path: string) => {
     <slot />
     <Footer />
 
-    {/* SP用フローティング文字サイズ切り替えボタン */}
+    {/* 文字サイズ切り替えボタン（全ページ共通） */}
     {SHOW_FONT_SIZE_TOGGLE && (
       <div class="font-size-toggle" id="fontSizeToggle">
-        <button class="font-size-btn" data-size="small" aria-label="文字を小さく">小</button>
-        <button class="font-size-btn active" data-size="medium" aria-label="文字を標準に">中</button>
-        <button class="font-size-btn" data-size="large" aria-label="文字を大きく">大</button>
+        <button class="font-size-btn" data-size="small" aria-label="文字を小さく（14px）">
+          <span class="font-size-preview" style="font-size: 14px;">あ</span>
+        </button>
+        <button class="font-size-btn active" data-size="medium" aria-label="文字を標準（18px）">
+          <span class="font-size-preview" style="font-size: 18px;">あ</span>
+        </button>
+        <button class="font-size-btn" data-size="large" aria-label="文字を大きく（22px）">
+          <span class="font-size-preview" style="font-size: 22px;">あ</span>
+        </button>
       </div>
     )}
 
     <style>
-      /* フローティング文字サイズ切り替えボタン（SP専用） */
+      /* 文字サイズ切り替えボタン（PC/SP共通） */
       .font-size-toggle {
-        display: none;
+        display: flex;
+        position: fixed;
+        bottom: 20px;
+        right: 16px;
+        z-index: 1000;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        padding: 6px;
+        gap: 4px;
+        border: 1px solid #e0e0e0;
       }
 
+      .font-size-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border: 2px solid transparent;
+        border-radius: 6px;
+        background: #f5f5f5;
+        color: #333;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .font-size-btn:hover {
+        background: #e8e8e8;
+        border-color: #ccc;
+      }
+
+      .font-size-btn.active {
+        background: #043e80;
+        color: #fff;
+        border-color: #043e80;
+      }
+
+      .font-size-btn:focus-visible {
+        outline: 2px solid #043e80;
+        outline-offset: 2px;
+      }
+
+      .font-size-preview {
+        font-weight: bold;
+        line-height: 1;
+      }
+
+      /* SP用調整 */
       @media (max-width: 767px) {
         .font-size-toggle {
-          display: flex;
-          position: fixed;
-          bottom: 20px;
-          right: 16px;
-          z-index: 1000;
-          background: #fff;
-          border-radius: 24px;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+          bottom: 16px;
+          right: 12px;
           padding: 4px;
-          gap: 2px;
+          gap: 3px;
         }
 
         .font-size-btn {
-          width: 36px;
-          height: 36px;
-          border: none;
-          border-radius: 50%;
-          background: transparent;
-          color: #666;
-          font-size: 12px;
-          font-weight: bold;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-
-        .font-size-btn:hover {
-          background: #f0f0f0;
-        }
-
-        .font-size-btn.active {
-          background: #043e80;
-          color: #fff;
-        }
-
-        .font-size-btn:focus-visible {
-          outline: 2px solid #043e80;
-          outline-offset: 2px;
+          width: 40px;
+          height: 40px;
         }
       }
 
-      /* 文字サイズ変更クラス（本文テキストのみに適用、見出し・タイトル系は除外） */
-      :global(html.font-size-small .container .main-content p:not(.section-title):not(.mobile-profile-nickname)),
-      :global(html.font-size-small .container .main-content li),
-      :global(html.font-size-small .container .sidebar p:not(.section-title)),
-      :global(html.font-size-small .container .card-description),
-      :global(html.font-size-small .container .policy-card-summary),
-      :global(html.font-size-small .container .faq-detail),
-      :global(html.font-size-small .container .message-answer) {
-        font-size: 15px;
+      /* 文字サイズ変更クラス（地の文のみに適用、セクションタイトル・ヒーロー等は除外） */
+      /* 小サイズ（14px） */
+      :global(html.font-size-small .body-text),
+      :global(html.font-size-small .message-answer),
+      :global(html.font-size-small .policy-card-summary),
+      :global(html.font-size-small .faq-detail),
+      :global(html.font-size-small .note-article-description),
+      :global(html.font-size-small .support-card-description),
+      :global(html.font-size-small .consultation-cta-description),
+      :global(html.font-size-small .article-content p),
+      :global(html.font-size-small .article-content li),
+      :global(html.font-size-small .privacy-page p),
+      :global(html.font-size-small .privacy-page li),
+      :global(html.font-size-small .contact-intro p),
+      :global(html.font-size-small .notice-list li),
+      :global(html.font-size-small .card-description) {
+        font-size: 14px !important;
       }
 
-      :global(html.font-size-large .container .main-content p:not(.section-title):not(.mobile-profile-nickname)),
-      :global(html.font-size-large .container .main-content li),
-      :global(html.font-size-large .container .sidebar p:not(.section-title)),
-      :global(html.font-size-large .container .card-description),
-      :global(html.font-size-large .container .policy-card-summary),
-      :global(html.font-size-large .container .faq-detail),
-      :global(html.font-size-large .container .message-answer) {
-        font-size: 21px;
-      }
-
-      /* フローティングボタンの位置固定 */
-      .font-size-toggle {
-        bottom: 20px !important;
-        right: 16px !important;
+      /* 大サイズ（22px） */
+      :global(html.font-size-large .body-text),
+      :global(html.font-size-large .message-answer),
+      :global(html.font-size-large .policy-card-summary),
+      :global(html.font-size-large .faq-detail),
+      :global(html.font-size-large .note-article-description),
+      :global(html.font-size-large .support-card-description),
+      :global(html.font-size-large .consultation-cta-description),
+      :global(html.font-size-large .article-content p),
+      :global(html.font-size-large .article-content li),
+      :global(html.font-size-large .privacy-page p),
+      :global(html.font-size-large .privacy-page li),
+      :global(html.font-size-large .contact-intro p),
+      :global(html.font-size-large .notice-list li),
+      :global(html.font-size-large .card-description) {
+        font-size: 22px !important;
       }
     </style>
 
@@ -224,8 +258,8 @@ const withBase = (path: string) => {
         const buttons = toggle.querySelectorAll<HTMLButtonElement>('.font-size-btn');
         const html = document.documentElement;
 
-        // LocalStorageから保存されたサイズを復元
-        const savedSize = localStorage.getItem('fontSize') || 'medium';
+        // sessionStorageから保存されたサイズを復元（タブを閉じるまで保持）
+        const savedSize = sessionStorage.getItem('fontSize') || 'medium';
         applyFontSize(savedSize);
 
         buttons.forEach(btn => {
@@ -233,7 +267,7 @@ const withBase = (path: string) => {
             const size = btn.dataset.size;
             if (size) {
               applyFontSize(size);
-              localStorage.setItem('fontSize', size);
+              sessionStorage.setItem('fontSize', size);
             }
           });
         });
