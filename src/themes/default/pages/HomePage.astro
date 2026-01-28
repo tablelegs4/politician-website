@@ -310,13 +310,16 @@ const showAchievementsOnTop = profile.showAchievementsOnTop && profile.achieveme
 
         <!-- 相談誘導セクション（活動報告の下） -->
         <section class="consultation-cta">
-          <img src={withImageBase('/images/common/kokusa/kokusa_listen.png')} alt="" class="consultation-kokusa consultation-kokusa-left" />
           <div class="consultation-cta-content">
             <h2 class="consultation-cta-title">お困りごと、ありませんか？</h2>
-            <p class="consultation-cta-description">
-              地域の課題やお困りごとをお聞かせください。<br />
-              一つひとつ丁寧にお応えします。
-            </p>
+            <div class="consultation-description-row">
+              <img src={withImageBase('/images/common/kokusa/kokusa_listen.png')} alt="" class="consultation-kokusa consultation-kokusa-left" />
+              <p class="consultation-cta-description">
+                地域の課題やお困りごと、<br />
+                お気軽にお聞かせください。<br />
+                一つひとつ丁寧にお応えします。
+              </p>
+            </div>
             <div class="consultation-cta-buttons">
               <a href={withBase(siteConfig.cta.primary.url)} class="btn btn-primary btn-large">
                 {siteConfig.cta.primary.label}
@@ -1731,8 +1734,8 @@ const showAchievementsOnTop = profile.showAchievementsOnTop && profile.achieveme
   .consultation-cta {
     background: linear-gradient(135deg, #043e80 0%, #065ba8 100%);
     padding: 3rem 2rem;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     border-radius: 12px;
     text-align: center;
     position: relative;
@@ -1765,9 +1768,28 @@ const showAchievementsOnTop = profile.showAchievementsOnTop && profile.achieveme
     white-space: nowrap;
   }
 
+  .consultation-description-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .consultation-description-row .consultation-kokusa-left {
+    position: relative;
+    top: 10px;
+    height: 180px;
+    width: auto;
+    flex-shrink: 0;
+    clip-path: inset(0 0 20% 0);
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 85%);
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 85%);
+  }
+
   .consultation-cta-description {
     color: rgba(255, 255, 255, 0.95);
-    margin-bottom: 1.5rem;
+    margin: 0;
     line-height: 1.8;
     font-size: 1.0625rem;
     text-align: left;
@@ -1806,7 +1828,7 @@ const showAchievementsOnTop = profile.showAchievementsOnTop && profile.achieveme
 
   @media (max-width: 767px) {
     .consultation-cta {
-      padding: 2rem 1.5rem;
+      padding: 0.5rem 0.5rem;
     }
 
     .consultation-cta-title {
@@ -2016,7 +2038,9 @@ const showAchievementsOnTop = profile.showAchievementsOnTop && profile.achieveme
   }
 
   .consultation-kokusa-left {
-    left: 2rem;
+    position: static;
+    bottom: auto;
+    left: auto;
   }
 
   .consultation-kokusa-right {
@@ -2101,8 +2125,8 @@ const showAchievementsOnTop = profile.showAchievementsOnTop && profile.achieveme
       align-items: center;
     }
 
-    .consultation-kokusa-left {
-      order: -1;
+    .consultation-description-row .consultation-kokusa-left {
+      height: 100px;
     }
 
     .consultation-kokusa-right {
