@@ -60,7 +60,8 @@ export function getABTestPattern(): ABTestPattern {
   }
 
   // 新規割り当て（均等確率）
-  const patterns: ABTestPattern[] = ['A', 'B', 'C'];
+  // パターン3(C)は一旦停止中のため除外
+  const patterns: ABTestPattern[] = ['A', 'B'];
   const randomIndex = Math.floor(Math.random() * patterns.length);
   const pattern = patterns[randomIndex];
 
@@ -74,7 +75,8 @@ export function getABTestPattern(): ABTestPattern {
  * パターンの妥当性チェック
  */
 function isValidPattern(value: string): value is ABTestPattern {
-  return ['A', 'B', 'C'].includes(value);
+  // パターン3(C)は一旦停止中のため、既存セッションもA/Bに振り直す
+  return ['A', 'B'].includes(value);
 }
 
 /**
