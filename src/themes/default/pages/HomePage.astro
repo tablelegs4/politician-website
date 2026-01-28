@@ -85,8 +85,8 @@ const formatHeroTitle = (title: string) => {
   return title.replace(/\*([^*]+)\*/g, '<span class="hero-emphasis">$1</span>');
 };
 
-// デバッグ: ヒーローテキストの代わりに注目画像を表示する（true で画像表示）
-const SHOW_HERO_IMAGE_INSTEAD = true;
+// ヒーローテキストのランダム表示用データ
+const heroTexts = siteConfig.heroTexts || [{ title: siteConfig.hero.title, subtitle: siteConfig.hero.subtitle }];
 
 // 信頼要素の表示判定
 const isIncumbent = siteConfig.trustElements.mode === 'incumbent';
@@ -103,40 +103,62 @@ const showAchievementsOnTop = profile.showAchievementsOnTop && profile.achieveme
        レイアウトパターン: ?top=1〜5 で切り替え（クライアントサイドJS）
        ===================================== -->
 
-  {/* ========== TOP画像を大きく表示、要素は画像の下 ========== */}
+  {/* ========== ヒーローセクション: テキストをランダム表示 ========== */}
   <section class="hero-section hero-layout-1">
     <div class="hero-full-image">
       <img src={THEME_IMAGES.default.hero} alt={`${siteConfig.politician.name}の写真`} class="hero-image-large" loading="eager" />
     </div>
     <div class="hero-content-below">
       <div class="container">
-        {SHOW_HERO_IMAGE_INSTEAD ? (
-          <img src={withImageBase('/images/atention.png')} alt="注目" class="hero-atention-image" />
+        <h1 class="hero-title" id="hero-title" set:html={formatHeroTitle(heroTexts[0].title.replace(/\/n/g, '<br>'))}></h1>
+        {heroTexts[0].subtitle ? (
+          <p class="hero-subtitle" id="hero-subtitle" set:html={heroTexts[0].subtitle.replace(/\/n/g, '<br>')}></p>
         ) : (
-          <>
-            <h1 class="hero-title" set:html={formatHeroTitle(siteConfig.hero.title)}></h1>
-            <p class="hero-subtitle">{siteConfig.hero.subtitle}</p>
-            {isIncumbent && incumbentData.proposals > 0 && (
-              <div class="trust-elements">
-                <div class="trust-item">
-                  <span class="trust-number">{incumbentData.proposals}</span>
-                  <span class="trust-label">件の提案</span>
-                </div>
-                <div class="trust-item">
-                  <span class="trust-number">{incumbentData.questions}</span>
-                  <span class="trust-label">回の質問</span>
-                </div>
-                <div class="trust-item">
-                  <span class="trust-number">{incumbentData.cases}</span>
-                  <span class="trust-label">件の対応</span>
-                </div>
-              </div>
-            )}
-          </>
+          <p class="hero-subtitle" id="hero-subtitle" style="display:none"></p>
+        )}
+        {isIncumbent && incumbentData.proposals > 0 && (
+          <div class="trust-elements">
+            <div class="trust-item">
+              <span class="trust-number">{incumbentData.proposals}</span>
+              <span class="trust-label">件の提案</span>
+            </div>
+            <div class="trust-item">
+              <span class="trust-number">{incumbentData.questions}</span>
+              <span class="trust-label">回の質問</span>
+            </div>
+            <div class="trust-item">
+              <span class="trust-number">{incumbentData.cases}</span>
+              <span class="trust-label">件の対応</span>
+            </div>
+          </div>
         )}
       </div>
     </div>
   </section>
+
+  {/* ヒーローテキストのランダム選択（クライアントサイド） */}
+  <script define:vars={{ heroTexts }}>
+    (function() {
+      const idx = Math.floor(Math.random() * heroTexts.length);
+      const chosen = heroTexts[idx];
+      const titleEl = document.getElementById('hero-title');
+      const subtitleEl = document.getElementById('hero-subtitle');
+      if (titleEl) {
+        const formatted = chosen.title
+          .replace(/\/n/g, '<br>')
+          .replace(/\*([^*]+)\*/g, '<span class="hero-emphasis">$1</span>');
+        titleEl.innerHTML = formatted;
+      }
+      if (subtitleEl) {
+        if (chosen.subtitle) {
+          subtitleEl.innerHTML = chosen.subtitle.replace(/\/n/g, '<br>');
+          subtitleEl.style.display = '';
+        } else {
+          subtitleEl.style.display = 'none';
+        }
+      }
+    })();
+  </script>
 
 
   <div class="container">

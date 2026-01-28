@@ -24,6 +24,10 @@ export interface SiteConfig {
     title: string;
     subtitle: string;
   };
+  heroTexts?: Array<{
+    title: string;
+    subtitle: string;
+  }>;
   messages?: Array<{
     question: string;
     answer: string;
