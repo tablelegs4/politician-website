@@ -20,28 +20,38 @@ const withBase = (path: string) => {
   return `${base}${cleanPath}${themeQuery}`;
 };
 
+// 現在のページがTOPページかどうかを判定
+const currentPath = Astro.url.pathname;
+const basePath = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
+const isTopPage = currentPath === basePath || currentPath === basePath.slice(0, -1);
+
+// アンカーリンクのhrefを生成（TOPページ以外では「/」付きで生成）
+const anchor = (hash: string) => isTopPage ? hash : `/${hash}`;
+
 // ナビゲーション項目の定義
 // isExternal: true の場合はページ遷移（遷移アイコン表示）
+// TOP画面のセクション順に合わせる: 政策 → メッセージ → プロフィール → 活動報告 → FAQ → 応援する → お問い合わせ
 // PC用ナビ項目
 const navItemsPC = [
   { label: 'トップ', href: '/', isExternal: false },
-  { label: '魂のメッセージ', href: '#message', isExternal: false },
-  { label: '政策', href: '#policy', isExternal: false },
-  { label: '活動報告', href: '#activity', isExternal: false },
+  { label: '政策', href: anchor('#policy'), isExternal: false },
+  { label: '魂のメッセージ', href: anchor('#message'), isExternal: false },
   { label: 'プロフィール', href: '/profile/', isExternal: true },
+  { label: '活動報告', href: anchor('#activity'), isExternal: false },
   { label: 'お問い合わせ', href: '/contact/', isExternal: true },
   { label: 'プライバシーポリシー', href: '/privacy/', isExternal: true },
 ];
 
-// SP用ナビ項目（全てTOPページ内のアンカーリンク、ページ遷移なし）
+// SP用ナビ項目
 const navItemsSP = [
-  { label: 'トップ', href: '#top', isExternal: false },
-  { label: '魂のメッセージ', href: '#message', isExternal: false },
-  { label: '政策', href: '#policy', isExternal: false },
-  { label: 'プロフィール', href: '#profile', isExternal: false },
-  { label: '活動報告', href: '#activity', isExternal: false },
-  { label: 'よくある質問', href: '#faq', isExternal: false },
-  { label: '応援する', href: '#support', isExternal: false },
+  { label: 'トップ', href: isTopPage ? '#top' : '/', isExternal: false },
+  { label: '政策', href: anchor('#policy'), isExternal: false },
+  { label: '魂のメッセージ', href: anchor('#message'), isExternal: false },
+  { label: 'プロフィール', href: anchor('#profile'), isExternal: false },
+  { label: '活動報告', href: anchor('#activity'), isExternal: false },
+  { label: 'よくある質問', href: anchor('#faq'), isExternal: false },
+  { label: '応援する', href: anchor('#support'), isExternal: false },
+  { label: 'お問い合わせ', href: '/contact/', isExternal: true },
 ];
 
 ---
